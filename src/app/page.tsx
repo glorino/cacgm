@@ -129,6 +129,16 @@ export default function HomePage() {
 
             <div className="flex items-center gap-3">
               <Link
+                href="/login"
+                className={`hidden sm:flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all ${
+                  scrolled
+                    ? 'text-slate-600 hover:text-slate-800 hover:bg-slate-100'
+                    : 'text-white/80 hover:text-white hover:bg-white/10'
+                }`}
+              >
+                Sign In
+              </Link>
+              <Link
                 href="/dashboard"
                 className={`hidden sm:flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all ${
                   scrolled
@@ -168,6 +178,13 @@ export default function HomePage() {
                   {link.label}
                 </Link>
               ))}
+              <Link
+                href="/login"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block px-4 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-50 text-center"
+              >
+                Sign In
+              </Link>
               <Link
                 href="/dashboard"
                 onClick={() => setMobileMenuOpen(false)}
