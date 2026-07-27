@@ -1,0 +1,118 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  SUPER_ADMIN
+  GENERAL_OVERSEER
+  BRANCH_PASTOR
+  MEN_PRESIDENT
+  WOMEN_PRESIDENT
+  YOUTH_PRESIDENT
+  DEPARTMENT_HEAD
+  MEMBER
+}
+
+enum TransactionType {
+  TITHE
+  OFFERING
+  SEED
+  DONATION
+  PROJECT
+}
+
+enum TransactionStatus {
+  PENDING
+  SUCCESSFUL
+  FAILED
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  password     String
+  phone        String?
+  role         UserRole @default(MEMBER)
+  avatar       String?
+  departmentId String?
+  branchId     String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  department  Department? @relation(fields: [departmentId], references: [id])
+  branch      Branch?     @relation(fields: [branchId], references: [id])
+  transactions Transaction[]
+}
+
+model Branch {
+  id           String   @id @default(cuid())
+  name         String
+  address      String
+  latitude     Float
+  longitude    Float
+  pastorName   String
+  contactPhone String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  users        User[]
+  departments  Department[]
+  attendance   Attendance[]
+  transactions Transaction[]
+}
+
+model Department {
+  id         String   @id @default(cuid())
+  name       String
+  leaderName String
+  branchId   String
+  budget     Float    @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  branch Branch @relation(fields: [branchId], references: [id])
+  users  User[]
+}
+
+model Attendance {
+  id           String   @id @default(cuid())
+  branchId     String
+  date         DateTime
+  serviceType  String
+  maleCount    Int      @default(0)
+  femaleCount  Int      @default(0)
+  childrenCount Int     @default(0)
+  totalCount   Int      @default(0)
+  createdAt    DateTime @default(now())
+
+  branch Branch @relation(fields: [branchId], references: [id])
+
+  @@unique([branchId, date, serviceType])
+}
+
+model Transaction {
+  id        String            @id @default(cuid())
+  userId    String
+  branchId  String
+  amount    Float
+  currency  String            @default("NGN")
+  txRef     String            @unique
+  flwId     String?
+  status    TransactionStatus @default(PENDING)
+  type      TransactionType   @default(OFFERING)
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+
+  user   User   @relation(fields: [userId], references: [id])
+  branch Branch @relation(fields: [branchId], references: [id])
+
+  @@index([userId])
+  @@index([branchId])
+  @@index([status])
+}
