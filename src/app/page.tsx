@@ -111,15 +111,15 @@ export default function HomePage() {
               </div>
             </Link>
 
-            <nav className="hidden md:flex items-center gap-1">
+            <nav className="hidden md:flex items-center gap-1 bg-white/10 backdrop-blur-sm rounded-full px-2 py-1 border border-white/10">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
                     scrolled
-                      ? 'text-slate-600 hover:text-slate-800 hover:bg-slate-50'
-                      : 'text-white/70 hover:text-white hover:bg-white/10'
+                      ? 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                      : 'text-white/80 hover:text-white hover:bg-white/10'
                   }`}
                 >
                   {link.label}
@@ -412,7 +412,7 @@ export default function HomePage() {
       </section>
 
       {/* Stats Bar */}
-      <section className="relative -mt-8 z-10">
+      <section className="relative -mt-8 z-10 mb-24">
         <div className="max-w-5xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -438,9 +438,9 @@ export default function HomePage() {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-28 bg-slate-50/50">
+      <section id="features" className="py-32 bg-slate-50/50">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-20">
+          <div className="text-center max-w-2xl mx-auto mb-24">
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -470,7 +470,7 @@ export default function HomePage() {
             </motion.p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {features.map((feature, i) => (
               <motion.div
                 key={feature.title}
@@ -478,7 +478,7 @@ export default function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08 }}
-                className="group bg-white rounded-2xl p-8 border border-slate-100 card-hover cursor-default"
+                className="group bg-white rounded-2xl p-10 border border-slate-100 card-hover cursor-default"
               >
                 <div className={`w-14 h-14 rounded-2xl ${feature.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
                   {feature.icon}
@@ -495,9 +495,9 @@ export default function HomePage() {
       </section>
 
       {/* About / Roles Section */}
-      <section id="about" className="py-28">
+      <section id="about" className="py-32">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-20 items-center">
             <div>
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
@@ -529,7 +529,7 @@ export default function HomePage() {
               </motion.p>
             </div>
 
-            <div className="space-y-5">
+            <div className="space-y-6">
               {roles.map((role, i) => (
                 <motion.div
                   key={role.title}
@@ -554,13 +554,13 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-28">
+      <section className="py-32">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="relative bg-gradient-primary rounded-3xl overflow-hidden p-16 text-center"
+            className="relative bg-gradient-primary rounded-3xl overflow-hidden p-20 text-center"
           >
             {/* Background decorations */}
             <div className="absolute top-0 left-0 w-64 h-64 bg-accent/10 rounded-full blur-[80px]" />
