@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
-:root {
+@theme {
   --color-primary: #1e3a5f;
   --color-primary-dark: #0f1f36;
+  --color-primary-light: #2a5080;
   --color-accent: #d4a017;
   --color-accent-light: #f0c040;
-  --color-surface: #f8f9fc;
-  --color-surface-dark: #111827;
+  --color-accent-dark: #b8860b;
 }
 
 * {
@@ -21,7 +21,7 @@ html {
 
 body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background-color: #f8f9fc;
+  background-color: #ffffff;
   color: #1f2937;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -53,30 +53,47 @@ body {
   }
 
   .bg-gradient-primary {
-    background: linear-gradient(135deg, #1e3a5f, #0f1f36);
+    background: linear-gradient(135deg, #1e3a5f 0%, #0f1f36 100%);
   }
 
-  .bg-gradient-card {
-    background: linear-gradient(145deg, #ffffff, #f8f9fc);
+  .bg-gradient-hero {
+    background: linear-gradient(160deg, #0a1628 0%, #1e3a5f 40%, #0f2847 70%, #0a1628 100%);
   }
 
-  .border-gold {
-    border-color: #d4a017;
-  }
-
-  .shadow-gold {
-    box-shadow: 0 4px 20px -2px rgba(212, 160, 23, 0.15);
+  .bg-mesh {
+    background-image:
+      radial-gradient(at 40% 20%, rgba(212, 160, 23, 0.08) 0px, transparent 50%),
+      radial-gradient(at 80% 0%, rgba(30, 58, 95, 0.06) 0px, transparent 50%),
+      radial-gradient(at 0% 50%, rgba(212, 160, 23, 0.05) 0px, transparent 50%),
+      radial-gradient(at 80% 50%, rgba(30, 58, 95, 0.04) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, rgba(212, 160, 23, 0.06) 0px, transparent 50%);
   }
 
   .glass {
     background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
   }
 
   .glass-dark {
     background: rgba(15, 31, 54, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .card-hover {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 60px -12px rgba(30, 58, 95, 0.15);
+  }
+
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 }
