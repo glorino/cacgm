@@ -1,10 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import {
-  Church,
   Users,
   MapPin,
   Heart,
@@ -16,37 +15,34 @@ import {
   Menu,
   X,
   Sparkles,
-  Zap,
   Globe,
   Check,
+  Church,
+  Play,
 } from 'lucide-react';
 
-const navLinks = [
-  { label: 'Features', href: '#features' },
-  { label: 'About', href: '#about' },
-  { label: 'Find Branch', href: '/branches' },
-];
-
 const features = [
-  { icon: <Users size={28} />, title: 'Member Management', description: 'Track and manage all church members across branches with detailed profiles, roles, and contact information.', color: 'bg-blue-50 text-blue-600' },
-  { icon: <MapPin size={28} />, title: 'Branch Locator', description: 'Find the nearest CACGM branch with real-time GPS navigation and turn-by-turn directions.', color: 'bg-emerald-50 text-emerald-600' },
-  { icon: <Heart size={28} />, title: 'Online Giving', description: 'Give securely online via Flutterwave with instant confirmation, receipts, and full transaction history.', color: 'bg-rose-50 text-rose-600' },
-  { icon: <BarChart3 size={28} />, title: 'Analytics Dashboard', description: 'Comprehensive insights into attendance trends, financial giving, and church growth metrics.', color: 'bg-violet-50 text-violet-600' },
-  { icon: <Calendar size={28} />, title: 'Attendance Tracking', description: 'Record and monitor service attendance across all departments with detailed breakdowns.', color: 'bg-amber-50 text-amber-600' },
-  { icon: <Shield size={28} />, title: 'Role-Based Access', description: 'Multi-level dashboards for General Overseer, Branch Pastors, and Department Presidents.', color: 'bg-indigo-50 text-indigo-600' },
-];
-
-const stats = [
-  { value: '6+', label: 'Active Branches' },
-  { value: '2,847', label: 'Registered Members' },
-  { value: '₦35.5M', label: 'Year-to-Date Giving' },
-  { value: '8', label: 'Departments' },
+  { icon: <Users size={32} />, title: 'Member Management', description: 'Track and manage all church members across branches with detailed profiles, roles, and contact information.', color: 'bg-blue-50 text-blue-600' },
+  { icon: <MapPin size={32} />, title: 'Branch Locator', description: 'Find the nearest CACGM branch with real-time GPS navigation and turn-by-turn directions.', color: 'bg-emerald-50 text-emerald-600' },
+  { icon: <Heart size={32} />, title: 'Online Giving', description: 'Give securely online via Flutterwave with instant confirmation, receipts, and full transaction history.', color: 'bg-rose-50 text-rose-600' },
+  { icon: <BarChart3 size={32} />, title: 'Analytics Dashboard', description: 'Comprehensive insights into attendance trends, financial giving, and church growth metrics.', color: 'bg-violet-50 text-violet-600' },
+  { icon: <Calendar size={32} />, title: 'Attendance Tracking', description: 'Record and monitor service attendance across all departments with detailed breakdowns.', color: 'bg-amber-50 text-amber-600' },
+  { icon: <Shield size={32} />, title: 'Role-Based Access', description: 'Multi-level dashboards for General Overseer, Branch Pastors, and Department Presidents.', color: 'bg-indigo-50 text-indigo-600' },
 ];
 
 const roles = [
-  { title: 'General Overseer', desc: 'Full oversight across all branches with cross-branch analytics and comparison tools.', color: 'bg-primary' },
-  { title: 'Branch Pastor', desc: 'Manage your branch members, attendance, finances, and department performance.', color: 'bg-accent' },
+  { title: 'General Overseer', desc: 'Full oversight across all branches with cross-branch analytics and comparison tools.', color: 'bg-[#1a3a5c]' },
+  { title: 'Branch Pastor', desc: 'Manage your branch members, attendance, finances, and department performance.', color: 'bg-[#c8a44e]' },
   { title: 'Department President', desc: 'Lead your ministry with dedicated portals for events, members, and budget tracking.', color: 'bg-emerald-600' },
+];
+
+const branches = [
+  { name: 'Headquarters', address: '12 Allen Avenue, Ikeja, Lagos', time: 'Sundays 8:00 & 10:30 AM' },
+  { name: 'Surulere', address: '45 Bode Thomas Street, Surulere', time: 'Sundays 9:00 AM' },
+  { name: 'Yaba', address: '78 Herbert Macaulay Way, Yaba', time: 'Sundays 9:00 AM' },
+  { name: 'Ikeja GRA', address: '23 Oba Akran Avenue, Ikeja GRA', time: 'Sundays 9:00 AM' },
+  { name: 'Lekki', address: '15 Admiralty Way, Lekki Phase 1', time: 'Sundays 9:00 AM' },
+  { name: 'Ikorodu', address: '33 Benson Street, Ikorodu', time: 'Sundays 9:00 AM' },
 ];
 
 export default function HomePage() {
@@ -54,266 +50,236 @@ export default function HomePage() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
+    const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#f5f6fa] overflow-x-hidden">
+    <div className="min-h-screen bg-white overflow-x-hidden">
       {/* Header */}
-      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-[#f5f6fa]/95 backdrop-blur-xl shadow-sm border-b border-slate-200/60' : 'bg-transparent'}`}>
+      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        scrolled
+          ? 'bg-white shadow-md py-3'
+          : 'bg-transparent py-5'
+      }`}>
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
-            <Link href="/" className="flex items-center gap-3 group">
-              <div className="w-11 h-11 rounded-xl bg-gradient-primary flex items-center justify-center shadow-lg shadow-primary/20 group-hover:shadow-primary/30 transition-shadow">
+          <div className="flex items-center justify-between">
+            <Link href="/" className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-lg bg-[#1a3a5c] flex items-center justify-center">
                 <span className="text-white font-bold text-sm">CA</span>
               </div>
-              <div className="hidden sm:block">
-                <span className={`font-bold text-base ${scrolled ? 'text-slate-800' : 'text-white'}`}>CACGM</span>
-                <span className={`text-[11px] ml-1.5 ${scrolled ? 'text-slate-400' : 'text-white/50'}`}>Church Management</span>
+              <div>
+                <span className={`font-bold text-lg tracking-tight ${scrolled ? 'text-[#1a3a5c]' : 'text-white'}`}>CACGM</span>
               </div>
             </Link>
 
-            <nav className="hidden md:flex items-center gap-3">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`px-5 py-2.5 rounded-lg text-sm font-medium transition-all ${
+            <nav className="hidden lg:flex items-center gap-1">
+              {['Features', 'About', 'Locations'].map((label) => (
+                <a
+                  key={label}
+                  href={`#${label.toLowerCase()}`}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                     scrolled
-                      ? 'text-slate-600 hover:text-slate-900 hover:bg-white'
-                      : 'text-white bg-white/10 hover:bg-white/20'
+                      ? 'text-slate-600 hover:text-[#1a3a5c] hover:bg-slate-50'
+                      : 'text-white/90 hover:text-white hover:bg-white/10'
                   }`}
                 >
-                  {link.label}
-                </Link>
+                  {label}
+                </a>
               ))}
             </nav>
 
-            <div className="flex items-center gap-8">
+            <div className="flex items-center gap-4">
               <Link
                 href="/login"
-                className={`hidden sm:flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium transition-all ${
-                  scrolled
-                    ? 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-                    : 'text-white/80 hover:text-white hover:bg-white/10'
+                className={`hidden sm:flex text-sm font-medium transition-all px-4 py-2 rounded-lg ${
+                  scrolled ? 'text-slate-600 hover:text-[#1a3a5c]' : 'text-white/90 hover:text-white'
                 }`}
               >
                 Sign In
               </Link>
               <Link
                 href="/dashboard"
-                className={`hidden sm:flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold transition-all ${
+                className={`hidden sm:flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all ${
                   scrolled
-                    ? 'bg-primary text-white hover:bg-primary/90 shadow-lg shadow-primary/20'
-                    : 'bg-white text-primary hover:bg-white/90 shadow-lg shadow-black/10'
+                    ? 'bg-[#1a3a5c] text-white hover:bg-[#1a3a5c]/90'
+                    : 'bg-white text-[#1a3a5c] hover:bg-white/90'
                 }`}
               >
                 Dashboard
-                <ArrowRight size={16} />
+                <ArrowRight size={15} />
               </Link>
-
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className={`md:hidden p-2.5 rounded-full transition-colors ${scrolled ? 'text-slate-600 hover:bg-slate-100' : 'text-white hover:bg-white/10'}`}
+                className={`lg:hidden p-2 rounded-lg ${scrolled ? 'text-slate-600 hover:bg-slate-100' : 'text-white hover:bg-white/10'}`}
               >
-                {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+                {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
             </div>
           </div>
         </div>
 
-        {/* Mobile menu */}
-        {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="md:hidden bg-[#f5f6fa] border-b border-slate-200/60 shadow-lg"
-          >
-            <div className="px-6 py-5 space-y-2">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-50"
-                >
-                  {link.label}
-                </Link>
-              ))}
-              <Link
-                href="/login"
-                onClick={() => setMobileMenuOpen(false)}
-                className="block px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-50 text-center"
-              >
-                Sign In
-              </Link>
-              <Link
-                href="/dashboard"
-                onClick={() => setMobileMenuOpen(false)}
-                className="block px-4 py-3 rounded-xl text-sm font-semibold bg-primary text-white text-center mt-3"
-              >
-                Open Dashboard
-              </Link>
-            </div>
-          </motion.div>
-        )}
-      </header>
-
-      {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center bg-gradient-hero overflow-hidden">
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-accent/10 rounded-full blur-[100px] animate-pulse" />
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-primary-light/10 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '2s' }} />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/5 rounded-full blur-[150px]" />
-          <div className="absolute inset-0 opacity-[0.03]" style={{
-            backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
-            backgroundSize: '60px 60px',
-          }} />
-          <motion.div animate={{ y: [0, -20, 0], x: [0, 10, 0] }} transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }} className="absolute top-32 right-[15%] w-4 h-4 bg-accent/30 rounded-full" />
-          <motion.div animate={{ y: [0, 15, 0], x: [0, -8, 0] }} transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 1 }} className="absolute bottom-40 left-[20%] w-3 h-3 bg-white/20 rounded-full" />
-          <motion.div animate={{ y: [0, -12, 0] }} transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut', delay: 2 }} className="absolute top-48 left-[10%] w-2 h-2 bg-accent/20 rounded-full" />
-        </div>
-
-        <div className="relative max-w-7xl mx-auto px-6 lg:px-8 py-36 w-full">
-          <div className="grid lg:grid-cols-2 gap-20 items-center">
-            <div>
-              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
-                className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 border border-white/10 rounded-full text-white/80 text-sm font-medium backdrop-blur-sm mb-10">
-                <Sparkles size={14} className="text-accent" />
-                Christ Apostolic Church of God Mission
-              </motion.div>
-
-              <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}
-                className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-[1.08] tracking-tight">
-                Church Management{' '}
-                <span className="relative inline-block">
-                  <span className="text-gradient-gold">Made Simple</span>
-                  <motion.div initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 0.8, delay: 0.8 }}
-                    className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-accent/60 to-accent/20 rounded-full origin-left" />
-                </span>
-              </motion.h1>
-
-              <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }}
-                className="text-lg text-white/60 mt-8 max-w-xl leading-relaxed">
-                A comprehensive platform to manage members, track attendance, process giving, and connect all branches of CACGM under one unified system.
-              </motion.p>
-
-              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }}
-                className="flex flex-col sm:flex-row items-start gap-4 mt-12">
-                <Link href="/dashboard"
-                  className="group flex items-center gap-3 px-8 py-4 bg-white text-primary rounded-2xl text-sm font-bold hover:bg-white/95 transition-all shadow-2xl shadow-black/20 hover:shadow-3xl">
-                  Open Dashboard
-                  <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                </Link>
-                <Link href="/branches"
-                  className="group flex items-center gap-3 px-8 py-4 bg-white/10 text-white border border-white/15 rounded-2xl text-sm font-semibold hover:bg-white/15 backdrop-blur-sm transition-all">
-                  <MapPin size={18} />
-                  Find a Branch
-                </Link>
-              </motion.div>
-
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6, delay: 0.5 }}
-                className="flex items-center gap-8 mt-14">
-                {[
-                  { icon: <Check size={14} />, text: 'Free to use' },
-                  { icon: <Check size={14} />, text: 'Secure payments' },
-                  { icon: <Check size={14} />, text: 'Multi-branch' },
-                ].map((item) => (
-                  <div key={item.text} className="flex items-center gap-2.5 text-white/50 text-xs font-medium">
-                    <div className="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center text-accent">{item.icon}</div>
-                    {item.text}
-                  </div>
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="lg:hidden bg-white border-t border-slate-100 overflow-hidden"
+            >
+              <div className="px-6 py-6 space-y-1">
+                {['Features', 'About', 'Locations'].map((label) => (
+                  <a
+                    key={label}
+                    href={`#${label.toLowerCase()}`}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="block px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 font-medium"
+                  >
+                    {label}
+                  </a>
                 ))}
-              </motion.div>
-            </div>
-
-            {/* Dashboard Preview */}
-            <motion.div initial={{ opacity: 0, x: 40, scale: 0.95 }} animate={{ opacity: 1, x: 0, scale: 1 }} transition={{ duration: 0.8, delay: 0.3 }}
-              className="hidden lg:block relative">
-              <div className="relative">
-                <div className="absolute -inset-4 bg-gradient-to-r from-accent/20 to-primary-light/20 rounded-3xl blur-2xl" />
-                <div className="relative bg-[#111827] rounded-2xl overflow-hidden shadow-2xl shadow-black/40 border border-white/5">
-                  <div className="flex items-center gap-2 px-4 py-3 bg-[#1a2332] border-b border-white/5">
-                    <div className="flex gap-1.5">
-                      <div className="w-3 h-3 rounded-full bg-[#ff5f57]" />
-                      <div className="w-3 h-3 rounded-full bg-[#febc2e]" />
-                      <div className="w-3 h-3 rounded-full bg-[#28c840]" />
-                    </div>
-                    <div className="flex-1 mx-4">
-                      <div className="bg-[#0d1520] rounded-lg px-3 py-1.5 text-[11px] text-slate-400 font-mono">cacgm.org/dashboard</div>
-                    </div>
-                  </div>
-                  <div className="p-5">
-                    <div className="flex gap-4">
-                      <div className="w-44 space-y-2 flex-shrink-0">
-                        <div className="h-8 bg-primary/30 rounded-lg" />
-                        {[1, 2, 3, 4, 5].map((i) => (
-                          <div key={i} className="flex items-center gap-2 px-2 py-1.5">
-                            <div className="w-4 h-4 rounded bg-white/10" />
-                            <div className="h-2.5 rounded bg-white/10" style={{ width: `${55 + Math.random() * 35}%` }} />
-                          </div>
-                        ))}
-                      </div>
-                      <div className="flex-1 space-y-4">
-                        <div className="grid grid-cols-2 gap-3">
-                          {[
-                            { label: 'Members', value: '2,847', change: '+12%', color: 'bg-blue-500/10' },
-                            { label: 'Giving', value: '₦6.3M', change: '+8%', color: 'bg-emerald-500/10' },
-                            { label: 'Attendance', value: '1,380', change: '+5%', color: 'bg-amber-500/10' },
-                            { label: 'Departments', value: '8', change: 'All OK', color: 'bg-violet-500/10' },
-                          ].map((card) => (
-                            <div key={card.label} className={`${card.color} rounded-xl p-3 border border-white/5`}>
-                              <div className="text-[9px] text-slate-400 mb-1">{card.label}</div>
-                              <div className="text-base font-bold text-white">{card.value}</div>
-                              <div className="text-[9px] text-emerald-400 mt-0.5">{card.change}</div>
-                            </div>
-                          ))}
-                        </div>
-                        <div className="bg-white/5 rounded-xl p-3 border border-white/5">
-                          <div className="text-[9px] text-slate-400 mb-3">Financial Trends</div>
-                          <div className="flex items-end gap-1.5 h-20">
-                            {[40, 55, 45, 65, 50, 70, 60, 75, 55, 80, 65, 85].map((h, i) => (
-                              <motion.div key={i} initial={{ height: 0 }} animate={{ height: `${h}%` }} transition={{ duration: 0.5, delay: 0.5 + i * 0.05 }}
-                                className="flex-1 bg-gradient-to-t from-accent/60 to-accent/30 rounded-t" />
-                            ))}
-                          </div>
-                        </div>
-                        <div className="bg-white/5 rounded-xl p-3 border border-white/5">
-                          <div className="text-[9px] text-slate-400 mb-2">Recent Transactions</div>
-                          {[1, 2, 3].map((i) => (
-                            <div key={i} className="flex items-center gap-2 py-1.5 border-b border-white/5 last:border-0">
-                              <div className="w-6 h-6 rounded-full bg-white/10" />
-                              <div className="flex-1">
-                                <div className="h-2 bg-white/10 rounded w-20 mb-0.5" />
-                                <div className="h-1.5 bg-white/5 rounded w-12" />
-                              </div>
-                              <div className="h-2 bg-emerald-500/30 rounded w-12" />
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <Link href="/login" onClick={() => setMobileMenuOpen(false)} className="block px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 font-medium">Sign In</Link>
+                <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)} className="block px-4 py-3 rounded-lg bg-[#1a3a5c] text-white text-center font-semibold mt-2">Open Dashboard</Link>
               </div>
             </motion.div>
-          </div>
+          )}
+        </AnimatePresence>
+      </header>
+
+      {/* Hero - Full bleed with background image effect */}
+      <section className="relative min-h-screen flex items-center overflow-hidden">
+        {/* Background */}
+        <div className="absolute inset-0 bg-[#1a3a5c]">
+          <div className="absolute inset-0 bg-gradient-to-br from-[#1a3a5c] via-[#1a3a5c]/95 to-[#0f2640]" />
+          <div className="absolute inset-0 opacity-10" style={{
+            backgroundImage: 'radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 1px, transparent 1px)',
+            backgroundSize: '50px 50px',
+          }} />
+          <motion.div
+            animate={{ scale: [1, 1.1, 1] }}
+            transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
+            className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#c8a44e]/5 rounded-full blur-[200px]"
+          />
+          <motion.div
+            animate={{ scale: [1, 1.15, 1] }}
+            transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut', delay: 3 }}
+            className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-white/3 rounded-full blur-[150px]"
+          />
         </div>
 
-        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#f5f6fa] to-transparent" />
+        <div className="relative max-w-7xl mx-auto px-6 lg:px-8 py-32 w-full">
+          <div className="max-w-3xl">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 border border-white/10 rounded-full text-white/80 text-sm font-medium backdrop-blur-sm mb-8"
+            >
+              <Sparkles size={14} className="text-[#c8a44e]" />
+              Christ Apostolic Church of God Mission
+            </motion.div>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.1 }}
+              className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-[1.05] tracking-tight"
+            >
+              Church Management{' '}
+              <span className="text-[#c8a44e]">Made Simple</span>
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-lg text-white/60 mt-8 max-w-xl leading-relaxed"
+            >
+              A comprehensive platform to manage members, track attendance, process giving, and connect all branches of CACGM under one unified system.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="flex flex-col sm:flex-row items-start gap-4 mt-12"
+            >
+              <Link
+                href="/dashboard"
+                className="group flex items-center gap-3 px-8 py-4 bg-white text-[#1a3a5c] rounded-xl text-sm font-bold hover:bg-white/95 transition-all shadow-xl"
+              >
+                Open Dashboard
+                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+              </Link>
+              <Link
+                href="/branches"
+                className="group flex items-center gap-3 px-8 py-4 bg-white/10 text-white border border-white/20 rounded-xl text-sm font-semibold hover:bg-white/15 backdrop-blur-sm transition-all"
+              >
+                <MapPin size={18} />
+                Find a Branch
+              </Link>
+            </motion.div>
+          </div>
+
+          {/* Hero cards overlay */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            className="mt-20 grid grid-cols-1 sm:grid-cols-3 gap-4"
+          >
+            {[
+              { icon: <MapPin size={20} />, title: 'Find a Congregation', desc: 'We gather for services each weekend', href: '/branches' },
+              { icon: <Play size={20} />, title: 'Watch Online', desc: 'Experience CACGM from anywhere', href: '/dashboard' },
+              { icon: <Heart size={20} />, title: 'Give', desc: 'Support our mission securely online', href: '/dashboard/giving' },
+            ].map((card, i) => (
+              <Link
+                key={card.title}
+                href={card.href}
+                className="group flex items-start gap-4 p-5 bg-white/10 backdrop-blur-sm border border-white/10 rounded-xl hover:bg-white/15 transition-all"
+              >
+                <div className="w-10 h-10 rounded-lg bg-[#c8a44e]/20 flex items-center justify-center text-[#c8a44e] flex-shrink-0">
+                  {card.icon}
+                </div>
+                <div>
+                  <h3 className="text-white font-semibold text-sm">{card.title}</h3>
+                  <p className="text-white/50 text-xs mt-1">{card.desc}</p>
+                </div>
+                <ChevronRight size={16} className="text-white/30 group-hover:text-white/60 mt-1 ml-auto flex-shrink-0 transition-colors" />
+              </Link>
+            ))}
+          </motion.div>
+        </div>
+
+        {/* Bottom fade */}
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent" />
       </section>
 
-      {/* Stats Bar */}
-      <section className="relative -mt-8 z-10 mb-48">
-        <div className="max-w-5xl mx-auto px-6 lg:px-8">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-            className="bg-white rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 p-10 grid grid-cols-2 lg:grid-cols-4 gap-10">
-            {stats.map((stat, i) => (
-              <motion.div key={stat.label} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-                className="text-center">
-                <p className="text-3xl sm:text-4xl font-bold text-gradient-gold">{stat.value}</p>
+      {/* Stats */}
+      <section className="relative -mt-16 z-10 mb-32">
+        <div className="max-w-6xl mx-auto px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="bg-white rounded-2xl shadow-xl shadow-slate-200/40 border border-slate-100 p-10 grid grid-cols-2 lg:grid-cols-4 gap-8"
+          >
+            {[
+              { value: '6+', label: 'Active Branches' },
+              { value: '2,847', label: 'Registered Members' },
+              { value: '₦35.5M', label: 'Year-to-Date Giving' },
+              { value: '8', label: 'Departments' },
+            ].map((stat, i) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="text-center"
+              >
+                <p className="text-3xl sm:text-4xl font-bold text-[#1a3a5c]">{stat.value}</p>
                 <p className="text-sm text-slate-500 mt-2 font-medium">{stat.label}</p>
               </motion.div>
             ))}
@@ -321,35 +287,54 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Features Section */}
-      <section id="features" className="py-44 bg-[#f0f1f6]">
+      {/* Features - Clean card grid */}
+      <section id="features" className="py-32 bg-slate-50">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-28">
-            <motion.div initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-primary/5 border border-primary/10 rounded-full text-primary text-xs font-semibold mb-6 uppercase tracking-wider">
-              <Zap size={12} />
+          <div className="text-center max-w-2xl mx-auto mb-20">
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-sm font-semibold text-[#c8a44e] uppercase tracking-wider mb-4"
+            >
               Features
-            </motion.div>
-            <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}
-              className="text-4xl sm:text-5xl font-bold text-slate-900 tracking-tight">
+            </motion.p>
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="text-4xl sm:text-5xl font-bold text-slate-900 tracking-tight"
+            >
               Everything You Need
             </motion.h2>
-            <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }}
-              className="text-lg text-slate-500 mt-6 leading-relaxed">
-              Powerful tools to manage every aspect of your church operations, from member tracking to financial management.
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="text-lg text-slate-500 mt-6 leading-relaxed"
+            >
+              Powerful tools to manage every aspect of your church operations.
             </motion.p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {features.map((feature, i) => (
-              <motion.div key={feature.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}
-                className="group bg-white rounded-2xl p-10 border border-slate-100 card-hover cursor-default">
-                <div className={`w-14 h-14 rounded-2xl ${feature.color} flex items-center justify-center mb-7 group-hover:scale-110 transition-transform duration-300`}>
+              <motion.div
+                key={feature.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.08 }}
+                className="bg-white rounded-2xl p-8 border border-slate-100 hover:shadow-lg hover:shadow-slate-200/50 transition-all duration-300 group"
+              >
+                <div className={`w-14 h-14 rounded-2xl ${feature.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
                   {feature.icon}
                 </div>
-                <h3 className="text-xl font-bold text-slate-800 mb-4">{feature.title}</h3>
+                <h3 className="text-xl font-bold text-slate-800 mb-3">{feature.title}</h3>
                 <p className="text-sm text-slate-500 leading-relaxed">{feature.description}</p>
-                <div className="flex items-center gap-1.5 mt-6 text-sm font-semibold text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="flex items-center gap-1.5 mt-5 text-sm font-semibold text-[#1a3a5c] opacity-0 group-hover:opacity-100 transition-opacity">
                   Learn more <ChevronRight size={14} />
                 </div>
               </motion.div>
@@ -358,37 +343,56 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* About / Roles Section */}
-      <section id="about" className="py-44 bg-[#f5f6fa]">
+      {/* About / Roles */}
+      <section id="about" className="py-32">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-20 items-center">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
-              <motion.div initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-                className="inline-flex items-center gap-2 px-4 py-2 bg-accent/10 border border-accent/20 rounded-full text-accent-dark text-xs font-semibold mb-6 uppercase tracking-wider">
-                <Globe size={12} />
+              <motion.p
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="text-sm font-semibold text-[#c8a44e] uppercase tracking-wider mb-4"
+              >
                 Multi-Role Access
-              </motion.div>
-              <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}
-                className="text-4xl sm:text-5xl font-bold text-slate-900 tracking-tight">
+              </motion.p>
+              <motion.h2
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 }}
+                className="text-4xl sm:text-5xl font-bold text-slate-900 tracking-tight"
+              >
                 Built for Every{' '}
-                <span className="text-gradient-gold">Leader</span>
+                <span className="text-[#c8a44e]">Leader</span>
               </motion.h2>
-              <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }}
-                className="text-lg text-slate-500 mt-6 leading-relaxed">
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+                className="text-lg text-slate-500 mt-6 leading-relaxed"
+              >
                 Whether you oversee the entire mission or lead a local branch, CACGM gives you the tools and insights you need.
               </motion.p>
             </div>
 
-            <div className="space-y-6">
+            <div className="space-y-4">
               {roles.map((role, i) => (
-                <motion.div key={role.title} initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 + i * 0.1 }}
-                  className="group flex gap-6 p-7 bg-white rounded-2xl border border-slate-100 card-hover cursor-default">
-                  <div className={`w-14 h-14 rounded-2xl ${role.color} flex items-center justify-center flex-shrink-0 shadow-lg`}>
-                    <Shield size={22} className="text-white" />
+                <motion.div
+                  key={role.title}
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.2 + i * 0.1 }}
+                  className="flex gap-5 p-6 bg-white rounded-2xl border border-slate-100 hover:shadow-lg hover:shadow-slate-200/50 transition-all"
+                >
+                  <div className={`w-12 h-12 rounded-xl ${role.color} flex items-center justify-center flex-shrink-0`}>
+                    <Shield size={20} className="text-white" />
                   </div>
                   <div>
                     <h4 className="text-lg font-bold text-slate-800">{role.title}</h4>
-                    <p className="text-sm text-slate-500 mt-2 leading-relaxed">{role.desc}</p>
+                    <p className="text-sm text-slate-500 mt-1 leading-relaxed">{role.desc}</p>
                   </div>
                 </motion.div>
               ))}
@@ -397,61 +401,154 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-44 bg-[#f0f1f6]">
+      {/* Locations */}
+      <section id="locations" className="py-32 bg-[#1a3a5c]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-            className="relative bg-gradient-primary rounded-3xl overflow-hidden p-20 text-center">
-            <div className="absolute top-0 left-0 w-64 h-64 bg-accent/10 rounded-full blur-[80px]" />
-            <div className="absolute bottom-0 right-0 w-80 h-80 bg-white/5 rounded-full blur-[100px]" />
-            <div className="relative">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight">
-                Ready to Transform Your{' '}
-                <span className="text-gradient-gold">Church Management?</span>
-              </h2>
-              <p className="text-white/60 mt-8 max-w-xl mx-auto text-lg leading-relaxed">
-                Join CACGM branches already using our platform to streamline their operations and connect their congregations.
-              </p>
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-5 mt-12">
-                <Link href="/dashboard"
-                  className="group flex items-center gap-3 px-8 py-4 bg-white text-primary rounded-2xl text-sm font-bold hover:bg-white/95 transition-all shadow-2xl shadow-black/20">
-                  Get Started
-                  <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                </Link>
-                <Link href="/branches"
-                  className="group flex items-center gap-3 px-8 py-4 bg-white/10 text-white border border-white/15 rounded-2xl text-sm font-semibold hover:bg-white/15 backdrop-blur-sm transition-all">
-                  <MapPin size={18} />
-                  Visit a Branch
-                </Link>
-              </div>
+          <div className="text-center mb-16">
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-sm font-semibold text-[#c8a44e] uppercase tracking-wider mb-4"
+            >
+              Our Locations
+            </motion.p>
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="text-4xl sm:text-5xl font-bold text-white tracking-tight"
+            >
+              Find a Congregation
+            </motion.h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {branches.map((branch, i) => (
+              <motion.div
+                key={branch.name}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.08 }}
+                className="p-6 bg-white/10 backdrop-blur-sm border border-white/10 rounded-2xl hover:bg-white/15 transition-all group"
+              >
+                <h3 className="text-white font-bold text-lg">{branch.name}</h3>
+                <p className="text-white/50 text-sm mt-2">{branch.address}</p>
+                <p className="text-[#c8a44e] text-sm mt-3 font-medium">{branch.time}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="text-center mt-12">
+            <Link
+              href="/branches"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-white text-[#1a3a5c] rounded-xl text-sm font-semibold hover:bg-white/90 transition-all"
+            >
+              <MapPin size={16} />
+              View All Locations
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-32">
+        <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-4xl sm:text-5xl font-bold text-slate-900 tracking-tight">
+              Ready to Transform Your{' '}
+              <span className="text-[#c8a44e]">Church?</span>
+            </h2>
+            <p className="text-lg text-slate-500 mt-6 max-w-xl mx-auto leading-relaxed">
+              Join CACGM branches already using our platform to streamline their operations.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10">
+              <Link
+                href="/dashboard"
+                className="group flex items-center gap-3 px-8 py-4 bg-[#1a3a5c] text-white rounded-xl text-sm font-bold hover:bg-[#1a3a5c]/90 transition-all shadow-lg shadow-[#1a3a5c]/20"
+              >
+                Get Started
+                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+              </Link>
+              <Link
+                href="/branches"
+                className="group flex items-center gap-3 px-8 py-4 bg-slate-100 text-slate-700 rounded-xl text-sm font-semibold hover:bg-slate-200 transition-all"
+              >
+                <MapPin size={18} />
+                Visit a Branch
+              </Link>
             </div>
           </motion.div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-slate-200/60 bg-[#f5f6fa]">
+      <footer className="bg-[#0f2640] text-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-gradient-primary flex items-center justify-center shadow-lg shadow-primary/20">
-                <span className="text-white font-bold text-xs">CA</span>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+            <div className="md:col-span-1">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-lg bg-[#c8a44e] flex items-center justify-center">
+                  <span className="text-[#1a3a5c] font-bold text-sm">CA</span>
+                </div>
+                <span className="font-bold text-lg">CACGM</span>
               </div>
-              <div>
-                <span className="font-bold text-sm text-slate-800">CACGM</span>
-                <span className="text-xs text-slate-400 ml-1.5">Church Management</span>
-              </div>
+              <p className="text-white/50 text-sm leading-relaxed">
+                Christ Apostolic Church of God Mission. Unifying church management across all branches.
+              </p>
             </div>
-            <nav className="flex items-center gap-8">
-              {navLinks.map((link) => (
-                <Link key={link.href} href={link.href} className="text-sm text-slate-500 hover:text-slate-700 transition-colors">
-                  {link.label}
-                </Link>
-              ))}
-            </nav>
-            <p className="text-xs text-slate-400">
-              &copy; {new Date().getFullYear()} Christ Apostolic Church of God Mission. All rights reserved.
+
+            <div>
+              <h4 className="font-semibold text-sm uppercase tracking-wider text-white/70 mb-4">Quick Links</h4>
+              <ul className="space-y-3">
+                {['Features', 'About', 'Find Branch', 'Dashboard'].map((link) => (
+                  <li key={link}>
+                    <Link href={link === 'Features' ? '#features' : link === 'About' ? '#about' : link === 'Find Branch' ? '/branches' : '/dashboard'} className="text-white/50 text-sm hover:text-white transition-colors">
+                      {link}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-semibold text-sm uppercase tracking-wider text-white/70 mb-4">Account</h4>
+              <ul className="space-y-3">
+                {['Sign In', 'Register', 'Giving', 'Attendance'].map((link) => (
+                  <li key={link}>
+                    <Link href={link === 'Sign In' ? '/login' : link === 'Register' ? '/register' : `/dashboard/${link.toLowerCase()}`} className="text-white/50 text-sm hover:text-white transition-colors">
+                      {link}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-semibold text-sm uppercase tracking-wider text-white/70 mb-4">Contact</h4>
+              <ul className="space-y-3 text-white/50 text-sm">
+                <li>12 Allen Avenue, Ikeja, Lagos</li>
+                <li>+234 801 234 5678</li>
+                <li>info@cacgm.org</li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="border-t border-white/10 mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+            <p className="text-white/40 text-sm">
+              &copy; {new Date().getFullYear()} CACGM. All rights reserved.
             </p>
+            <div className="flex items-center gap-6">
+              <Link href="/login" className="text-white/40 text-sm hover:text-white/70 transition-colors">Privacy</Link>
+              <Link href="/login" className="text-white/40 text-sm hover:text-white/70 transition-colors">Terms</Link>
+              <Link href="/login" className="text-white/40 text-sm hover:text-white/70 transition-colors">Contact</Link>
+            </div>
           </div>
         </div>
       </footer>
