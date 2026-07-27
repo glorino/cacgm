@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
+import { logAudit } from '@/lib/audit';
 
 export async function GET(req: Request) {
   try {
@@ -52,6 +53,8 @@ export async function POST(req: Request) {
       },
       include: { branch: true, department: true },
     });
+
+    logAudit({ action: 'CREATE', entity: 'User', entityId: member.id, newData: { name, email, phone, branchId, departmentId } });
 
     return NextResponse.json(member, { status: 201 });
   } catch (e: any) {

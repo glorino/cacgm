@@ -116,3 +116,19 @@ model Transaction {
   @@index([branchId])
   @@index([status])
 }
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  userId     String?
+  action     String
+  entity     String
+  entityId   String?
+  oldData    Json?
+  newData    Json?
+  ipAddress  String?
+  createdAt  DateTime @default(now())
+
+  @@index([userId])
+  @@index([entity])
+  @@index([createdAt])
+}
