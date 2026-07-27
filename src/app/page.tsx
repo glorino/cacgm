@@ -60,9 +60,9 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white overflow-x-hidden">
+    <div className="min-h-screen bg-[#f5f6fa] overflow-x-hidden">
       {/* Header */}
-      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white/95 backdrop-blur-xl shadow-sm border-b border-slate-100' : 'bg-transparent'}`}>
+      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-[#f5f6fa]/95 backdrop-blur-xl shadow-sm border-b border-slate-200/60' : 'bg-transparent'}`}>
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             <Link href="/" className="flex items-center gap-3 group">
@@ -129,7 +129,7 @@ export default function HomePage() {
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="md:hidden bg-white border-b border-slate-100 shadow-lg"
+            className="md:hidden bg-[#f5f6fa] border-b border-slate-200/60 shadow-lg"
           >
             <div className="px-6 py-5 space-y-2">
               {navLinks.map((link) => (
@@ -302,7 +302,7 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#f5f6fa] to-transparent" />
       </section>
 
       {/* Stats Bar */}
@@ -322,7 +322,7 @@ export default function HomePage() {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-36 bg-slate-50/50">
+      <section id="features" className="py-36 bg-[#f0f1f6]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-24">
             <motion.div initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
@@ -359,7 +359,7 @@ export default function HomePage() {
       </section>
 
       {/* About / Roles Section */}
-      <section id="about" className="py-36">
+      <section id="about" className="py-36 bg-[#f5f6fa]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-20 items-center">
             <div>
@@ -398,7 +398,7 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-36">
+      <section className="py-36 bg-[#f0f1f6]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
             className="relative bg-gradient-primary rounded-3xl overflow-hidden p-20 text-center">
@@ -430,7 +430,7 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-slate-100">
+      <footer className="border-t border-slate-200/60 bg-[#f5f6fa]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-14">
           <div className="flex flex-col md:flex-row items-center justify-between gap-8">
             <div className="flex items-center gap-3">
