@@ -34,6 +34,19 @@ export default function TransactionsPage() {
 
   const totalAmount = filtered.reduce((sum, tx) => tx.status === 'SUCCESSFUL' ? sum + tx.amount : sum, 0);
 
+  const exportCSV = () => {
+    const headers = ['Member', 'Branch', 'Amount', 'Type', 'Status', 'Date', 'Reference'];
+    const rows = filtered.map(tx => [tx.member, tx.branch, tx.amount, tx.type, tx.status, tx.date, tx.ref]);
+    const csv = [headers, ...rows].map(row => row.map(cell => `"${cell}"`).join(',')).join('\n');
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `cacgm-transactions-${new Date().toISOString().split('T')[0]}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <PageTransition>
       <Header
@@ -61,7 +74,7 @@ export default function TransactionsPage() {
           <option value="DONATION">Donation</option>
           <option value="PROJECT">Project</option>
         </select>
-        <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 text-slate-700 rounded-xl text-sm font-medium hover:bg-slate-200 transition-colors">
+        <button onClick={exportCSV} className="flex items-center gap-2 px-4 py-2 bg-slate-100 text-slate-700 rounded-xl text-sm font-medium hover:bg-slate-200 transition-colors">
           <Download size={16} />
           Export CSV
         </button>
