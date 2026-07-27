@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Calendar, Users, Plus, TrendingUp, TrendingDown, Minus } from 'lucide-react';
 import Header from '@/components/Header';
+import { useUser } from '@/hooks/useUser';
 import { MetricCard, AnimatedCard, PageTransition } from '@/components/AnimatedUI';
 import { SERVICE_TYPES } from '@/lib/constants';
 import {
@@ -34,6 +35,7 @@ const weeklyAttendance = [
 ];
 
 export default function AttendancePage() {
+  const { userRole, userName } = useUser();
   const [branchFilter, setBranchFilter] = useState('');
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
 
@@ -43,8 +45,8 @@ export default function AttendancePage() {
         title="Attendance"
         subtitle="Track and manage service attendance"
         showBranchFilter
-        userRole="GENERAL_OVERSEER"
-        userName="Pastor Adebayo Johnson"
+        userRole={userRole}
+        userName={userName}
         selectedBranch={branchFilter}
         onBranchChange={setBranchFilter}
       />

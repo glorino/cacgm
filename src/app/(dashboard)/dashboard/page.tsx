@@ -12,6 +12,7 @@ import {
   Calendar,
 } from 'lucide-react';
 import Header from '@/components/Header';
+import { useUser } from '@/hooks/useUser';
 import { MetricCard, AnimatedCard, SkeletonCard, PageTransition } from '@/components/AnimatedUI';
 import { formatCurrency } from '@/lib/utils';
 import {
@@ -60,6 +61,7 @@ const recentMembers = [
 ];
 
 export default function DashboardPage() {
+  const { userRole, userName } = useUser();
   const [branchFilter, setBranchFilter] = useState('');
 
   return (
@@ -68,8 +70,8 @@ export default function DashboardPage() {
         title="Dashboard"
         subtitle="Welcome back, here's your church overview"
         showBranchFilter
-        userRole="GENERAL_OVERSEER"
-        userName="Pastor Adebayo Johnson"
+        userRole={userRole}
+        userName={userName}
         selectedBranch={branchFilter}
         onBranchChange={setBranchFilter}
       />

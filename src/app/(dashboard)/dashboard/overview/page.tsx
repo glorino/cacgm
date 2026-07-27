@@ -13,6 +13,7 @@ import {
   Globe,
 } from 'lucide-react';
 import Header from '@/components/Header';
+import { useUser } from '@/hooks/useUser';
 import { MetricCard, AnimatedCard, PageTransition } from '@/components/AnimatedUI';
 import { formatCurrency } from '@/lib/utils';
 import { BRANCHES_DATA } from '@/lib/constants';
@@ -69,6 +70,7 @@ const topGivers = [
 ];
 
 export default function OverviewPage() {
+  const { userRole, userName } = useUser();
   const [branchFilter, setBranchFilter] = useState('');
 
   return (
@@ -77,8 +79,8 @@ export default function OverviewPage() {
         title="Overview"
         subtitle="Comprehensive analytics across all branches"
         showBranchFilter
-        userRole="GENERAL_OVERSEER"
-        userName="Pastor Adebayo Johnson"
+        userRole={userRole}
+        userName={userName}
         selectedBranch={branchFilter}
         onBranchChange={setBranchFilter}
       />

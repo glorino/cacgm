@@ -1,11 +1,7 @@
 import 'dotenv/config';
 import { PrismaClient } from '../src/generated/prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
-import { createHash } from 'crypto';
-
-function hashPassword(password: string): string {
-  return createHash('sha256').update(password).digest('hex');
-}
+import bcrypt from 'bcryptjs';
 
 const adapter = new PrismaPg({
   connectionString: process.env.DATABASE_URL!,
@@ -15,7 +11,6 @@ const prisma = new PrismaClient({ adapter });
 async function main() {
   console.log('Seeding database...');
 
-  // Create branches
   const branches = await Promise.all([
     prisma.branch.upsert({
       where: { id: 'branch-1' },
@@ -99,7 +94,6 @@ async function main() {
 
   console.log(`Created ${branches.length} branches`);
 
-  // Create departments for each branch
   const deptNames = [
     "Men's Fellowship",
     "Women's Ministry",
@@ -129,8 +123,7 @@ async function main() {
 
   console.log('Created departments for all branches');
 
-  // Create admin users
-  const password = hashPassword('password123');
+  const password = await bcrypt.hash('password123', 12);
 
   const adminUsers = [
     { name: 'Pastor Adebayo Johnson', email: 'overseer@cacgm.org', role: 'GENERAL_OVERSEER' as const, branchId: 'branch-1' },
@@ -144,14 +137,13 @@ async function main() {
   for (const user of adminUsers) {
     await prisma.user.upsert({
       where: { email: user.email },
-      update: {},
+      update: { password },
       create: { ...user, password },
     });
   }
 
-  console.log('Created admin users');
+  console.log('Created admin users with bcrypt passwords');
 
-  // Seed attendance data
   const serviceTypes = ['First Service', 'Second Service', 'Youth Service', 'Midweek Service'];
   const today = new Date();
 
@@ -190,7 +182,6 @@ async function main() {
 
   console.log('Seeded attendance data');
 
-  // Seed transactions
   const txTypes = ['TITHE', 'OFFERING', 'SEED', 'DONATION'] as const;
   const allUsers = await prisma.user.findMany();
 

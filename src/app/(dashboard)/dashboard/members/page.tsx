@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Plus, Filter, Download, MoreVertical, Edit, Trash2, Eye } from 'lucide-react';
 import Header from '@/components/Header';
+import { useUser } from '@/hooks/useUser';
 import { AnimatedCard, PageTransition } from '@/components/AnimatedUI';
 
 const membersData = [
@@ -18,6 +19,7 @@ const membersData = [
 ];
 
 export default function MembersPage() {
+  const { userRole, userName } = useUser();
   const [search, setSearch] = useState('');
   const [filterDept, setFilterDept] = useState('');
   const [branchFilter, setBranchFilter] = useState('');
@@ -36,8 +38,8 @@ export default function MembersPage() {
         title="Members"
         subtitle={`Managing ${membersData.length} registered members`}
         showBranchFilter
-        userRole="GENERAL_OVERSEER"
-        userName="Pastor Adebayo Johnson"
+        userRole={userRole}
+        userName={userName}
         selectedBranch={branchFilter}
         onBranchChange={setBranchFilter}
       />

@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { signOut } from 'next-auth/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   LayoutDashboard,
@@ -15,14 +16,12 @@ import {
   ChevronRight,
   LogOut,
   Church,
-  Calendar,
   Menu,
   X,
   Shield,
   TrendingUp,
   UserCheck,
   Landmark,
-  Home,
 } from 'lucide-react';
 import { cn, getInitials, getRoleLabel } from '@/lib/utils';
 
@@ -55,10 +54,11 @@ interface SidebarProps {
   branchName?: string;
 }
 
-export default function Sidebar({ userRole = 'MEMBER', userName = 'User', branchName = '' }: SidebarProps) {
+  export default function Sidebar({ userRole = 'MEMBER', userName = 'User', branchName = '' }: SidebarProps) {
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
 
   const filteredNav = navItems.filter(
     (item) => !item.roles || item.roles.includes(userRole)
@@ -133,7 +133,7 @@ export default function Sidebar({ userRole = 'MEMBER', userName = 'User', branch
         collapsed && 'px-2'
       )}>
         <div className={cn(
-          'flex items-center gap-3 px-3 py-2 rounded-xl bg-slate-50',
+          'flex items-center gap-3 px-3 py-2 rounded-xl bg-slate-50 mb-2',
           collapsed && 'justify-center px-2'
         )}>
           <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
@@ -148,6 +148,16 @@ export default function Sidebar({ userRole = 'MEMBER', userName = 'User', branch
             </div>
           )}
         </div>
+        <button
+          onClick={() => signOut({ callbackUrl: '/login' })}
+          className={cn(
+            'flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 text-red-500 hover:bg-red-50',
+            collapsed && 'justify-center px-2'
+          )}
+        >
+          <LogOut size={20} className="flex-shrink-0" />
+          {!collapsed && <span>Sign Out</span>}
+        </button>
       </div>
     </div>
   );

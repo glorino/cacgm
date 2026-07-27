@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Heart, Percent, Sprout, HandHeart, Building, CheckCircle, Clock, AlertCircle, CreditCard } from 'lucide-react';
 import Header from '@/components/Header';
+import { useUser } from '@/hooks/useUser';
 import { AnimatedCard, PageTransition } from '@/components/AnimatedUI';
 import { PRESET_AMOUNTS, GIVING_TYPES } from '@/lib/constants';
 import { formatCurrency, generateTxRef } from '@/lib/utils';
@@ -25,6 +26,7 @@ const iconMap: Record<string, React.ReactNode> = {
 };
 
 export default function GivingPage() {
+  const { userRole, userName } = useUser();
   const [branchFilter, setBranchFilter] = useState('');
   const [selectedType, setSelectedType] = useState('TITHE');
   const [customAmount, setCustomAmount] = useState('');
@@ -53,8 +55,8 @@ export default function GivingPage() {
         title="Giving Hub"
         subtitle="Give securely online via Flutterwave"
         showBranchFilter
-        userRole="GENERAL_OVERSEER"
-        userName="Pastor Adebayo Johnson"
+        userRole={userRole}
+        userName={userName}
         selectedBranch={branchFilter}
         onBranchChange={setBranchFilter}
       />

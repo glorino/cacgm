@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Landmark, Filter, CheckCircle, Clock, XCircle, Download, Eye } from 'lucide-react';
 import Header from '@/components/Header';
+import { useUser } from '@/hooks/useUser';
 import { AnimatedCard, PageTransition } from '@/components/AnimatedUI';
 import { formatCurrency, formatDate, getStatusColor } from '@/lib/utils';
 
@@ -19,6 +20,7 @@ const transactions = [
 ];
 
 export default function TransactionsPage() {
+  const { userRole, userName } = useUser();
   const [branchFilter, setBranchFilter] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
   const [typeFilter, setTypeFilter] = useState('');
@@ -38,8 +40,8 @@ export default function TransactionsPage() {
         title="Transactions"
         subtitle={`Managing ${filtered.length} transactions · ${formatCurrency(totalAmount)} total`}
         showBranchFilter
-        userRole="GENERAL_OVERSEER"
-        userName="Pastor Adebayo Johnson"
+        userRole={userRole}
+        userName={userName}
         selectedBranch={branchFilter}
         onBranchChange={setBranchFilter}
       />

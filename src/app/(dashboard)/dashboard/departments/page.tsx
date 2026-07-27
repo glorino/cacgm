@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { Church, Users, ArrowUpRight, TrendingUp } from 'lucide-react';
 import Header from '@/components/Header';
+import { useUser } from '@/hooks/useUser';
 import { AnimatedCard, PageTransition, StaggerContainer, StaggerItem } from '@/components/AnimatedUI';
 import { formatCurrency } from '@/lib/utils';
 
@@ -18,13 +19,14 @@ const departments = [
 ];
 
 export default function DepartmentsPage() {
+  const { userRole, userName } = useUser();
   return (
     <PageTransition>
       <Header
         title="Departments"
         subtitle="Manage all church departments and ministries"
-        userRole="GENERAL_OVERSEER"
-        userName="Pastor Adebayo Johnson"
+        userRole={userRole}
+        userName={userName}
       />
 
       <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

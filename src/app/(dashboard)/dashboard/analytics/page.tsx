@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Header from '@/components/Header';
+import { useUser } from '@/hooks/useUser';
 import { AnimatedCard, MetricCard, PageTransition } from '@/components/AnimatedUI';
 import { formatCurrency } from '@/lib/utils';
 import {
@@ -57,6 +58,7 @@ const attendanceByService = [
 ];
 
 export default function AnalyticsPage() {
+  const { userRole, userName } = useUser();
   const [branchFilter, setBranchFilter] = useState('');
 
   return (
@@ -65,8 +67,8 @@ export default function AnalyticsPage() {
         title="Analytics"
         subtitle="Deep insights and performance metrics"
         showBranchFilter
-        userRole="GENERAL_OVERSEER"
-        userName="Pastor Adebayo Johnson"
+        userRole={userRole}
+        userName={userName}
         selectedBranch={branchFilter}
         onBranchChange={setBranchFilter}
       />

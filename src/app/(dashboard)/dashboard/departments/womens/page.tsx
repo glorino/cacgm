@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Shield, Users, Calendar, TrendingUp, Plus } from 'lucide-react';
 import Header from '@/components/Header';
+import { useUser } from '@/hooks/useUser';
 import { MetricCard, AnimatedCard, PageTransition } from '@/components/AnimatedUI';
 import { formatCurrency } from '@/lib/utils';
 
@@ -23,6 +24,7 @@ const upcomingEvents = [
 ];
 
 export default function WomensMinistryPage() {
+  const { userRole, userName } = useUser();
   const [activeTab, setActiveTab] = useState<'overview' | 'members' | 'events'>('overview');
 
   return (
@@ -31,8 +33,8 @@ export default function WomensMinistryPage() {
         title="Women's Ministry"
         subtitle="Department portal for Women's Ministry"
         showBack
-        userRole="GENERAL_OVERSEER"
-        userName="Pastor Adebayo Johnson"
+        userRole={userRole}
+        userName={userName}
       />
 
       <div className="flex gap-2 mb-6">

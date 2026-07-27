@@ -3,16 +3,18 @@
 import { motion } from 'framer-motion';
 import { Settings, User, Bell, Shield, Palette, Database } from 'lucide-react';
 import Header from '@/components/Header';
+import { useUser } from '@/hooks/useUser';
 import { AnimatedCard, PageTransition } from '@/components/AnimatedUI';
 
 export default function SettingsPage() {
+  const { userRole, userName } = useUser();
   return (
     <PageTransition>
       <Header
         title="Settings"
         subtitle="Manage your account and application preferences"
-        userRole="GENERAL_OVERSEER"
-        userName="Pastor Adebayo Johnson"
+        userRole={userRole}
+        userName={userName}
       />
 
       <div className="max-w-3xl space-y-6">
