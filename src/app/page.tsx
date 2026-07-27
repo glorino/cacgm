@@ -75,15 +75,15 @@ export default function HomePage() {
               </div>
             </Link>
 
-            <nav className="hidden md:flex items-center gap-2">
+            <nav className="hidden md:flex items-center gap-3">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all ${
+                  className={`px-5 py-2.5 rounded-lg text-sm font-medium transition-all ${
                     scrolled
-                      ? 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-                      : 'text-white/80 hover:text-white hover:bg-white/10'
+                      ? 'text-slate-600 hover:text-slate-900 hover:bg-white'
+                      : 'text-white bg-white/10 hover:bg-white/20'
                   }`}
                 >
                   {link.label}
@@ -91,7 +91,7 @@ export default function HomePage() {
               ))}
             </nav>
 
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-8">
               <Link
                 href="/login"
                 className={`hidden sm:flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium transition-all ${
@@ -306,7 +306,7 @@ export default function HomePage() {
       </section>
 
       {/* Stats Bar */}
-      <section className="relative -mt-8 z-10 mb-32">
+      <section className="relative -mt-8 z-10 mb-48">
         <div className="max-w-5xl mx-auto px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
             className="bg-white rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 p-10 grid grid-cols-2 lg:grid-cols-4 gap-10">
@@ -322,9 +322,9 @@ export default function HomePage() {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-36 bg-[#f0f1f6]">
+      <section id="features" className="py-44 bg-[#f0f1f6]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-24">
+          <div className="text-center max-w-2xl mx-auto mb-28">
             <motion.div initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
               className="inline-flex items-center gap-2 px-4 py-2 bg-primary/5 border border-primary/10 rounded-full text-primary text-xs font-semibold mb-6 uppercase tracking-wider">
               <Zap size={12} />
@@ -359,7 +359,7 @@ export default function HomePage() {
       </section>
 
       {/* About / Roles Section */}
-      <section id="about" className="py-36 bg-[#f5f6fa]">
+      <section id="about" className="py-44 bg-[#f5f6fa]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-20 items-center">
             <div>
@@ -398,7 +398,7 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-36 bg-[#f0f1f6]">
+      <section className="py-44 bg-[#f0f1f6]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
             className="relative bg-gradient-primary rounded-3xl overflow-hidden p-20 text-center">
@@ -431,7 +431,7 @@ export default function HomePage() {
 
       {/* Footer */}
       <footer className="border-t border-slate-200/60 bg-[#f5f6fa]">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-14">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
           <div className="flex flex-col md:flex-row items-center justify-between gap-8">
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-xl bg-gradient-primary flex items-center justify-center shadow-lg shadow-primary/20">
