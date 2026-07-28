@@ -2,82 +2,147 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ArrowRight, MapPin, Users, Heart, Calendar, Clock } from 'lucide-react';
+import { MapPin, Users, Church, Globe, ArrowRight, ChevronRight } from 'lucide-react';
+
+const experienceCards = [
+  { title: 'Find a Congregation', desc: 'We gather together for services each weekend', link: 'Locations', href: '/locations' },
+  { title: 'Youth Ministry', desc: 'For young people ages 13-18', link: 'Learn More', href: '/ministries' },
+  { title: 'Hosted Here', desc: 'Partner churches under CACGM', link: 'Learn More', href: '/about' },
+  { title: 'Online', desc: 'Experience CACGM from anywhere', link: 'Learn More', href: '/dashboard' },
+];
+
+const loopSteps = [
+  { title: 'Follow Jesus', desc: 'Begin your faith journey with Christ and commit your life to Him.', color: '#3364A0' },
+  { title: 'Grow Together', desc: 'Connect in community through small groups and fellowship.', color: '#9EC73F' },
+  { title: 'Serve One Another', desc: 'Use your unique gifts to serve the church and bless others.', color: '#39A1B1' },
+  { title: 'Change The World', desc: 'Impact lives through outreach, missions, and acts of love.', color: '#E46C63' },
+];
+
+const stories = [
+  { name: 'Sarah', quote: 'CACGM changed my life. I found purpose and community here.', tag: 'Testimony' },
+  { name: 'David', quote: 'God transformed my family through the ministry at this church.', tag: 'Testimony' },
+  { name: 'Grace', quote: 'I went from being lost to leading a department. Only God!', tag: 'Testimony' },
+];
 
 export default function HomePage() {
   return (
     <>
-      {/* HERO */}
-      <section className="relative min-h-[80vh] flex items-center" style={{ background: 'linear-gradient(135deg, #1a3a5c 0%, #0f2640 100%)' }}>
-        <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
-        <div className="relative max-w-6xl mx-auto px-5 lg:px-8 py-28 w-full">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium mb-8" style={{ background: 'rgba(200,164,78,0.15)', color: '#c8a44e' }}>
-              Christ Apostolic Church of God Mission
-            </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.1] tracking-tight">
-              Church Management<br />
-              <span style={{ color: '#c8a44e' }}>Made Simple</span>
-            </h1>
-            <p className="text-lg mt-6 max-w-lg leading-relaxed" style={{ color: 'rgba(255,255,255,0.5)' }}>
-              Manage members, track attendance, process giving, and connect all CACGM branches from one place.
-            </p>
-            <div className="flex flex-wrap items-center gap-3 mt-10">
-              <Link href="/dashboard" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-2xl text-sm font-semibold transition-all" style={{ background: 'white', color: '#1a3a5c' }}>
-                Open Dashboard <ArrowRight size={15} />
-              </Link>
-              <Link href="/about" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-2xl text-sm font-medium transition-all" style={{ background: 'rgba(255,255,255,0.1)', color: 'white', border: '1px solid rgba(255,255,255,0.15)' }}>
-                Learn More
-              </Link>
-            </div>
-          </motion.div>
+      {/* ===== HERO ===== */}
+      <section className="relative overflow-hidden" style={{ background: '#000' }}>
+        {/* Background Image */}
+        <div className="absolute inset-0">
+          <img
+            src="https://images.unsplash.com/photo-1438032005730-c779502df39b?w=2000&q=80"
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{ opacity: 0.75, top: '50%', left: '50%', transform: 'translate(-50%, -50%) scale(1.01)' }}
+          />
+          {/* Top gradient */}
+          <div className="absolute top-0 left-0 right-0 h-[200px]" style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0))' }} />
+          {/* Bottom gradient with cards */}
+          <div className="absolute bottom-0 left-0 right-0" style={{ height: '100%', background: 'linear-gradient(180deg, rgba(0,0,0,0) 18.38%, rgba(0,0,0,0.6) 63.02%)', zIndex: 5 }} />
+          <div className="absolute bottom-0 left-0 right-0" style={{ height: 350, opacity: 0.8, background: 'linear-gradient(180deg, rgba(0,0,0,0.0001) 0%, #000000 100%)', zIndex: 5 }} />
         </div>
-      </section>
 
-      {/* STATS */}
-      <section className="relative -mt-8 z-10 mb-20">
-        <div className="max-w-4xl mx-auto px-5 lg:px-8">
-          <div className="rounded-3xl px-8 py-8 grid grid-cols-2 lg:grid-cols-4 gap-6" style={{ background: 'white', boxShadow: '0 4px 24px rgba(0,0,0,0.06)' }}>
-            {[
-              { value: '6+', label: 'Branches' },
-              { value: '2,847', label: 'Members' },
-              { value: '₦35.5M', label: 'Year-to-Date Giving' },
-              { value: '8', label: 'Departments' },
-            ].map((s) => (
-              <div key={s.label} className="text-center">
-                <p className="text-2xl font-bold" style={{ color: '#1a3a5c' }}>{s.value}</p>
-                <p className="text-xs mt-1" style={{ color: '#8a8580' }}>{s.label}</p>
-              </div>
+        {/* Hero Content */}
+        <div className="relative z-10 text-center max-w-[1280px] mx-auto px-5 pt-[26vh] pb-[50px]">
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-white leading-[1.3] font-['Arno_Pro',serif] font-normal"
+            style={{ fontSize: 'clamp(38px, 8vw, 80px)', marginBottom: 50 }}
+          >
+            Inspiring people to follow Jesus and fearlessly change the world.
+          </motion.h1>
+        </div>
+
+        {/* Experience Cards */}
+        <div className="relative z-10 max-w-[1400px] mx-auto px-5 pb-8">
+          <h2 className="text-white text-center font-['Arno_Pro',serif] font-normal mb-[45px]" style={{ fontSize: 'clamp(24px, 3vw, 40px)' }}>
+            Ways to experience CACGM
+          </h2>
+          <div className="flex flex-col md:flex-row gap-[15px]">
+            {experienceCards.map((card, i) => (
+              <motion.div
+                key={card.title}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 + i * 0.1 }}
+                className="flex-1 rounded-[15px] p-[30px] flex flex-col text-left"
+                style={{ background: 'hsla(0,0%,100%,0.92)', backdropFilter: 'blur(20px)' }}
+              >
+                <h3 className="text-[20px] font-['Gotham',sans-serif] font-medium text-[#222] mb-2">{card.title}</h3>
+                <p className="text-[15px] text-[#69757B] mb-[30px] leading-relaxed">{card.desc}</p>
+                <div className="mt-auto">
+                  <Link
+                    href={card.href}
+                    className="inline-block min-w-[170px] text-center px-[22px] py-[14px] text-[13px] font-bold uppercase tracking-[1px] rounded-[3px] transition-all duration-200"
+                    style={{ border: '1px solid rgba(0,0,0,0.15)', color: '#222' }}
+                  >
+                    {card.link}
+                  </Link>
+                </div>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ABOUT PREVIEW */}
-      <section className="py-20 lg:py-28">
-        <div className="max-w-6xl mx-auto px-5 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-14 items-center">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-wider mb-3" style={{ color: '#c8a44e' }}>About CACGM</p>
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight" style={{ color: '#1a1a1a' }}>A Mission Rooted in Faith</h2>
-              <p className="mt-4 leading-relaxed" style={{ color: '#8a8580' }}>
-                Christ Apostolic Church of God Mission has been a beacon of hope and faith. Our management platform connects every branch under one unified system.
-              </p>
-              <Link href="/about" className="inline-flex items-center gap-1.5 font-semibold text-sm mt-6 hover:underline" style={{ color: '#1a3a5c' }}>
-                Read Our Story <ArrowRight size={14} />
-              </Link>
+      {/* ===== THE LOOP (Get Involved) ===== */}
+      <section className="py-[100px]">
+        <div className="max-w-[1400px] mx-auto px-5 md:px-8 lg:px-[30px] flex flex-col lg:flex-row items-center gap-16">
+          {/* Loop Circle Graphic */}
+          <div className="lg:order-1 w-full lg:w-[67%] flex justify-center">
+            <div className="relative w-[350px] h-[350px] md:w-[450px] md:h-[450px] lg:w-[500px] lg:h-[500px]">
+              {/* Dashed circle border */}
+              <div className="absolute inset-0 rounded-full" style={{ border: '1px dashed hsl(188,51%,66%)' }} />
+              {/* Center circle */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[55%] h-[55%] rounded-full bg-white flex items-center justify-center z-10 shadow-lg">
+                <div className="text-center">
+                  <p className="text-[11px] font-bold uppercase tracking-[2px] text-[#69757B] mb-1">The</p>
+                  <h2 className="font-['Arno_Pro',serif] text-[42px] md:text-[50px] leading-none text-[#222]">Loop</h2>
+                </div>
+              </div>
+              {/* 4 colored dots */}
+              {loopSteps.map((step, i) => {
+                const angle = (i * 90 - 90) * (Math.PI / 180);
+                const radius = 42;
+                const x = 50 + radius * Math.cos(angle);
+                const y = 50 + radius * Math.sin(angle);
+                return (
+                  <div
+                    key={step.title}
+                    className="absolute w-4 h-4 rounded-full z-20"
+                    style={{
+                      background: step.color,
+                      left: `${x}%`,
+                      top: `${y}%`,
+                      transform: 'translate(-50%, -50%)',
+                    }}
+                  />
+                );
+              })}
             </div>
-            <div className="grid grid-cols-2 gap-4">
-              {[
-                { icon: <Users size={20} />, title: 'Member Management', desc: 'Track members across branches' },
-                { icon: <MapPin size={20} />, title: 'Branch Locator', desc: 'Find the nearest congregation' },
-                { icon: <Heart size={20} />, title: 'Online Giving', desc: 'Secure giving with receipts' },
-                { icon: <Calendar size={20} />, title: 'Attendance', desc: 'Record service attendance' },
-              ].map((f) => (
-                <div key={f.title} className="p-5 rounded-2xl" style={{ background: '#f5f3ef' }}>
-                  <div className="w-9 h-9 rounded-xl flex items-center justify-center mb-3" style={{ background: 'rgba(26,58,92,0.06)', color: '#1a3a5c' }}>{f.icon}</div>
-                  <h3 className="font-semibold text-sm" style={{ color: '#1a1a1a' }}>{f.title}</h3>
-                  <p className="text-xs mt-1" style={{ color: '#8a8580' }}>{f.desc}</p>
+          </div>
+
+          {/* Text Content */}
+          <div className="lg:order-2 lg:w-[40%]">
+            <p className="text-[12px] font-bold uppercase tracking-[2px] text-[#E46C63] mb-3">Get Involved</p>
+            <h2 className="font-['Arno_Pro',serif] leading-[1.1] mb-[30px] md:mb-[50px]" style={{ fontSize: 'clamp(30px, 4vw, 47px)' }}>
+              Experience The Loop
+            </h2>
+            <p className="text-[18px] text-[#69757B] leading-[1.8] mb-8">
+              At CACGM, we refer to the discipleship journey as the Transformational Loop. Become more like Jesus as you grow in faith.
+            </p>
+            <div className="space-y-4">
+              {loopSteps.map((step) => (
+                <div key={step.title} className="flex items-start gap-3">
+                  <div className="w-3 h-3 rounded-full mt-1.5 flex-shrink-0" style={{ background: step.color }} />
+                  <div>
+                    <h4 className="font-bold text-[15px] text-[#222]">{step.title}</h4>
+                    <p className="text-[14px] text-[#69757B] mt-0.5">{step.desc}</p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -85,54 +150,61 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* BRANCHES PREVIEW */}
-      <section className="py-20 lg:py-28" style={{ background: '#f5f3ef' }}>
-        <div className="max-w-6xl mx-auto px-5 lg:px-8">
-          <div className="text-center mb-14">
-            <p className="text-xs font-semibold uppercase tracking-wider mb-3" style={{ color: '#c8a44e' }}>Our Locations</p>
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight" style={{ color: '#1a1a1a' }}>Find a Congregation</h2>
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {[
-              { name: 'Headquarters', addr: '12 Allen Avenue, Ikeja, Lagos', time: 'Sundays 8:00 & 10:30 AM' },
-              { name: 'Surulere', addr: '45 Bode Thomas Street, Surulere', time: 'Sundays 9:00 AM' },
-              { name: 'Yaba', addr: '78 Herbert Macaulay Way, Yaba', time: 'Sundays 9:00 AM' },
-              { name: 'Ikeja GRA', addr: '23 Oba Akran Avenue, Ikeja GRA', time: 'Sundays 9:00 AM' },
-              { name: 'Lekki', addr: '15 Admiralty Way, Lekki Phase 1', time: 'Sundays 9:00 AM' },
-              { name: 'Ikorodu', addr: '33 Benson Street, Ikorodu', time: 'Sundays 9:00 AM' },
-            ].map((b) => (
-              <div key={b.name} className="p-6 rounded-2xl transition-all hover:shadow-md" style={{ background: 'white' }}>
-                <div className="flex items-start gap-3.5">
-                  <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: 'rgba(26,58,92,0.06)', color: '#1a3a5c' }}><MapPin size={15} /></div>
-                  <div>
-                    <h3 className="font-semibold text-sm" style={{ color: '#1a1a1a' }}>{b.name}</h3>
-                    <p className="text-xs mt-1" style={{ color: '#8a8580' }}>{b.addr}</p>
-                    <p className="text-xs font-medium mt-2 flex items-center gap-1" style={{ color: '#1a3a5c' }}><Clock size={11} /> {b.time}</p>
+      {/* ===== STORIES ===== */}
+      <section className="py-[75px] lg:py-[85px] mt-[80px]" style={{ background: '#3364A0' }}>
+        <div className="max-w-[1400px] mx-auto px-5 md:px-8 lg:px-[30px]">
+          <h2 className="text-white font-['Arno_Pro',serif] text-center mb-12" style={{ fontSize: 'clamp(28px, 4vw, 42px)' }}>Our Stories</h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Featured story */}
+            <div className="md:col-span-1 bg-white rounded-[15px] overflow-hidden">
+              <div className="relative aspect-[4/3] bg-gradient-to-br from-slate-200 to-slate-300">
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-14 h-14 rounded-full bg-white/90 flex items-center justify-center shadow-lg">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#E46C63"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                   </div>
+                </div>
+              </div>
+              <div className="p-6">
+                <p className="text-[11px] font-bold uppercase tracking-[1px] text-[#E46C63] mb-2">{stories[0].tag}</p>
+                <h3 className="font-['Arno_Pro',serif] text-[24px] text-[#222] leading-[1.2] mb-2">{stories[0].name}&apos;s Story</h3>
+                <p className="text-[15px] text-[#69757B] leading-relaxed">{stories[0].quote}</p>
+              </div>
+            </div>
+
+            {/* Smaller stories */}
+            {stories.slice(1).map((story) => (
+              <div key={story.name} className="bg-white rounded-[15px] overflow-hidden">
+                <div className="relative aspect-[16/9] bg-gradient-to-br from-slate-200 to-slate-300">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-12 h-12 rounded-full bg-white/90 flex items-center justify-center shadow-lg">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="#E46C63"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                    </div>
+                  </div>
+                </div>
+                <div className="p-5">
+                  <p className="text-[11px] font-bold uppercase tracking-[1px] text-[#E46C63] mb-2">{story.tag}</p>
+                  <h3 className="font-['Gotham',sans-serif] font-medium text-[20px] text-[#222] leading-[1.4] mb-2">{story.name}&apos;s Story</h3>
+                  <p className="text-[14px] text-[#69757B] leading-relaxed">{story.quote}</p>
                 </div>
               </div>
             ))}
           </div>
-          <div className="text-center mt-10">
-            <Link href="/locations" className="inline-flex items-center gap-1.5 font-semibold text-sm hover:underline" style={{ color: '#1a3a5c' }}>
-              View All Locations <ArrowRight size={14} />
-            </Link>
-          </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-20 lg:py-28">
-        <div className="max-w-2xl mx-auto px-5 lg:px-8 text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight" style={{ color: '#1a1a1a' }}>Ready to Get Started?</h2>
-          <p className="mt-3 leading-relaxed" style={{ color: '#8a8580' }}>
+      {/* ===== CTA BANNER ===== */}
+      <section className="py-[100px] text-center">
+        <div className="max-w-[800px] mx-auto px-5">
+          <h2 className="font-['Arno_Pro',serif] text-[36px] md:text-[48px] text-[#222] mb-4">Ready to Get Started?</h2>
+          <p className="text-[18px] text-[#69757B] leading-relaxed mb-8">
             Join CACGM branches already using our platform to streamline their operations.
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-3 mt-8">
-            <Link href="/dashboard" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-2xl text-sm font-semibold" style={{ background: '#1a3a5c', color: 'white' }}>
-              Open Dashboard <ArrowRight size={15} />
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <Link href="/dashboard" className="inline-block px-[30px] py-[19px] text-[14px] font-bold uppercase tracking-[1px] rounded-[3px] transition-all duration-200" style={{ background: '#E46C63', color: '#fff' }}>
+              Open Dashboard
             </Link>
-            <Link href="/contact" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-2xl text-sm font-medium" style={{ background: '#f5f3ef', color: '#4a4540' }}>
+            <Link href="/contact" className="inline-block px-[30px] py-[19px] text-[14px] font-bold uppercase tracking-[1px] rounded-[3px] transition-all duration-200" style={{ background: '#39A1B1', color: '#fff' }}>
               Contact Us
             </Link>
           </div>

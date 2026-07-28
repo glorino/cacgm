@@ -3,40 +3,41 @@
 import { motion } from 'framer-motion';
 import { Users, Heart, Globe, Church, Music, HandHeart } from 'lucide-react';
 import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
 
 const departments = [
-  { name: "Men's Ministry", desc: 'Building men of integrity, faith, and leadership through fellowship.', icon: <Users size={22} />, bg: 'rgba(26,58,92,0.06)', color: '#1a3a5c' },
-  { name: "Women's Ministry", desc: 'Empowering women to grow in faith, build community, and serve.', icon: <Heart size={22} />, bg: 'rgba(200,164,78,0.1)', color: '#c8a44e' },
-  { name: 'Youth Ministry', desc: 'Dynamic programs for young people to discover their purpose.', icon: <Globe size={22} />, bg: 'rgba(72,160,120,0.08)', color: '#48a078' },
-  { name: "Children's Ministry", desc: 'Nurturing the next generation with age-appropriate activities.', icon: <Church size={22} />, bg: 'rgba(180,120,60,0.08)', color: '#b4783c' },
-  { name: 'Worship Ministry', desc: 'Leading the congregation in heartfelt worship and music.', icon: <Music size={22} />, bg: 'rgba(130,100,180,0.08)', color: '#8264b4' },
-  { name: 'Outreach Ministry', desc: 'Serving the community through evangelism and charity.', icon: <HandHeart size={22} />, bg: 'rgba(180,80,80,0.08)', color: '#b45050' },
+  { name: "Men's Ministry", desc: 'Building men of integrity, faith, and leadership through fellowship.', icon: <Users size={22} />, color: '#3364A0' },
+  { name: "Women's Ministry", desc: 'Empowering women to grow in faith, build community, and serve.', icon: <Heart size={22} />, color: '#E46C63' },
+  { name: 'Youth Ministry', desc: 'Dynamic programs for young people to discover their purpose.', icon: <Globe size={22} />, color: '#39A1B1' },
+  { name: "Children's Ministry", desc: 'Nurturing the next generation with age-appropriate activities.', icon: <Church size={22} />, color: '#9EC73F' },
+  { name: 'Worship Ministry', desc: 'Leading the congregation in heartfelt worship and music.', icon: <Music size={22} />, color: '#1A374F' },
+  { name: 'Outreach Ministry', desc: 'Serving the community through evangelism and charity.', icon: <HandHeart size={22} />, color: '#E46C63' },
 ];
 
 export default function MinistriesPage() {
   return (
     <>
-      <section className="pt-32 pb-16" style={{ background: 'linear-gradient(135deg, #1a3a5c 0%, #0f2640 100%)' }}>
-        <div className="max-w-6xl mx-auto px-5 lg:px-8">
-          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-xs font-medium uppercase tracking-wider mb-3" style={{ color: 'rgba(255,255,255,0.4)' }}>Ministries</motion.p>
-          <motion.h1 initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="text-4xl sm:text-5xl font-bold text-white tracking-tight">Our Ministries</motion.h1>
-          <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-lg mt-4 max-w-2xl leading-relaxed" style={{ color: 'rgba(255,255,255,0.5)' }}>
+      <section className="relative pt-[160px] pb-[100px] text-center" style={{ background: '#1A374F' }}>
+        <div className="max-w-[992px] mx-auto px-5">
+          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-[12px] font-bold uppercase tracking-[2px] text-[#E46C63] mb-3">Ministries</motion.p>
+          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="text-white font-['Arno_Pro',serif] leading-[1.3] mb-4" style={{ fontSize: 'clamp(36px, 6vw, 64px)' }}>
+            Our Ministries
+          </motion.h1>
+          <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-white/60 text-[18px] leading-[1.8] max-w-[700px] mx-auto">
             Every ministry is designed to help you grow in faith, connect with others, and serve.
           </motion.p>
         </div>
       </section>
 
-      <section className="py-20 lg:py-28">
-        <div className="max-w-6xl mx-auto px-5 lg:px-8">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <section className="py-[100px]">
+        <div className="max-w-[1400px] mx-auto px-5 md:px-8 lg:px-[30px]">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-[30px]">
             {departments.map((dept, i) => (
-              <motion.div key={dept.name} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }} className="p-7 rounded-3xl transition-all hover:shadow-lg" style={{ background: 'white', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
-                <div className="w-11 h-11 rounded-2xl flex items-center justify-center mb-5" style={{ background: dept.bg, color: dept.color }}>{dept.icon}</div>
-                <h3 className="font-bold" style={{ color: '#1a1a1a' }}>{dept.name}</h3>
-                <p className="text-sm mt-2 leading-relaxed" style={{ color: '#8a8580' }}>{dept.desc}</p>
-                <Link href="/dashboard/departments" className="inline-flex items-center gap-1 font-semibold text-sm mt-4 hover:underline" style={{ color: '#1a3a5c' }}>
-                  Learn More <ArrowRight size={13} />
+              <motion.div key={dept.name} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }} className="p-[30px] bg-white rounded-[15px] border border-gray-100 hover:shadow-[0_5px_20px_rgba(0,0,0,0.08)] transition-all duration-300">
+                <div className="w-[50px] h-[50px] rounded-[3px] flex items-center justify-center mb-5" style={{ background: `${dept.color}15`, color: dept.color }}>{dept.icon}</div>
+                <h3 className="text-[20px] font-['Gotham',sans-serif] font-medium text-[#222] mb-3">{dept.name}</h3>
+                <p className="text-[15px] text-[#69757B] leading-relaxed mb-5">{dept.desc}</p>
+                <Link href="/dashboard/departments" className="text-[13px] font-bold uppercase tracking-[1px] hover:underline" style={{ color: '#E46C63' }}>
+                  Learn More
                 </Link>
               </motion.div>
             ))}
@@ -44,12 +45,12 @@ export default function MinistriesPage() {
         </div>
       </section>
 
-      <section className="py-20 lg:py-28" style={{ background: 'linear-gradient(135deg, #1a3a5c 0%, #0f2640 100%)' }}>
-        <div className="max-w-2xl mx-auto px-5 lg:px-8 text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">Get Involved</h2>
-          <p className="mt-3 leading-relaxed" style={{ color: 'rgba(255,255,255,0.5)' }}>Ready to join a ministry? Contact us to find the right fit.</p>
-          <Link href="/contact" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-2xl text-sm font-semibold mt-8" style={{ background: 'white', color: '#1a3a5c' }}>
-            Contact Us <ArrowRight size={15} />
+      <section className="py-[100px] text-center" style={{ background: '#1A374F' }}>
+        <div className="max-w-[800px] mx-auto px-5">
+          <h2 className="text-white font-['Arno_Pro',serif] text-[36px] md:text-[48px] mb-4">Get Involved</h2>
+          <p className="text-white/60 text-[18px] leading-relaxed mb-8">Ready to join a ministry? Contact us to find the right fit.</p>
+          <Link href="/contact" className="inline-block px-[30px] py-[19px] text-[14px] font-bold uppercase tracking-[1px] rounded-[3px] transition-all duration-200" style={{ background: '#E46C63', color: '#fff' }}>
+            Contact Us
           </Link>
         </div>
       </section>
