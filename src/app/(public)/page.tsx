@@ -29,37 +29,33 @@ export default function HomePage() {
     <>
       {/* ===== HERO ===== */}
       <section className="relative overflow-hidden" style={{ background: '#000' }}>
-        {/* Background Image */}
         <div className="absolute inset-0">
           <img
             src="https://images.unsplash.com/photo-1438032005730-c779502df39b?w=2000&q=80"
             alt=""
             className="absolute inset-0 w-full h-full object-cover"
-            style={{ opacity: 0.75, top: '50%', left: '50%', transform: 'translate(-50%, -50%) scale(1.01)' }}
+            style={{ opacity: 0.75 }}
           />
-          {/* Top gradient */}
           <div className="absolute top-0 left-0 right-0 h-[200px]" style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0))' }} />
-          {/* Bottom gradient with cards */}
           <div className="absolute bottom-0 left-0 right-0" style={{ height: '100%', background: 'linear-gradient(180deg, rgba(0,0,0,0) 18.38%, rgba(0,0,0,0.6) 63.02%)', zIndex: 5 }} />
           <div className="absolute bottom-0 left-0 right-0" style={{ height: 350, opacity: 0.8, background: 'linear-gradient(180deg, rgba(0,0,0,0.0001) 0%, #000000 100%)', zIndex: 5 }} />
         </div>
 
-        {/* Hero Content */}
-        <div className="relative z-10 text-center max-w-[1280px] mx-auto px-5 pt-[26vh] pb-[50px]">
+        <div className="relative z-10 text-center max-w-[1280px] mx-auto px-8 pt-[28vh] pb-[60px]">
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-white leading-[1.3] font-['Arno_Pro',serif] font-normal"
-            style={{ fontSize: 'clamp(38px, 8vw, 80px)', marginBottom: 50 }}
+            className="text-white leading-[1.25] font-['Arno_Pro',serif] font-normal"
+            style={{ fontSize: 'clamp(38px, 7vw, 76px)', marginBottom: 50 }}
           >
             Inspiring people to follow Jesus and fearlessly change the world.
           </motion.h1>
         </div>
 
         {/* Experience Cards */}
-        <div className="relative z-10 max-w-[1400px] mx-auto px-5 pb-8">
-          <h2 className="text-white text-center font-['Arno_Pro',serif] font-normal mb-[45px]" style={{ fontSize: 'clamp(24px, 3vw, 40px)' }}>
+        <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10 lg:px-[50px] pb-10">
+          <h2 className="text-white text-center font-['Arno_Pro',serif] font-normal mb-[45px]" style={{ fontSize: 'clamp(24px, 3vw, 38px)' }}>
             Ways to experience CACGM
           </h2>
           <div className="flex flex-col md:flex-row gap-[15px]">
@@ -89,22 +85,18 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== THE LOOP (Get Involved) ===== */}
+      {/* ===== THE LOOP ===== */}
       <section className="py-[100px]">
-        <div className="max-w-[1400px] mx-auto px-5 md:px-8 lg:px-[30px] flex flex-col lg:flex-row items-center gap-16">
-          {/* Loop Circle Graphic */}
+        <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-[50px] flex flex-col lg:flex-row items-center gap-16">
           <div className="lg:order-1 w-full lg:w-[67%] flex justify-center">
             <div className="relative w-[350px] h-[350px] md:w-[450px] md:h-[450px] lg:w-[500px] lg:h-[500px]">
-              {/* Dashed circle border */}
               <div className="absolute inset-0 rounded-full" style={{ border: '1px dashed hsl(188,51%,66%)' }} />
-              {/* Center circle */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[55%] h-[55%] rounded-full bg-white flex items-center justify-center z-10 shadow-lg">
                 <div className="text-center">
                   <p className="text-[11px] font-bold uppercase tracking-[2px] text-[#69757B] mb-1">The</p>
                   <h2 className="font-['Arno_Pro',serif] text-[42px] md:text-[50px] leading-none text-[#222]">Loop</h2>
                 </div>
               </div>
-              {/* 4 colored dots */}
               {loopSteps.map((step, i) => {
                 const angle = (i * 90 - 90) * (Math.PI / 180);
                 const radius = 42;
@@ -114,19 +106,13 @@ export default function HomePage() {
                   <div
                     key={step.title}
                     className="absolute w-4 h-4 rounded-full z-20"
-                    style={{
-                      background: step.color,
-                      left: `${x}%`,
-                      top: `${y}%`,
-                      transform: 'translate(-50%, -50%)',
-                    }}
+                    style={{ background: step.color, left: `${x}%`, top: `${y}%`, transform: 'translate(-50%, -50%)' }}
                   />
                 );
               })}
             </div>
           </div>
 
-          {/* Text Content */}
           <div className="lg:order-2 lg:w-[40%]">
             <p className="text-[12px] font-bold uppercase tracking-[2px] text-[#E46C63] mb-3">Get Involved</p>
             <h2 className="font-['Arno_Pro',serif] leading-[1.1] mb-[30px] md:mb-[50px]" style={{ fontSize: 'clamp(30px, 4vw, 47px)' }}>
@@ -151,12 +137,10 @@ export default function HomePage() {
       </section>
 
       {/* ===== STORIES ===== */}
-      <section className="py-[75px] lg:py-[85px] mt-[80px]" style={{ background: '#3364A0' }}>
-        <div className="max-w-[1400px] mx-auto px-5 md:px-8 lg:px-[30px]">
-          <h2 className="text-white font-['Arno_Pro',serif] text-center mb-12" style={{ fontSize: 'clamp(28px, 4vw, 42px)' }}>Our Stories</h2>
-
+      <section className="py-[85px] lg:py-[100px]" style={{ background: '#3364A0' }}>
+        <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-[50px]">
+          <h2 className="text-white font-['Arno_Pro',serif] text-center mb-14" style={{ fontSize: 'clamp(28px, 4vw, 42px)' }}>Our Stories</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Featured story */}
             <div className="md:col-span-1 bg-white rounded-[15px] overflow-hidden">
               <div className="relative aspect-[4/3] bg-gradient-to-br from-slate-200 to-slate-300">
                 <div className="absolute inset-0 flex items-center justify-center">
@@ -171,8 +155,6 @@ export default function HomePage() {
                 <p className="text-[15px] text-[#69757B] leading-relaxed">{stories[0].quote}</p>
               </div>
             </div>
-
-            {/* Smaller stories */}
             {stories.slice(1).map((story) => (
               <div key={story.name} className="bg-white rounded-[15px] overflow-hidden">
                 <div className="relative aspect-[16/9] bg-gradient-to-br from-slate-200 to-slate-300">
@@ -193,11 +175,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== CTA BANNER ===== */}
+      {/* ===== CTA ===== */}
       <section className="py-[100px] text-center">
-        <div className="max-w-[800px] mx-auto px-5">
+        <div className="max-w-[800px] mx-auto px-6">
           <h2 className="font-['Arno_Pro',serif] text-[36px] md:text-[48px] text-[#222] mb-4">Ready to Get Started?</h2>
-          <p className="text-[18px] text-[#69757B] leading-relaxed mb-8">
+          <p className="text-[18px] text-[#69757B] leading-relaxed mb-10">
             Join CACGM branches already using our platform to streamline their operations.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4">
