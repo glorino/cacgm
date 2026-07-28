@@ -1,40 +1,41 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Users, Heart, Globe, Church, Calendar, ArrowRight } from 'lucide-react';
+import { Users, Heart, Globe, Church, Music, HandHeart } from 'lucide-react';
 import Link from 'next/link';
+import { ArrowRight } from 'lucide-react';
 
 const departments = [
-  { name: "Men's Ministry", desc: 'Building men of integrity, faith, and leadership through fellowship and spiritual growth.', icon: <Users size={24} />, color: 'bg-blue-50 text-blue-600' },
-  { name: "Women's Ministry", desc: 'Empowering women to grow in faith, build community, and serve with purpose.', icon: <Heart size={24} />, color: 'bg-rose-50 text-rose-600' },
-  { name: 'Youth Ministry', desc: 'Dynamic programs for young people to discover their purpose and follow Jesus.', icon: <Globe size={24} />, color: 'bg-emerald-50 text-emerald-600' },
-  { name: "Children's Ministry", desc: 'Nurturing the next generation with age-appropriate teaching and activities.', icon: <Church size={24} />, color: 'bg-amber-50 text-amber-600' },
-  { name: 'Worship Ministry', desc: 'Leading the congregation in heartfelt worship through music and creative arts.', icon: <Calendar size={24} />, color: 'bg-violet-50 text-violet-600' },
-  { name: 'Outreach Ministry', desc: 'Serving the community through evangelism, charity, and social impact programs.', icon: <Heart size={24} />, color: 'bg-indigo-50 text-indigo-600' },
+  { name: "Men's Ministry", desc: 'Building men of integrity, faith, and leadership through fellowship.', icon: <Users size={22} />, bg: 'rgba(26,58,92,0.06)', color: '#1a3a5c' },
+  { name: "Women's Ministry", desc: 'Empowering women to grow in faith, build community, and serve.', icon: <Heart size={22} />, bg: 'rgba(200,164,78,0.1)', color: '#c8a44e' },
+  { name: 'Youth Ministry', desc: 'Dynamic programs for young people to discover their purpose.', icon: <Globe size={22} />, bg: 'rgba(72,160,120,0.08)', color: '#48a078' },
+  { name: "Children's Ministry", desc: 'Nurturing the next generation with age-appropriate activities.', icon: <Church size={22} />, bg: 'rgba(180,120,60,0.08)', color: '#b4783c' },
+  { name: 'Worship Ministry', desc: 'Leading the congregation in heartfelt worship and music.', icon: <Music size={22} />, bg: 'rgba(130,100,180,0.08)', color: '#8264b4' },
+  { name: 'Outreach Ministry', desc: 'Serving the community through evangelism and charity.', icon: <HandHeart size={22} />, bg: 'rgba(180,80,80,0.08)', color: '#b45050' },
 ];
 
 export default function MinistriesPage() {
   return (
     <>
-      <section className="bg-[#1a3a5c] pt-32 pb-20">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="text-white/40 text-sm font-medium tracking-wide uppercase mb-4">Ministries</motion.p>
-          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="text-4xl sm:text-5xl font-bold text-white tracking-tight">Our Ministries</motion.h1>
-          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-white/50 text-lg mt-4 max-w-2xl leading-relaxed">
-            Every ministry at CACGM is designed to help you grow in faith, connect with others, and serve with your gifts.
+      <section className="pt-32 pb-16" style={{ background: 'linear-gradient(135deg, #1a3a5c 0%, #0f2640 100%)' }}>
+        <div className="max-w-6xl mx-auto px-5 lg:px-8">
+          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-xs font-medium uppercase tracking-wider mb-3" style={{ color: 'rgba(255,255,255,0.4)' }}>Ministries</motion.p>
+          <motion.h1 initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="text-4xl sm:text-5xl font-bold text-white tracking-tight">Our Ministries</motion.h1>
+          <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-lg mt-4 max-w-2xl leading-relaxed" style={{ color: 'rgba(255,255,255,0.5)' }}>
+            Every ministry is designed to help you grow in faith, connect with others, and serve.
           </motion.p>
         </div>
       </section>
 
-      <section className="py-24 lg:py-32">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <section className="py-20 lg:py-28">
+        <div className="max-w-6xl mx-auto px-5 lg:px-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {departments.map((dept, i) => (
-              <motion.div key={dept.name} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }} className="group p-7 bg-white rounded-2xl border border-slate-100 hover:shadow-lg hover:shadow-slate-200/40 transition-all duration-300">
-                <div className={`w-12 h-12 rounded-xl ${dept.color} flex items-center justify-center mb-5`}>{dept.icon}</div>
-                <h3 className="text-xl font-bold text-slate-900 mb-3">{dept.name}</h3>
-                <p className="text-slate-400 text-sm leading-relaxed">{dept.desc}</p>
-                <Link href="/dashboard/departments" className="inline-flex items-center gap-1 text-[#1a3a5c] font-semibold text-sm mt-5 hover:underline">
+              <motion.div key={dept.name} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }} className="p-7 rounded-3xl transition-all hover:shadow-lg" style={{ background: 'white', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
+                <div className="w-11 h-11 rounded-2xl flex items-center justify-center mb-5" style={{ background: dept.bg, color: dept.color }}>{dept.icon}</div>
+                <h3 className="font-bold" style={{ color: '#1a1a1a' }}>{dept.name}</h3>
+                <p className="text-sm mt-2 leading-relaxed" style={{ color: '#8a8580' }}>{dept.desc}</p>
+                <Link href="/dashboard/departments" className="inline-flex items-center gap-1 font-semibold text-sm mt-4 hover:underline" style={{ color: '#1a3a5c' }}>
                   Learn More <ArrowRight size={13} />
                 </Link>
               </motion.div>
@@ -43,11 +44,11 @@ export default function MinistriesPage() {
         </div>
       </section>
 
-      <section className="py-24 lg:py-32 bg-[#1a3a5c]">
-        <div className="max-w-3xl mx-auto px-6 lg:px-8 text-center">
+      <section className="py-20 lg:py-28" style={{ background: 'linear-gradient(135deg, #1a3a5c 0%, #0f2640 100%)' }}>
+        <div className="max-w-2xl mx-auto px-5 lg:px-8 text-center">
           <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">Get Involved</h2>
-          <p className="text-white/50 mt-4 leading-relaxed">Ready to join a ministry? Contact us to find the right fit for your gifts and calling.</p>
-          <Link href="/contact" className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-[#1a3a5c] rounded-lg text-sm font-semibold hover:bg-white/90 transition-colors mt-8">
+          <p className="mt-3 leading-relaxed" style={{ color: 'rgba(255,255,255,0.5)' }}>Ready to join a ministry? Contact us to find the right fit.</p>
+          <Link href="/contact" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-2xl text-sm font-semibold mt-8" style={{ background: 'white', color: '#1a3a5c' }}>
             Contact Us <ArrowRight size={15} />
           </Link>
         </div>
