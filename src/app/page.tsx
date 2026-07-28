@@ -29,10 +29,10 @@ const navItems = [
 ];
 
 const experienceCards = [
-  { icon: <MapPin size={24} />, title: 'Find a Congregation', desc: 'We gather together for services each weekend', link: 'View Locations', href: '#locations' },
-  { icon: <Users size={24} />, title: 'Youth Ministry', desc: 'For young people ages 13-18', link: 'Learn More', href: '#get-involved' },
-  { icon: <Church size={24} />, title: 'Hosted Here', desc: 'Partner churches under CACGM', link: 'Learn More', href: '#about' },
-  { icon: <Globe size={24} />, title: 'Online', desc: 'Experience CACGM from anywhere', link: 'Learn More', href: '/dashboard' },
+  { icon: <MapPin size={22} />, title: 'Find a Congregation', desc: 'We gather together for services each weekend', link: 'View Locations', href: '#locations' },
+  { icon: <Users size={22} />, title: 'Youth Ministry', desc: 'For young people ages 13-18', link: 'Learn More', href: '#get-involved' },
+  { icon: <Church size={22} />, title: 'Hosted Here', desc: 'Partner churches under CACGM', link: 'Learn More', href: '#about' },
+  { icon: <Globe size={22} />, title: 'Online', desc: 'Experience CACGM from anywhere', link: 'Learn More', href: '/dashboard' },
 ];
 
 const events = [
@@ -42,10 +42,10 @@ const events = [
 ];
 
 const involvedCards = [
-  { title: 'Follow Jesus', desc: 'Begin your faith journey with Christ', gradient: 'from-blue-500 to-blue-700', icon: <Church size={36} /> },
-  { title: 'Grow Together', desc: 'Connect in community and small groups', gradient: 'from-emerald-500 to-emerald-700', icon: <Users size={36} /> },
-  { title: 'Serve One Another', desc: 'Use your gifts to serve the church', gradient: 'from-amber-500 to-amber-700', icon: <Heart size={36} /> },
-  { title: 'Change The World', desc: 'Impact lives through outreach and missions', gradient: 'from-rose-500 to-rose-700', icon: <Globe size={36} /> },
+  { title: 'Follow Jesus', desc: 'Begin your faith journey with Christ', gradient: 'from-blue-500 to-blue-700', icon: <Church size={32} /> },
+  { title: 'Grow Together', desc: 'Connect in community and small groups', gradient: 'from-emerald-500 to-emerald-700', icon: <Users size={32} /> },
+  { title: 'Serve One Another', desc: 'Use your gifts to serve the church', gradient: 'from-amber-500 to-amber-700', icon: <Heart size={32} /> },
+  { title: 'Change The World', desc: 'Impact lives through outreach and missions', gradient: 'from-rose-500 to-rose-700', icon: <Globe size={32} /> },
 ];
 
 const stories = [
@@ -90,13 +90,11 @@ export default function HomePage() {
               <div className={`w-9 h-9 rounded-md flex items-center justify-center font-bold text-xs transition-colors ${scrolled ? 'bg-[#1a3a5c] text-white' : 'bg-white text-[#1a3a5c]'}`}>CA</div>
               <span className={`font-bold text-[17px] tracking-tight hidden sm:block transition-colors ${scrolled ? 'text-[#1a3a5c]' : 'text-white'}`}>CACGM</span>
             </Link>
-
             <nav className="hidden lg:flex items-center gap-2">
               {navItems.map((item) => (
                 <a key={item.label} href={item.href} className={`px-4 py-2 text-[15px] font-medium rounded-md transition-all ${scrolled ? 'text-slate-500 hover:text-[#1a3a5c] hover:bg-slate-50' : 'text-white/80 hover:text-white hover:bg-white/10'}`}>{item.label}</a>
               ))}
             </nav>
-
             <div className="flex items-center gap-3">
               <Link href="/login" className={`hidden sm:flex px-5 py-2.5 text-[15px] font-medium rounded-md transition-colors ${scrolled ? 'text-slate-500 hover:text-[#1a3a5c]' : 'text-white/80 hover:text-white'}`}>Sign In</Link>
               <Link href="/dashboard" className={`hidden sm:flex items-center gap-2 px-6 py-2.5 rounded-md text-[15px] font-semibold transition-all ${scrolled ? 'bg-[#1a3a5c] text-white hover:bg-[#1a3a5c]/90' : 'bg-white text-[#1a3a5c] hover:bg-white/90'}`}>Dashboard <ArrowRight size={15} /></Link>
@@ -104,7 +102,6 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-
         <AnimatePresence>
           {mobileMenuOpen && (
             <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="lg:hidden bg-white border-t border-slate-100 overflow-hidden">
@@ -126,28 +123,26 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1438032005730-c779502df39b?w=1920&q=80)' }} />
           <div className="absolute inset-0 bg-[#1a3a5c]/55" />
         </div>
-
         <div className="relative flex-1 flex items-center">
-          <div className="max-w-[1400px] mx-auto px-8 lg:px-12 w-full pt-40 pb-32">
-            <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="text-4xl sm:text-5xl lg:text-[4rem] font-bold text-white leading-[1.1] max-w-2xl tracking-tight">
+          <div className="max-w-[1400px] mx-auto px-8 lg:px-12 w-full pt-40 pb-36">
+            <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="text-4xl sm:text-5xl lg:text-[4.5rem] font-bold text-white leading-[1.08] max-w-2xl tracking-tight">
               Unifying church management across every CACGM branch.
             </motion.h1>
           </div>
         </div>
-
         <div className="relative z-10">
-          <div className="max-w-[1400px] mx-auto px-8 lg:px-12 pb-12">
-            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }} className="text-white/50 text-xs font-semibold mb-5 tracking-[0.2em] uppercase">
+          <div className="max-w-[1400px] mx-auto px-8 lg:px-12 pb-14">
+            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }} className="text-white/50 text-xs font-semibold mb-6 tracking-[0.2em] uppercase">
               Ways to experience CACGM
             </motion.p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
               {experienceCards.map((card, i) => (
-                <motion.a key={card.title} href={card.href} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 + i * 0.1 }} className="group flex items-start gap-4 p-6 bg-white/10 backdrop-blur-md border border-white/10 rounded-xl hover:bg-white/15 transition-all cursor-pointer">
-                  <div className="w-11 h-11 rounded-lg bg-white/10 flex items-center justify-center text-white/80 flex-shrink-0">{card.icon}</div>
+                <motion.a key={card.title} href={card.href} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 + i * 0.1 }} className="group flex items-start gap-4 p-7 bg-white/10 backdrop-blur-md border border-white/10 rounded-xl hover:bg-white/15 transition-all cursor-pointer">
+                  <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center text-white/70 flex-shrink-0">{card.icon}</div>
                   <div className="flex-1 min-w-0">
                     <h3 className="text-white font-semibold text-[15px]">{card.title}</h3>
                     <p className="text-white/40 text-sm mt-1.5 leading-relaxed">{card.desc}</p>
-                    <span className="inline-flex items-center gap-1.5 text-white/60 text-sm font-medium mt-3 group-hover:text-white transition-colors">{card.link} <ChevronRight size={13} className="group-hover:translate-x-0.5 transition-transform" /></span>
+                    <span className="inline-flex items-center gap-1.5 text-white/55 text-sm font-medium mt-3 group-hover:text-white transition-colors">{card.link} <ChevronRight size={13} /></span>
                   </div>
                 </motion.a>
               ))}
@@ -157,26 +152,26 @@ export default function HomePage() {
       </section>
 
       {/* ===== EVENTS ===== */}
-      <section className="py-28 bg-[#f8f9fb]">
+      <section className="py-32 bg-[#f8f9fb]">
         <div className="max-w-[1400px] mx-auto px-8 lg:px-12">
-          <div className="relative rounded-2xl overflow-hidden min-h-[480px]">
+          <div className="relative rounded-2xl overflow-hidden min-h-[500px]">
             {events.map((event, i) => (
               <div key={event.title} className={`absolute inset-0 bg-gradient-to-br ${event.color} transition-opacity duration-1000 ${i === currentEvent ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
-                <div className="flex flex-col justify-center h-full px-12 lg:px-20 py-20">
-                  <div className="flex items-center gap-4 text-white/50 text-sm mb-6">
+                <div className="flex flex-col justify-center h-full px-12 lg:px-24 py-24">
+                  <div className="flex items-center gap-4 text-white/50 text-sm mb-8">
                     <span className="flex items-center gap-2"><Calendar size={15} /> {event.date}</span>
                     <span className="w-px h-4 bg-white/20" />
                     <span className="flex items-center gap-2"><MapPin size={15} /> {event.location}</span>
                   </div>
-                  <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-5 max-w-xl leading-tight">{event.title}</h2>
-                  <p className="text-white/60 text-lg max-w-lg mb-10 leading-relaxed">{event.description}</p>
-                  <a href="#locations" className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-[#1a3a5c] rounded-xl font-semibold text-sm hover:bg-white/90 transition-colors w-fit">Learn More <ArrowRight size={15} /></a>
+                  <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 max-w-xl leading-tight">{event.title}</h2>
+                  <p className="text-white/60 text-lg max-w-lg mb-12 leading-relaxed">{event.description}</p>
+                  <a href="#locations" className="inline-flex items-center gap-2 px-8 py-4 bg-white text-[#1a3a5c] rounded-xl font-semibold text-sm hover:bg-white/90 transition-colors w-fit">Learn More <ArrowRight size={15} /></a>
                 </div>
               </div>
             ))}
-            <button onClick={() => setCurrentEvent((p) => (p - 1 + events.length) % events.length)} className="absolute left-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 bg-white/15 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/25 transition-colors"><ChevronLeft size={18} /></button>
-            <button onClick={() => setCurrentEvent((p) => (p + 1) % events.length)} className="absolute right-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 bg-white/15 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/25 transition-colors"><ChevronRight size={18} /></button>
-            <div className="absolute bottom-7 left-1/2 -translate-x-1/2 z-20 flex gap-2.5">
+            <button onClick={() => setCurrentEvent((p) => (p - 1 + events.length) % events.length)} className="absolute left-5 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-white/15 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/25 transition-colors"><ChevronLeft size={18} /></button>
+            <button onClick={() => setCurrentEvent((p) => (p + 1) % events.length)} className="absolute right-5 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-white/15 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/25 transition-colors"><ChevronRight size={18} /></button>
+            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-3">
               {events.map((_, i) => (
                 <button key={i} onClick={() => setCurrentEvent(i)} className={`h-2 rounded-full transition-all duration-500 ${i === currentEvent ? 'bg-white w-8' : 'bg-white/30 w-2 hover:bg-white/50'}`} />
               ))}
@@ -186,26 +181,25 @@ export default function HomePage() {
       </section>
 
       {/* ===== GET INVOLVED ===== */}
-      <section id="get-involved" className="py-32">
+      <section id="get-involved" className="py-40">
         <div className="max-w-[1400px] mx-auto px-8 lg:px-12">
-          <div className="text-center mb-20">
-            <motion.p initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-xs font-semibold text-[#c8a44e] uppercase tracking-[0.2em] mb-4">Get Involved</motion.p>
+          <div className="text-center mb-24">
+            <motion.p initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-xs font-semibold text-[#c8a44e] uppercase tracking-[0.2em] mb-5">Get Involved</motion.p>
             <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 tracking-tight">Your Next Step</motion.h2>
-            <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="text-lg text-slate-400 mt-5 max-w-xl mx-auto leading-relaxed">
+            <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="text-lg text-slate-400 mt-6 max-w-xl mx-auto leading-relaxed">
               Become more like Jesus as you grow in faith, community, and purpose.
             </motion.p>
           </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {involvedCards.map((card, i) => (
               <motion.div key={card.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} className={`group relative bg-gradient-to-br ${card.gradient} rounded-2xl overflow-hidden aspect-[3/4] cursor-pointer`}>
                 <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors duration-500" />
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-white p-8 text-center">
                   <div className="w-16 h-16 rounded-2xl bg-white/15 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">{card.icon}</div>
-                  <h3 className="text-2xl font-bold mb-2">{card.title}</h3>
+                  <h3 className="text-2xl font-bold mb-3">{card.title}</h3>
                   <p className="text-white/70 text-sm leading-relaxed">{card.desc}</p>
                 </div>
-                <div className="absolute bottom-0 left-0 right-0 p-6">
+                <div className="absolute bottom-0 left-0 right-0 p-7">
                   <span className="inline-flex items-center gap-1.5 text-white/70 text-sm font-medium group-hover:text-white transition-colors">Learn More <ChevronRight size={13} /></span>
                 </div>
               </motion.div>
@@ -215,17 +209,16 @@ export default function HomePage() {
       </section>
 
       {/* ===== STORIES ===== */}
-      <section className="py-32 bg-[#f8f9fb]">
+      <section className="py-40 bg-[#f8f9fb]">
         <div className="max-w-[1400px] mx-auto px-8 lg:px-12">
-          <div className="flex items-end justify-between mb-16">
+          <div className="flex items-end justify-between mb-20">
             <div>
-              <motion.p initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-xs font-semibold text-[#c8a44e] uppercase tracking-[0.2em] mb-4">Our Stories</motion.p>
+              <motion.p initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-xs font-semibold text-[#c8a44e] uppercase tracking-[0.2em] mb-5">Our Stories</motion.p>
               <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">Lives Changed</motion.h2>
             </div>
             <motion.a initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} href="#" className="hidden sm:flex items-center gap-1.5 text-[#1a3a5c] font-semibold text-sm hover:underline">Watch More Stories <ArrowRight size={13} /></motion.a>
           </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {stories.map((story, i) => (
               <motion.div key={story.name} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} className="group bg-white rounded-2xl overflow-hidden border border-slate-100/80 hover:shadow-xl hover:shadow-slate-200/40 transition-all duration-500 cursor-pointer">
                 <div className="relative aspect-video bg-gradient-to-br from-slate-100 to-slate-200">
@@ -234,26 +227,25 @@ export default function HomePage() {
                   </div>
                   <div className="absolute top-4 left-4"><span className="px-3 py-1 bg-[#1a3a5c] text-white text-[11px] font-semibold rounded-full tracking-wide">{story.tag}</span></div>
                 </div>
-                <div className="p-6">
+                <div className="p-7">
                   <h4 className="font-bold text-slate-800 text-lg">{story.name}&apos;s Story</h4>
-                  <p className="text-slate-400 text-sm mt-2.5 leading-relaxed line-clamp-2">{story.quote}</p>
+                  <p className="text-slate-400 text-sm mt-3 leading-relaxed line-clamp-2">{story.quote}</p>
                 </div>
               </motion.div>
             ))}
           </div>
-
-          <div className="sm:hidden mt-10 text-center">
+          <div className="sm:hidden mt-12 text-center">
             <a href="#" className="inline-flex items-center gap-1.5 text-[#1a3a5c] font-semibold text-sm">Watch More Stories <ArrowRight size={13} /></a>
           </div>
         </div>
       </section>
 
       {/* ===== NEWSLETTER ===== */}
-      <section className="py-24 bg-[#1a3a5c]">
+      <section className="py-28 bg-[#1a3a5c]">
         <div className="max-w-[1400px] mx-auto px-8 lg:px-12">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
             <div className="text-center lg:text-left">
-              <h2 className="text-3xl sm:text-4xl font-bold text-white mb-3 tracking-tight">The Weekly</h2>
+              <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4 tracking-tight">The Weekly</h2>
               <p className="text-white/50 text-lg">Sign up to stay in the loop with everything happening at CACGM.</p>
             </div>
             <div className="flex w-full max-w-lg">
@@ -265,21 +257,20 @@ export default function HomePage() {
       </section>
 
       {/* ===== LOCATIONS ===== */}
-      <section id="locations" className="py-32">
+      <section id="locations" className="py-40">
         <div className="max-w-[1400px] mx-auto px-8 lg:px-12">
-          <div className="text-center mb-20">
-            <motion.p initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-xs font-semibold text-[#c8a44e] uppercase tracking-[0.2em] mb-4">Our Locations</motion.p>
+          <div className="text-center mb-24">
+            <motion.p initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-xs font-semibold text-[#c8a44e] uppercase tracking-[0.2em] mb-5">Our Locations</motion.p>
             <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 tracking-tight">Find a Congregation</motion.h2>
           </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {branches.map((branch, i) => (
-              <motion.div key={branch.name} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }} className="group p-7 bg-white rounded-2xl border border-slate-100/80 hover:shadow-xl hover:shadow-slate-200/40 transition-all duration-500">
+              <motion.div key={branch.name} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }} className="group p-8 bg-white rounded-2xl border border-slate-100/80 hover:shadow-xl hover:shadow-slate-200/40 transition-all duration-500">
                 <div className="flex items-start gap-5">
                   <div className="w-12 h-12 rounded-xl bg-[#1a3a5c]/5 flex items-center justify-center text-[#1a3a5c] flex-shrink-0"><MapPin size={18} /></div>
                   <div>
                     <h3 className="font-bold text-slate-800 text-lg">{branch.name}</h3>
-                    <p className="text-slate-400 text-sm mt-1.5 leading-relaxed">{branch.address}</p>
+                    <p className="text-slate-400 text-sm mt-2 leading-relaxed">{branch.address}</p>
                     <div className="flex items-center gap-2 mt-4"><Clock size={13} className="text-[#c8a44e]" /><span className="text-[#1a3a5c] text-sm font-medium">{branch.time}</span></div>
                   </div>
                 </div>
@@ -291,14 +282,14 @@ export default function HomePage() {
 
       {/* ===== FOOTER ===== */}
       <footer className="bg-[#0f2640] text-white">
-        <div className="max-w-[1400px] mx-auto px-8 lg:px-12 py-20">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
+        <div className="max-w-[1400px] mx-auto px-8 lg:px-12 py-24">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-14">
             <div className="lg:col-span-1">
-              <div className="flex items-center gap-3 mb-5">
+              <div className="flex items-center gap-3 mb-6">
                 <div className="w-9 h-9 rounded-md bg-[#c8a44e] flex items-center justify-center"><span className="text-[#1a3a5c] font-bold text-xs">CA</span></div>
                 <span className="font-bold text-lg">CACGM</span>
               </div>
-              <p className="text-white/40 text-sm leading-relaxed mb-7">Christ Apostolic Church of God Mission. Unifying church management across all branches.</p>
+              <p className="text-white/40 text-sm leading-relaxed mb-8">Christ Apostolic Church of God Mission. Unifying church management across all branches.</p>
               <div className="flex items-center gap-3">
                 {[
                   <svg key="ig" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>,
@@ -309,7 +300,6 @@ export default function HomePage() {
                 ))}
               </div>
             </div>
-
             {[
               { title: 'About', links: ['About CACGM', 'Statement of Faith', 'Leadership', 'Careers', 'Contact Us'] },
               { title: 'Get Involved', links: ["I'm New", 'Join a Group', 'Volunteer', 'Events', 'Baptism'] },
@@ -317,8 +307,8 @@ export default function HomePage() {
               { title: 'Locations', links: branches.map((b) => b.name) },
             ].map((col) => (
               <div key={col.title}>
-                <h4 className="font-semibold text-xs uppercase tracking-[0.15em] text-white/60 mb-6">{col.title}</h4>
-                <ul className="space-y-3.5">
+                <h4 className="font-semibold text-xs uppercase tracking-[0.15em] text-white/60 mb-7">{col.title}</h4>
+                <ul className="space-y-4">
                   {col.links.map((link) => (
                     <li key={link}><a href="#" className="text-white/40 text-sm hover:text-white transition-colors">{link}</a></li>
                   ))}
@@ -326,8 +316,7 @@ export default function HomePage() {
               </div>
             ))}
           </div>
-
-          <div className="border-t border-white/8 mt-16 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="border-t border-white/8 mt-20 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-white/30 text-sm">&copy; {new Date().getFullYear()} CACGM. All Rights Reserved.</p>
             <div className="flex items-center gap-8">
               <a href="#" className="text-white/30 text-sm hover:text-white/60 transition-colors">Contact Us</a>
