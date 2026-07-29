@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, MapPin, Globe, Users, MonitorPlay } from 'lucide-react';
 
@@ -65,6 +66,7 @@ function useIsMobile() {
 }
 
 export default function HomePage() {
+  const { data: session } = useSession();
   const [currentSlide, setCurrentSlide] = useState(0);
   const isMobile = useIsMobile();
 
@@ -311,12 +313,12 @@ export default function HomePage() {
             Join CACGM branches already using our platform to streamline their operations.
           </p>
           <div style={{ display: 'flex', justifyContent: 'center', gap: 16, flexWrap: 'wrap', flexDirection: isMobile ? 'column' : 'row', alignItems: isMobile ? 'stretch' : 'center' }}>
-            <Link href="/login" style={{
+            <Link href={session ? '/dashboard' : '/login'} style={{
               display: 'inline-block', padding: isMobile ? '16px 24px' : '19px 30px', fontSize: 14, fontWeight: 700,
               textTransform: 'uppercase', letterSpacing: '1px', borderRadius: 3,
               background: '#E46C63', color: '#fff', textDecoration: 'none', textAlign: 'center',
             }}>
-              Open Dashboard
+              {session ? 'Go to Dashboard' : 'Open Dashboard'}
             </Link>
             <Link href="/contact" style={{
               display: 'inline-block', padding: isMobile ? '16px 24px' : '19px 30px', fontSize: 14, fontWeight: 700,

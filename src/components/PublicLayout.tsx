@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 
@@ -20,6 +21,7 @@ const branchLocations = [
 ];
 
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
+  const { data: session } = useSession();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -135,12 +137,12 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
 
             {/* Auth buttons */}
             <div style={{ display: 'flex', alignItems: 'center', marginLeft: 40, gap: 16 }}>
-              <Link href="/login" style={{
+              <Link href={session ? '/dashboard' : '/login'} style={{
                 color: scrolled ? '#222' : '#fff', textDecoration: 'none',
                 fontSize: 13, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px',
                 padding: '8px 0', whiteSpace: 'nowrap',
               }}>
-                Sign In
+                {session ? 'Dashboard' : 'Sign In'}
               </Link>
               <Link href="/give" style={{
                 background: '#E46C63', color: '#fff', textDecoration: 'none',
@@ -179,10 +181,10 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
                     {link.label}
                   </Link>
                 ))}
-                <Link href="/login" style={{
+                <Link href={session ? '/dashboard' : '/login'} style={{
                   display: 'block', padding: '12px 16px', color: '#555', textDecoration: 'none',
                   fontWeight: 700, textTransform: 'uppercase', fontSize: 14,
-                }}>Sign In</Link>
+                }}>{session ? 'Dashboard' : 'Sign In'}</Link>
                 <Link href="/give" style={{
                   display: 'block', padding: '12px 16px', textAlign: 'center',
                   fontWeight: 700, textTransform: 'uppercase', fontSize: 14, letterSpacing: '1px',
