@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { motion } from 'framer-motion';
 import { Calendar, MapPin, Clock, Users, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
@@ -52,8 +53,8 @@ const eventsData: Record<string, {
   },
 };
 
-export default async function EventDetailPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
+export default function EventDetailPage({ params }: { params: { slug: string } }) {
+  const { slug } = params;
   const event = eventsData[slug] || eventsData['sunday-worship-service'];
 
   return (
@@ -178,5 +179,3 @@ function CountdownTimer() {
     </div>
   );
 }
-
-import React from 'react';

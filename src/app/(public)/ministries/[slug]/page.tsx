@@ -42,8 +42,8 @@ function JoinForm({ color }: { color: string }) {
   );
 }
 
-export default async function MinistryDetailPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
+export default function MinistryDetailPage({ params }: { params: { slug: string } }) {
+  const { slug } = params;
   const m = ministriesData[slug] || ministriesData['mens-ministry'];
   return (
     <>
