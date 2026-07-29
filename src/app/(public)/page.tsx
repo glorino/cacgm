@@ -37,19 +37,19 @@ const stories = [
     name: 'Sunday Service',
     quote: 'Watch our latest Sunday service message and be blessed by the Word of God.',
     tag: 'Church Message',
-    videoId: 'uq6UnTMPyUI',
+    videoId: '9bVjt4qRv_A',
   },
   {
     name: 'Midweek Service',
     quote: 'Join our midweek service for deeper teachings and spiritual growth.',
     tag: 'Church Message',
-    videoId: 'ZBzolX8wOqY',
+    videoId: '1Skr4izdzUQ',
   },
   {
     name: 'Worship Night',
     quote: 'Experience the presence of God through our worship night sessions.',
     tag: 'Worship',
-    videoId: 'rVnEYkrm7ac',
+    videoId: 'H-MjtMaJ2hI',
   },
 ];
 
