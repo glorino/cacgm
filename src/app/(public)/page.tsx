@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { MapPin, Users, Church, Globe, ArrowRight, ChevronRight } from 'lucide-react';
 
 const experienceCards = [
   { title: 'Find a Congregation', desc: 'We gather together for services each weekend', link: 'Locations', href: '/locations' },
@@ -27,55 +26,55 @@ const stories = [
 export default function HomePage() {
   return (
     <>
-      {/* ===== HERO ===== */}
-      <section className="relative overflow-hidden" style={{ background: '#000' }}>
-        <div className="absolute inset-0">
+      {/* HERO */}
+      <section style={{ position: 'relative', overflow: 'hidden', background: '#000' }}>
+        <div style={{ position: 'absolute', inset: 0 }}>
           <img
             src="https://images.unsplash.com/photo-1438032005730-c779502df39b?w=2000&q=80"
             alt=""
-            className="absolute inset-0 w-full h-full object-cover"
-            style={{ opacity: 0.75 }}
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.75 }}
           />
-          <div className="absolute top-0 left-0 right-0 h-[200px]" style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0))' }} />
-          <div className="absolute bottom-0 left-0 right-0" style={{ height: '100%', background: 'linear-gradient(180deg, rgba(0,0,0,0) 18.38%, rgba(0,0,0,0.6) 63.02%)', zIndex: 5 }} />
-          <div className="absolute bottom-0 left-0 right-0" style={{ height: 350, opacity: 0.8, background: 'linear-gradient(180deg, rgba(0,0,0,0.0001) 0%, #000000 100%)', zIndex: 5 }} />
+          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 200, background: 'linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0))' }} />
+          <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '100%', background: 'linear-gradient(180deg, rgba(0,0,0,0) 18%, rgba(0,0,0,0.6) 63%)', zIndex: 5 }} />
+          <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 350, opacity: 0.8, background: 'linear-gradient(180deg, rgba(0,0,0,0.0001) 0%, #000 100%)', zIndex: 5 }} />
         </div>
 
-        <div className="relative z-10 text-center max-w-[1280px] mx-auto px-8 pt-[28vh] pb-[60px]">
+        <div style={{ position: 'relative', zIndex: 10, textAlign: 'center', maxWidth: 1280, margin: '0 auto', padding: '28vh 40px 60px' }}>
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-white leading-[1.25] font-['Arno_Pro',serif] font-normal"
-            style={{ fontSize: 'clamp(38px, 7vw, 76px)', marginBottom: 50 }}
+            style={{ color: '#fff', lineHeight: 1.25, fontFamily: "'Arno Pro', serif", fontWeight: 400, fontSize: 'clamp(38px, 7vw, 76px)', marginBottom: 50 }}
           >
             Inspiring people to follow Jesus and fearlessly change the world.
           </motion.h1>
         </div>
 
         {/* Experience Cards */}
-        <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10 lg:px-[50px] pb-10">
-          <h2 className="text-white text-center font-['Arno_Pro',serif] font-normal mb-[45px]" style={{ fontSize: 'clamp(24px, 3vw, 38px)' }}>
+        <div style={{ position: 'relative', zIndex: 10, maxWidth: 1400, margin: '0 auto', padding: '0 50px 40px' }}>
+          <h2 style={{ color: '#fff', textAlign: 'center', fontFamily: "'Arno Pro', serif", fontWeight: 400, marginBottom: 45, fontSize: 'clamp(24px, 3vw, 38px)' }}>
             Ways to experience CACGM
           </h2>
-          <div className="flex flex-col md:flex-row gap-[15px]">
+          <div style={{ display: 'flex', gap: 15 }}>
             {experienceCards.map((card, i) => (
               <motion.div
                 key={card.title}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 + i * 0.1 }}
-                className="flex-1 rounded-[15px] p-[30px] flex flex-col text-left"
-                style={{ background: 'hsla(0,0%,100%,0.92)', backdropFilter: 'blur(20px)' }}
+                style={{
+                  flex: 1, borderRadius: 15, padding: 30, display: 'flex', flexDirection: 'column', textAlign: 'left',
+                  background: 'hsla(0,0%,100%,0.92)', backdropFilter: 'blur(20px)',
+                }}
               >
-                <h3 className="text-[20px] font-['Gotham',sans-serif] font-medium text-[#222] mb-2">{card.title}</h3>
-                <p className="text-[15px] text-[#69757B] mb-[30px] leading-relaxed">{card.desc}</p>
-                <div className="mt-auto">
-                  <Link
-                    href={card.href}
-                    className="inline-block min-w-[170px] text-center px-[22px] py-[14px] text-[13px] font-bold uppercase tracking-[1px] rounded-[3px] transition-all duration-200"
-                    style={{ border: '1px solid rgba(0,0,0,0.15)', color: '#222' }}
-                  >
+                <h3 style={{ fontSize: 20, fontFamily: "'Gotham', sans-serif", fontWeight: 500, color: '#222', marginBottom: 8 }}>{card.title}</h3>
+                <p style={{ fontSize: 15, color: '#69757B', marginBottom: 30, lineHeight: 1.6 }}>{card.desc}</p>
+                <div style={{ marginTop: 'auto' }}>
+                  <Link href={card.href} style={{
+                    display: 'inline-block', minWidth: 170, textAlign: 'center', padding: '14px 22px',
+                    fontSize: 13, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px',
+                    borderRadius: 3, border: '1px solid rgba(0,0,0,0.15)', color: '#222', textDecoration: 'none',
+                  }}>
                     {card.link}
                   </Link>
                 </div>
@@ -85,16 +84,21 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== THE LOOP ===== */}
-      <section className="py-[100px]">
-        <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-[50px] flex flex-col lg:flex-row items-center gap-16">
-          <div className="lg:order-1 w-full lg:w-[67%] flex justify-center">
-            <div className="relative w-[350px] h-[350px] md:w-[450px] md:h-[450px] lg:w-[500px] lg:h-[500px]">
-              <div className="absolute inset-0 rounded-full" style={{ border: '1px dashed hsl(188,51%,66%)' }} />
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[55%] h-[55%] rounded-full bg-white flex items-center justify-center z-10 shadow-lg">
-                <div className="text-center">
-                  <p className="text-[11px] font-bold uppercase tracking-[2px] text-[#69757B] mb-1">The</p>
-                  <h2 className="font-['Arno_Pro',serif] text-[42px] md:text-[50px] leading-none text-[#222]">Loop</h2>
+      {/* THE LOOP */}
+      <section style={{ padding: '100px 0' }}>
+        <div style={{ maxWidth: 1400, margin: '0 auto', padding: '0 50px', display: 'flex', alignItems: 'center', gap: 64, flexWrap: 'wrap' }}>
+          <div style={{ flex: '1 1 60%', minWidth: 320, display: 'flex', justifyContent: 'center' }}>
+            <div style={{ position: 'relative', width: 500, height: 500 }}>
+              <div style={{ position: 'absolute', inset: 0, borderRadius: '50%', border: '1px dashed hsl(188,51%,66%)' }} />
+              <div style={{
+                position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)',
+                width: '55%', height: '55%', borderRadius: '50%', background: '#fff',
+                display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 10,
+                boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+              }}>
+                <div style={{ textAlign: 'center' }}>
+                  <p style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 2, color: '#69757B', marginBottom: 4 }}>The</p>
+                  <h2 style={{ fontFamily: "'Arno Pro', serif", fontSize: 50, lineHeight: 1, color: '#222' }}>Loop</h2>
                 </div>
               </div>
               {loopSteps.map((step, i) => {
@@ -103,31 +107,29 @@ export default function HomePage() {
                 const x = 50 + radius * Math.cos(angle);
                 const y = 50 + radius * Math.sin(angle);
                 return (
-                  <div
-                    key={step.title}
-                    className="absolute w-4 h-4 rounded-full z-20"
-                    style={{ background: step.color, left: `${x}%`, top: `${y}%`, transform: 'translate(-50%, -50%)' }}
-                  />
+                  <div key={step.title} style={{
+                    position: 'absolute', width: 16, height: 16, borderRadius: '50%',
+                    background: step.color, left: `${x}%`, top: `${y}%`,
+                    transform: 'translate(-50%,-50%)', zIndex: 20,
+                  }} />
                 );
               })}
             </div>
           </div>
 
-          <div className="lg:order-2 lg:w-[40%]">
-            <p className="text-[12px] font-bold uppercase tracking-[2px] text-[#E46C63] mb-3">Get Involved</p>
-            <h2 className="font-['Arno_Pro',serif] leading-[1.1] mb-[30px] md:mb-[50px]" style={{ fontSize: 'clamp(30px, 4vw, 47px)' }}>
-              Experience The Loop
-            </h2>
-            <p className="text-[18px] text-[#69757B] leading-[1.8] mb-8">
+          <div style={{ flex: '1 1 35%', minWidth: 280 }}>
+            <p style={{ fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 2, color: '#E46C63', marginBottom: 12 }}>Get Involved</p>
+            <h2 style={{ fontFamily: "'Arno Pro', serif", lineHeight: 1.1, marginBottom: 50, fontSize: 'clamp(30px, 4vw, 47px)' }}>Experience The Loop</h2>
+            <p style={{ fontSize: 18, color: '#69757B', lineHeight: 1.8, marginBottom: 32 }}>
               At CACGM, we refer to the discipleship journey as the Transformational Loop. Become more like Jesus as you grow in faith.
             </p>
-            <div className="space-y-4">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
               {loopSteps.map((step) => (
-                <div key={step.title} className="flex items-start gap-3">
-                  <div className="w-3 h-3 rounded-full mt-1.5 flex-shrink-0" style={{ background: step.color }} />
+                <div key={step.title} style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
+                  <div style={{ width: 12, height: 12, borderRadius: '50%', marginTop: 6, flexShrink: 0, background: step.color }} />
                   <div>
-                    <h4 className="font-bold text-[15px] text-[#222]">{step.title}</h4>
-                    <p className="text-[14px] text-[#69757B] mt-0.5">{step.desc}</p>
+                    <h4 style={{ fontWeight: 700, fontSize: 15, color: '#222', margin: 0 }}>{step.title}</h4>
+                    <p style={{ fontSize: 14, color: '#69757B', marginTop: 2 }}>{step.desc}</p>
                   </div>
                 </div>
               ))}
@@ -136,38 +138,38 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== STORIES ===== */}
-      <section className="py-[85px] lg:py-[100px]" style={{ background: '#3364A0' }}>
-        <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-[50px]">
-          <h2 className="text-white font-['Arno_Pro',serif] text-center mb-14" style={{ fontSize: 'clamp(28px, 4vw, 42px)' }}>Our Stories</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="md:col-span-1 bg-white rounded-[15px] overflow-hidden">
-              <div className="relative aspect-[4/3] bg-gradient-to-br from-slate-200 to-slate-300">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-14 h-14 rounded-full bg-white/90 flex items-center justify-center shadow-lg">
+      {/* STORIES */}
+      <section style={{ padding: '100px 0', background: '#3364A0' }}>
+        <div style={{ maxWidth: 1400, margin: '0 auto', padding: '0 50px' }}>
+          <h2 style={{ color: '#fff', fontFamily: "'Arno Pro', serif", textAlign: 'center', marginBottom: 48, fontSize: 'clamp(28px, 4vw, 42px)' }}>Our Stories</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24 }}>
+            <div style={{ background: '#fff', borderRadius: 15, overflow: 'hidden' }}>
+              <div style={{ position: 'relative', paddingBottom: '75%', background: 'linear-gradient(135deg, #e2e8f0, #cbd5e1)' }}>
+                <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <div style={{ width: 56, height: 56, borderRadius: '50%', background: 'rgba(255,255,255,0.9)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="#E46C63"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                   </div>
                 </div>
               </div>
-              <div className="p-6">
-                <p className="text-[11px] font-bold uppercase tracking-[1px] text-[#E46C63] mb-2">{stories[0].tag}</p>
-                <h3 className="font-['Arno_Pro',serif] text-[24px] text-[#222] leading-[1.2] mb-2">{stories[0].name}&apos;s Story</h3>
-                <p className="text-[15px] text-[#69757B] leading-relaxed">{stories[0].quote}</p>
+              <div style={{ padding: 24 }}>
+                <p style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 1, color: '#E46C63', marginBottom: 8 }}>{stories[0].tag}</p>
+                <h3 style={{ fontFamily: "'Arno Pro', serif", fontSize: 24, color: '#222', lineHeight: 1.2, marginBottom: 8 }}>{stories[0].name}&apos;s Story</h3>
+                <p style={{ fontSize: 15, color: '#69757B', lineHeight: 1.6 }}>{stories[0].quote}</p>
               </div>
             </div>
             {stories.slice(1).map((story) => (
-              <div key={story.name} className="bg-white rounded-[15px] overflow-hidden">
-                <div className="relative aspect-[16/9] bg-gradient-to-br from-slate-200 to-slate-300">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-12 h-12 rounded-full bg-white/90 flex items-center justify-center shadow-lg">
+              <div key={story.name} style={{ background: '#fff', borderRadius: 15, overflow: 'hidden' }}>
+                <div style={{ position: 'relative', paddingBottom: '56%', background: 'linear-gradient(135deg, #e2e8f0, #cbd5e1)' }}>
+                  <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <div style={{ width: 48, height: 48, borderRadius: '50%', background: 'rgba(255,255,255,0.9)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="#E46C63"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                     </div>
                   </div>
                 </div>
-                <div className="p-5">
-                  <p className="text-[11px] font-bold uppercase tracking-[1px] text-[#E46C63] mb-2">{story.tag}</p>
-                  <h3 className="font-['Gotham',sans-serif] font-medium text-[20px] text-[#222] leading-[1.4] mb-2">{story.name}&apos;s Story</h3>
-                  <p className="text-[14px] text-[#69757B] leading-relaxed">{story.quote}</p>
+                <div style={{ padding: 20 }}>
+                  <p style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 1, color: '#E46C63', marginBottom: 8 }}>{story.tag}</p>
+                  <h3 style={{ fontFamily: "'Gotham', sans-serif", fontWeight: 500, fontSize: 20, color: '#222', lineHeight: 1.4, marginBottom: 8 }}>{story.name}&apos;s Story</h3>
+                  <p style={{ fontSize: 14, color: '#69757B', lineHeight: 1.6 }}>{story.quote}</p>
                 </div>
               </div>
             ))}
@@ -175,18 +177,26 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== CTA ===== */}
-      <section className="py-[100px] text-center">
-        <div className="max-w-[800px] mx-auto px-6">
-          <h2 className="font-['Arno_Pro',serif] text-[36px] md:text-[48px] text-[#222] mb-4">Ready to Get Started?</h2>
-          <p className="text-[18px] text-[#69757B] leading-relaxed mb-10">
+      {/* CTA */}
+      <section style={{ padding: '100px 0', textAlign: 'center' }}>
+        <div style={{ maxWidth: 800, margin: '0 auto', padding: '0 40px' }}>
+          <h2 style={{ fontFamily: "'Arno Pro', serif", fontSize: 'clamp(36px, 5vw, 48px)', color: '#222', marginBottom: 16 }}>Ready to Get Started?</h2>
+          <p style={{ fontSize: 18, color: '#69757B', lineHeight: 1.6, marginBottom: 40 }}>
             Join CACGM branches already using our platform to streamline their operations.
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-4">
-            <Link href="/dashboard" className="inline-block px-[30px] py-[19px] text-[14px] font-bold uppercase tracking-[1px] rounded-[3px] transition-all duration-200" style={{ background: '#E46C63', color: '#fff' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: 16, flexWrap: 'wrap' }}>
+            <Link href="/dashboard" style={{
+              display: 'inline-block', padding: '19px 30px', fontSize: 14, fontWeight: 700,
+              textTransform: 'uppercase', letterSpacing: '1px', borderRadius: 3,
+              background: '#E46C63', color: '#fff', textDecoration: 'none',
+            }}>
               Open Dashboard
             </Link>
-            <Link href="/contact" className="inline-block px-[30px] py-[19px] text-[14px] font-bold uppercase tracking-[1px] rounded-[3px] transition-all duration-200" style={{ background: '#39A1B1', color: '#fff' }}>
+            <Link href="/contact" style={{
+              display: 'inline-block', padding: '19px 30px', fontSize: 14, fontWeight: 700,
+              textTransform: 'uppercase', letterSpacing: '1px', borderRadius: 3,
+              background: '#39A1B1', color: '#fff', textDecoration: 'none',
+            }}>
               Contact Us
             </Link>
           </div>

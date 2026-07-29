@@ -3,8 +3,8 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, ChevronDown, MapPin } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { Menu, X, ChevronDown } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
 
 const navLinks = [
   { label: 'Locations', href: '/locations', hasDropdown: true },
@@ -16,7 +16,7 @@ const navLinks = [
 ];
 
 const branchLocations = [
-  'Headquarters', 'Surulere', 'Yaba', 'Ikeja GRA', 'Lekki', 'Ikorodu'
+  'Headquarters', 'Surulere', 'Yaba', 'Ikeja GRA', 'Lekki', 'Ikorodu',
 ];
 
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
@@ -34,59 +34,73 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
   useEffect(() => { setMobileOpen(false); setDropdownOpen(false); }, [pathname]);
 
   return (
-    <div className="min-h-screen bg-white font-['Gotham',sans-serif]">
+    <div style={{ minHeight: '100vh', background: '#fff', fontFamily: "'Gotham', sans-serif" }}>
       {/* HEADER */}
       <header
-        className="fixed top-0 left-0 right-0 z-[99] transition-all duration-[350ms]"
         style={{
-          background: scrolled ? '#fff' : 'rgba(0,0,0,0.35)',
+          position: 'fixed', top: 0, left: 0, right: 0, zIndex: 99,
+          background: scrolled ? '#fff' : 'rgba(0,0,0,0.4)',
           boxShadow: scrolled ? '0 1px 0 rgba(0,0,0,0.08)' : 'none',
+          transition: 'all .35s ease',
         }}
       >
-        <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-[50px] flex items-center justify-between" style={{ height: scrolled ? 65 : 80 }}>
+        <div style={{
+          maxWidth: 1400, margin: '0 auto', padding: '0 50px',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          height: scrolled ? 65 : 80, transition: 'height .35s ease',
+        }}>
           {/* Logo */}
-          <Link href="/" className="flex items-center transition-all duration-[350ms]">
-            <div
-              className="flex items-center justify-center font-bold rounded-[4px]"
-              style={{
-                width: scrolled ? 42 : 50,
-                height: scrolled ? 42 : 50,
-                background: scrolled ? '#1a3a5c' : '#fff',
-                color: scrolled ? '#fff' : '#1a3a5c',
-                transition: 'all .35s ease',
-                fontSize: scrolled ? '13px' : '15px',
-              }}
-            >
+          <Link href="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+            <div style={{
+              width: scrolled ? 42 : 50, height: scrolled ? 42 : 50,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontWeight: 700, borderRadius: 4, fontSize: scrolled ? 13 : 15,
+              background: scrolled ? '#1a3a5c' : '#fff',
+              color: scrolled ? '#fff' : '#1a3a5c',
+              transition: 'all .35s ease',
+            }}>
               CA
             </div>
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden lg:flex items-center">
-            <ul className="flex list-none m-0 p-0 items-center font-bold uppercase text-[13px] tracking-[0.5px]">
+          <nav style={{ display: 'flex', alignItems: 'center', gap: 0 }}>
+            <ul style={{ display: 'flex', listStyle: 'none', margin: 0, padding: 0, alignItems: 'center', fontWeight: 700, fontSize: 13, textTransform: 'uppercase', letterSpacing: '0.5px' }}>
               {navLinks.map((link) => (
                 <li
                   key={link.label}
-                  className="relative"
-                  style={{ marginLeft: 35 }}
+                  style={{ position: 'relative', marginLeft: 30 }}
                   onMouseEnter={() => link.hasDropdown && setDropdownOpen(true)}
                   onMouseLeave={() => link.hasDropdown && setDropdownOpen(false)}
                 >
                   <Link
                     href={link.href}
-                    className="flex items-center gap-1 transition-colors duration-200 py-2"
-                    style={{ color: scrolled ? '#222' : '#fff' }}
+                    style={{
+                      display: 'flex', alignItems: 'center', gap: 4,
+                      color: scrolled ? '#222' : '#fff', textDecoration: 'none',
+                      padding: '8px 0', transition: 'color .2s',
+                    }}
                   >
                     {link.label}
                     {link.hasDropdown && <ChevronDown size={12} />}
                   </Link>
 
-                  {/* Locations Dropdown */}
                   {link.hasDropdown && dropdownOpen && (
-                    <div className="absolute top-[calc(100%+10px)] left-[-20px] bg-white rounded-md shadow-[0_8px_30px_rgba(0,0,0,0.15)] py-3 min-w-[220px] z-50">
-                      <div className="px-5 pb-2 text-[11px] font-bold uppercase tracking-[1px] text-gray-400">Our Locations</div>
+                    <div style={{
+                      position: 'absolute', top: 'calc(100% + 10px)', left: -20,
+                      background: '#fff', borderRadius: 8,
+                      boxShadow: '0 8px 30px rgba(0,0,0,0.15)',
+                      padding: '12px 0', minWidth: 220, zIndex: 50,
+                    }}>
+                      <div style={{ padding: '0 20px 8px', fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 1, color: '#999' }}>Our Locations</div>
                       {branchLocations.map((loc) => (
-                        <Link key={loc} href="/locations" className="block px-5 py-2.5 text-[14px] text-gray-700 hover:bg-gray-50 transition-colors">
+                        <Link key={loc} href="/locations" style={{
+                          display: 'block', padding: '10px 20px', fontSize: 14,
+                          color: '#444', textDecoration: 'none', transition: 'background .15s',
+                        }}
+                          onMouseEnter={(e) => (e.currentTarget.style.background = '#f9f9f9')}
+                          onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
+                        >
                           {loc}
                         </Link>
                       ))}
@@ -96,22 +110,30 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
               ))}
             </ul>
 
-            <div className="flex items-center ml-[40px] gap-4">
-              <Link href="/login" className="text-[13px] font-bold uppercase tracking-[0.5px] py-2 transition-colors whitespace-nowrap" style={{ color: scrolled ? '#222' : '#fff' }}>
+            {/* Auth buttons */}
+            <div style={{ display: 'flex', alignItems: 'center', marginLeft: 40, gap: 16 }}>
+              <Link href="/login" style={{
+                color: scrolled ? '#222' : '#fff', textDecoration: 'none',
+                fontSize: 13, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px',
+                padding: '8px 0', whiteSpace: 'nowrap',
+              }}>
                 Sign In
               </Link>
-              <Link
-                href="/dashboard"
-                className="text-[13px] font-bold uppercase tracking-[1px] px-[24px] py-[13px] rounded-[3px] transition-all duration-200"
-                style={{ background: '#E46C63', color: '#fff' }}
-              >
+              <Link href="/dashboard" style={{
+                background: '#E46C63', color: '#fff', textDecoration: 'none',
+                fontSize: 13, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px',
+                padding: '13px 24px', borderRadius: 3, transition: 'opacity .2s',
+              }}>
                 Dashboard
               </Link>
             </div>
           </nav>
 
           {/* Mobile Toggle */}
-          <button onClick={() => setMobileOpen(!mobileOpen)} className="lg:hidden p-2" style={{ color: scrolled ? '#222' : '#fff' }}>
+          <button onClick={() => setMobileOpen(!mobileOpen)} style={{
+            display: 'none', padding: 8,
+            color: scrolled ? '#222' : '#fff', background: 'none', border: 'none', cursor: 'pointer',
+          }} className="mobile-toggle">
             {mobileOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
@@ -119,46 +141,74 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
         {/* Mobile Menu */}
         <AnimatePresence>
           {mobileOpen && (
-            <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="lg:hidden bg-white overflow-hidden border-t border-gray-100">
-              <div className="px-6 py-6 space-y-1">
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              style={{ background: '#fff', overflow: 'hidden', borderTop: '1px solid #eee' }}
+            >
+              <div style={{ padding: '24px 24px' }}>
                 {navLinks.map((link) => (
-                  <Link key={link.href} href={link.href} className="block px-4 py-3 rounded text-gray-600 hover:bg-gray-50 font-bold uppercase text-sm tracking-[0.5px]">
+                  <Link key={link.href} href={link.href} style={{
+                    display: 'block', padding: '12px 16px', color: '#555', textDecoration: 'none',
+                    fontWeight: 700, textTransform: 'uppercase', fontSize: 14, letterSpacing: '0.5px',
+                  }}>
                     {link.label}
                   </Link>
                 ))}
-                <Link href="/login" className="block px-4 py-3 rounded text-gray-600 hover:bg-gray-50 font-bold uppercase text-sm tracking-[0.5px]">Sign In</Link>
-                <Link href="/dashboard" className="block px-4 py-3 rounded text-center font-bold uppercase text-sm tracking-[1px] mt-3" style={{ background: '#E46C63', color: '#fff' }}>Dashboard</Link>
+                <Link href="/login" style={{
+                  display: 'block', padding: '12px 16px', color: '#555', textDecoration: 'none',
+                  fontWeight: 700, textTransform: 'uppercase', fontSize: 14,
+                }}>Sign In</Link>
+                <Link href="/dashboard" style={{
+                  display: 'block', padding: '12px 16px', textAlign: 'center',
+                  fontWeight: 700, textTransform: 'uppercase', fontSize: 14, letterSpacing: '1px',
+                  marginTop: 12, background: '#E46C63', color: '#fff', borderRadius: 3, textDecoration: 'none',
+                }}>Dashboard</Link>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
       </header>
 
+      <style>{`
+        @media (max-width: 1023px) {
+          .mobile-toggle { display: block !important; }
+          nav > ul, nav > div:last-child { display: none !important; }
+        }
+      `}</style>
+
       <main>{children}</main>
 
       {/* FOOTER */}
       <footer>
         {/* Newsletter */}
-        <div className="py-16 px-6 text-center" style={{ background: '#39A1B1' }}>
-          <div className="max-w-[500px] mx-auto">
-            <h3 className="text-white font-['Arno_Pro',serif] text-[32px] mb-3">The Weekly</h3>
-            <p className="text-white/80 text-[15px] mb-8">Sign up to stay in the loop with everything happening at CACGM.</p>
-            <Link href="/contact" className="inline-block px-10 py-[16px] text-[13px] font-bold uppercase tracking-[1px] rounded-[3px] transition-all duration-200 hover:opacity-90" style={{ background: '#fff', color: '#39A1B1' }}>
+        <div style={{ padding: '60px 50px', textAlign: 'center', background: '#39A1B1' }}>
+          <div style={{ maxWidth: 500, margin: '0 auto' }}>
+            <h3 style={{ color: '#fff', fontFamily: "'Arno Pro', serif", fontSize: 32, marginBottom: 12 }}>The Weekly</h3>
+            <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: 15, marginBottom: 32 }}>Sign up to stay in the loop with everything happening at CACGM.</p>
+            <Link href="/contact" style={{
+              display: 'inline-block', padding: '16px 40px', fontSize: 13, fontWeight: 700,
+              textTransform: 'uppercase', letterSpacing: '1px', borderRadius: 3,
+              background: '#fff', color: '#39A1B1', textDecoration: 'none',
+            }}>
               Receive The Weekly
             </Link>
           </div>
         </div>
 
         {/* Footer Content */}
-        <div className="py-16 px-6 md:px-10 lg:px-[50px]" style={{ background: '#222' }}>
-          <div className="max-w-[1400px] mx-auto">
-            {/* Logo */}
-            <div className="mb-10">
-              <div className="inline-flex items-center justify-center h-[45px] px-6 font-bold text-[16px] rounded-[4px]" style={{ background: '#E46C63', color: '#fff' }}>CACGM</div>
+        <div style={{ padding: '60px 50px', background: '#222' }}>
+          <div style={{ maxWidth: 1400, margin: '0 auto' }}>
+            <div style={{ marginBottom: 40 }}>
+              <div style={{
+                display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                height: 45, padding: '0 24px', fontWeight: 700, fontSize: 16,
+                borderRadius: 4, background: '#E46C63', color: '#fff',
+              }}>CACGM</div>
             </div>
 
-            {/* Locations Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10 mb-12">
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 40, marginBottom: 48 }}>
               {[
                 { name: 'Headquarters', addr: '12 Allen Avenue, Ikeja, Lagos', time: 'Sundays 8:00 & 10:30 AM' },
                 { name: 'Surulere', addr: '45 Bode Thomas Street', time: 'Sundays 9:00 AM' },
@@ -167,35 +217,32 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
                 { name: 'Lekki', addr: '15 Admiralty Way', time: 'Sundays 9:00 AM' },
               ].map((loc) => (
                 <div key={loc.name}>
-                  <h3 className="text-white text-[17px] font-['Gotham',sans-serif] font-medium mb-3">{loc.name}</h3>
-                  <div className="flex items-start gap-2 mb-2">
-                    <MapPin size={14} className="text-[#39A1B1] mt-0.5 flex-shrink-0" />
-                    <span className="text-white/70 text-[14px] leading-relaxed">{loc.addr}</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#39A1B1" strokeWidth="2" className="mt-0.5 flex-shrink-0"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                    <span className="text-white/70 text-[14px]">{loc.time}</span>
-                  </div>
+                  <h3 style={{ color: '#fff', fontSize: 17, fontWeight: 500, marginBottom: 12 }}>{loc.name}</h3>
+                  <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: 14, margin: '0 0 8px', lineHeight: 1.6 }}>{loc.addr}</p>
+                  <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: 14, margin: 0 }}>{loc.time}</p>
                 </div>
               ))}
             </div>
 
-            {/* Social */}
-            <div className="flex items-center gap-8 mb-0 pt-8 border-t border-white/10">
+            <div style={{ display: 'flex', alignItems: 'center', gap: 32, paddingTop: 32, borderTop: '1px solid rgba(255,255,255,0.1)' }}>
               {['Instagram', 'Facebook', 'YouTube'].map((social) => (
-                <a key={social} href="#" className="text-[#39A1B1] hover:text-white transition-colors text-[13px] font-bold uppercase tracking-[0.5px]">{social}</a>
+                <a key={social} href="#" style={{ color: '#39A1B1', textDecoration: 'none', fontSize: 13, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px' }}>{social}</a>
               ))}
             </div>
           </div>
         </div>
 
         {/* Info Bar */}
-        <div className="py-5 px-6 md:px-10 flex flex-col md:flex-row items-center justify-between gap-4 text-[12px] font-medium uppercase tracking-[1px]" style={{ background: '#191919', color: 'rgba(255,255,255,0.5)' }}>
+        <div style={{
+          padding: '20px 50px', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          fontSize: 12, fontWeight: 500, textTransform: 'uppercase', letterSpacing: '1px',
+          background: '#191919', color: 'rgba(255,255,255,0.5)',
+        }}>
           <span>&copy; {new Date().getFullYear()} CACGM. All Rights Reserved.</span>
-          <div className="flex items-center gap-8">
-            <a href="#" className="hover:text-white transition-colors">Contact Us</a>
-            <a href="#" className="hover:text-white transition-colors">About Us</a>
-            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 32 }}>
+            <a href="#" style={{ color: 'inherit', textDecoration: 'none' }}>Contact Us</a>
+            <a href="#" style={{ color: 'inherit', textDecoration: 'none' }}>About Us</a>
+            <a href="#" style={{ color: 'inherit', textDecoration: 'none' }}>Privacy Policy</a>
           </div>
         </div>
       </footer>

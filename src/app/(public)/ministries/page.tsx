@@ -16,27 +16,27 @@ const departments = [
 export default function MinistriesPage() {
   return (
     <>
-      <section className="relative pt-[200px] pb-[100px] text-center" style={{ background: '#1A374F' }}>
-        <div className="max-w-[900px] mx-auto px-8">
-          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-[12px] font-bold uppercase tracking-[2px] text-[#E46C63] mb-4">Ministries</motion.p>
-          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="text-white font-['Arno_Pro',serif] leading-[1.2] mb-5" style={{ fontSize: 'clamp(40px, 7vw, 68px)' }}>
+      <section style={{ position: 'relative', paddingTop: 200, paddingBottom: 100, textAlign: 'center', background: '#1A374F' }}>
+        <div style={{ maxWidth: 900, margin: '0 auto', padding: '0 40px' }}>
+          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} style={{ fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 2, color: '#E46C63', marginBottom: 16 }}>Ministries</motion.p>
+          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} style={{ color: '#fff', fontFamily: "'Arno Pro', serif", lineHeight: 1.2, marginBottom: 20, fontSize: 'clamp(40px, 7vw, 68px)' }}>
             Our Ministries
           </motion.h1>
-          <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-white/60 text-[18px] leading-[1.8] max-w-[650px] mx-auto">
+          <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} style={{ color: 'rgba(255,255,255,0.6)', fontSize: 18, lineHeight: 1.8, maxWidth: 650, margin: '0 auto' }}>
             Every ministry is designed to help you grow in faith, connect with others, and serve.
           </motion.p>
         </div>
       </section>
 
-      <section className="py-[100px]">
-        <div className="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-[50px]">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-[30px]">
+      <section style={{ padding: '100px 0' }}>
+        <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 50px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 30 }}>
             {departments.map((dept, i) => (
-              <motion.div key={dept.name} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }} className="p-[35px] bg-white rounded-[15px] border border-gray-100 hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] transition-all duration-300">
-                <div className="w-[50px] h-[50px] rounded-[3px] flex items-center justify-center mb-5" style={{ background: `${dept.color}15`, color: dept.color }}>{dept.icon}</div>
-                <h3 className="text-[20px] font-['Gotham',sans-serif] font-medium text-[#222] mb-3">{dept.name}</h3>
-                <p className="text-[15px] text-[#69757B] leading-relaxed mb-5">{dept.desc}</p>
-                <Link href="/dashboard/departments" className="text-[13px] font-bold uppercase tracking-[1px] hover:underline" style={{ color: '#E46C63' }}>
+              <motion.div key={dept.name} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }} style={{ padding: 35, background: '#fff', borderRadius: 15, border: '1px solid #f0f0f0', transition: 'box-shadow .3s' }}>
+                <div style={{ width: 50, height: 50, borderRadius: 3, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 20, background: `${dept.color}15`, color: dept.color }}>{dept.icon}</div>
+                <h3 style={{ fontSize: 20, fontFamily: "'Gotham', sans-serif", fontWeight: 500, color: '#222', marginBottom: 12 }}>{dept.name}</h3>
+                <p style={{ fontSize: 15, color: '#69757B', lineHeight: 1.6, marginBottom: 20 }}>{dept.desc}</p>
+                <Link href="/dashboard/departments" style={{ fontSize: 13, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', color: '#E46C63', textDecoration: 'none' }}>
                   Learn More
                 </Link>
               </motion.div>
@@ -45,11 +45,15 @@ export default function MinistriesPage() {
         </div>
       </section>
 
-      <section className="py-[100px] text-center" style={{ background: '#1A374F' }}>
-        <div className="max-w-[800px] mx-auto px-8">
-          <h2 className="text-white font-['Arno_Pro',serif] text-[36px] md:text-[48px] mb-5">Get Involved</h2>
-          <p className="text-white/60 text-[18px] leading-relaxed mb-10">Ready to join a ministry? Contact us to find the right fit.</p>
-          <Link href="/contact" className="inline-block px-[30px] py-[19px] text-[14px] font-bold uppercase tracking-[1px] rounded-[3px] transition-all duration-200" style={{ background: '#E46C63', color: '#fff' }}>
+      <section style={{ padding: '100px 0', textAlign: 'center', background: '#1A374F' }}>
+        <div style={{ maxWidth: 800, margin: '0 auto', padding: '0 40px' }}>
+          <h2 style={{ color: '#fff', fontFamily: "'Arno Pro', serif", fontSize: 'clamp(36px, 5vw, 48px)', marginBottom: 20 }}>Get Involved</h2>
+          <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: 18, lineHeight: 1.6, marginBottom: 40 }}>Ready to join a ministry? Contact us to find the right fit.</p>
+          <Link href="/contact" style={{
+            display: 'inline-block', padding: '19px 30px', fontSize: 14, fontWeight: 700,
+            textTransform: 'uppercase', letterSpacing: '1px', borderRadius: 3,
+            background: '#E46C63', color: '#fff', textDecoration: 'none',
+          }}>
             Contact Us
           </Link>
         </div>
