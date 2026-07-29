@@ -73,14 +73,26 @@ export default function AnalyticsPage() {
         onBranchChange={setBranchFilter}
       />
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8"
+      >
         <MetricCard title="Growth Rate" value="+9.5%" change="Year over year" changeType="positive" icon={<span className="text-lg">📈</span>} delay={0} />
         <MetricCard title="Retention Rate" value="87%" change="Member retention" changeType="positive" icon={<span className="text-lg">🔄</span>} delay={0.1} />
         <MetricCard title="Avg. Giving/Member" value={formatCurrency(2212)} change="Per month" changeType="neutral" icon={<span className="text-lg">💰</span>} delay={0.2} />
         <MetricCard title="Visitor Conversion" value="34%" change="From first visit" changeType="positive" icon={<span className="text-lg">🎯</span>} delay={0.3} />
-      </div>
+      </motion.div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+        className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8"
+      >
         <AnimatedCard delay={0.2} className="p-6">
           <h3 className="text-lg font-semibold text-slate-800 mb-2">Growth Trends</h3>
           <p className="text-sm text-slate-500 mb-6">Members, attendance & giving over 7 months</p>
@@ -122,9 +134,15 @@ export default function AnalyticsPage() {
             ))}
           </div>
         </AnimatedCard>
-      </div>
+      </motion.div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className="grid grid-cols-1 lg:grid-cols-2 gap-6"
+      >
         <AnimatedCard delay={0.4} className="p-6">
           <h3 className="text-lg font-semibold text-slate-800 mb-2">Branch Giving Comparison</h3>
           <p className="text-sm text-slate-500 mb-6">Monthly giving by branch</p>
@@ -156,7 +174,7 @@ export default function AnalyticsPage() {
             </BarChart>
           </ResponsiveContainer>
         </AnimatedCard>
-      </div>
+      </motion.div>
     </PageTransition>
   );
 }

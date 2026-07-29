@@ -7,6 +7,16 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Mail, Lock, Eye, EyeOff, Loader2, Church } from 'lucide-react';
 
+const demoAccounts = [
+  { label: 'General Overseer', email: 'overseer@cacgm.org', role: 'Super Admin', color: '#1A374F' },
+  { label: 'Branch Pastor', email: 'pastor.hq@cacgm.org', role: 'Branch Admin', color: '#3364A0' },
+  { label: 'Accountant', email: 'accountant@cacgm.org', role: 'Finance', color: '#39A1B1' },
+  { label: 'Head Usher', email: 'usher@cacgm.org', role: 'Attendance', color: '#9EC73F' },
+  { label: "Men's President", email: 'mens@cacgm.org', role: 'Department', color: '#3364A0' },
+  { label: "Women's President", email: 'womens@cacgm.org', role: 'Department', color: '#E46C63' },
+  { label: 'Youth President', email: 'youth@cacgm.org', role: 'Department', color: '#39A1B1' },
+];
+
 export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState('');
@@ -29,56 +39,87 @@ export default function LoginPage() {
     }
   };
 
+  const quickLogin = async (demoEmail: string) => {
+    setEmail(demoEmail);
+    setPassword('password123');
+    setError('');
+    setLoading(true);
+    const result = await signIn('credentials', { email: demoEmail, password: 'password123', redirect: false });
+    setLoading(false);
+    if (result?.error) {
+      setError('Login failed');
+    } else {
+      router.push('/dashboard');
+      router.refresh();
+    }
+  };
+
   return (
-    <div className="w-full max-w-md px-6">
+    <div style={{ width: '100%', maxWidth: 440, padding: '0 24px' }}>
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-        <div className="text-center mb-8">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#1e3a5f] to-[#2563eb] flex items-center justify-center mx-auto mb-4 shadow-lg">
-            <Church className="text-white" size={28} />
+        <div style={{ textAlign: 'center', marginBottom: 32 }}>
+          <div style={{
+            width: 64, height: 64, borderRadius: 16,
+            background: 'linear-gradient(135deg, #1A374F, #3364A0)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            margin: '0 auto 16px', boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+          }}>
+            <Church color="#fff" size={28} />
           </div>
-          <h1 className="text-2xl font-bold text-slate-800">Welcome Back</h1>
-          <p className="text-slate-500 text-sm mt-1">Sign in to CACGM Church Management</p>
+          <h1 style={{ fontSize: 24, fontWeight: 700, color: '#222', margin: 0 }}>Welcome Back</h1>
+          <p style={{ color: '#69757B', fontSize: 14, marginTop: 4 }}>Sign in to CACGM Church Management</p>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-xl border border-slate-200/60 p-8">
+        <div style={{
+          background: '#fff', borderRadius: 16, padding: 32,
+          boxShadow: '0 4px 24px rgba(0,0,0,0.08)', border: '1px solid #eee',
+        }}>
           {error && (
-            <div className="mb-4 p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm">
+            <div style={{ marginBottom: 16, padding: 12, borderRadius: 8, background: '#fef2f2', border: '1px solid #fecaca', color: '#dc2626', fontSize: 13 }}>
               {error}
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1.5">Email</label>
-              <div className="relative">
-                <Mail size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+              <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#444', marginBottom: 6 }}>Email</label>
+              <div style={{ position: 'relative' }}>
+                <Mail size={18} style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: '#999' }} />
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="you@cacgm.org"
                   required
-                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm"
+                  style={{
+                    width: '100%', padding: '12px 12px 12px 40px', borderRadius: 8,
+                    border: '1px solid #e5e7eb', fontSize: 14, outline: 'none',
+                    background: '#fafafa', boxSizing: 'border-box',
+                  }}
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1.5">Password</label>
-              <div className="relative">
-                <Lock size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+              <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#444', marginBottom: 6 }}>Password</label>
+              <div style={{ position: 'relative' }}>
+                <Lock size={18} style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: '#999' }} />
                 <input
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter your password"
                   required
-                  className="w-full pl-10 pr-12 py-2.5 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm"
+                  style={{
+                    width: '100%', padding: '12px 40px 12px 40px', borderRadius: 8,
+                    border: '1px solid #e5e7eb', fontSize: 14, outline: 'none',
+                    background: '#fafafa', boxSizing: 'border-box',
+                  }}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                  style={{ position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)', color: '#999', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
                 >
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
@@ -88,31 +129,58 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#1e3a5f] to-[#2563eb] text-white font-medium text-sm hover:shadow-lg transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+              style={{
+                width: '100%', padding: '14px', borderRadius: 8,
+                background: 'linear-gradient(135deg, #1A374F, #3364A0)',
+                color: '#fff', fontWeight: 600, fontSize: 14,
+                border: 'none', cursor: 'pointer', opacity: loading ? 0.7 : 1,
+                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+              }}
             >
-              {loading ? <><Loader2 size={18} className="animate-spin" /> Signing in...</> : 'Sign In'}
+              {loading ? <><Loader2 size={18} style={{ animation: 'spin 1s linear infinite' }} /> Signing in...</> : 'Sign In'}
             </button>
           </form>
 
-          <div className="mt-6 text-center text-sm text-slate-500">
+          <div style={{ marginTop: 24, textAlign: 'center', fontSize: 13, color: '#69757B' }}>
             Don&apos;t have an account?{' '}
-            <Link href="/register" className="text-primary font-medium hover:underline">Register</Link>
+            <Link href="/register" style={{ color: '#3364A0', fontWeight: 600, textDecoration: 'none' }}>Register</Link>
           </div>
         </div>
 
-        <div className="mt-6 bg-white/60 rounded-xl border border-slate-200/60 p-4">
-          <p className="text-xs text-slate-500 font-medium mb-2">Demo Accounts (password: password123)</p>
-          <div className="space-y-1 text-xs text-slate-600">
-            <p><span className="font-medium">General Overseer:</span> overseer@cacgm.org</p>
-            <p><span className="font-medium">Branch Pastor:</span> pastor.hq@cacgm.org</p>
-            <p><span className="font-medium">Men's President:</span> mens@cacgm.org</p>
-            <p><span className="font-medium">Women's President:</span> womens@cacgm.org</p>
-            <p><span className="font-medium">Youth President:</span> youth@cacgm.org</p>
+        {/* Demo Quick Login */}
+        <div style={{ marginTop: 24, background: '#f8fafc', borderRadius: 12, padding: 20, border: '1px solid #e2e8f0' }}>
+          <p style={{ fontSize: 12, fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 12 }}>Quick Demo Login</p>
+          <p style={{ fontSize: 11, color: '#94a3b8', marginBottom: 12 }}>Password for all: <strong>password123</strong></p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+            {demoAccounts.map((acc) => (
+              <button
+                key={acc.email}
+                onClick={() => quickLogin(acc.email)}
+                disabled={loading}
+                style={{
+                  display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                  padding: '10px 14px', borderRadius: 8, border: '1px solid #e2e8f0',
+                  background: '#fff', cursor: loading ? 'wait' : 'pointer',
+                  transition: 'all .15s', textAlign: 'left',
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.borderColor = acc.color; e.currentTarget.style.background = `${acc.color}08`; }}
+                onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#e2e8f0'; e.currentTarget.style.background = '#fff'; }}
+              >
+                <div>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: '#222' }}>{acc.label}</div>
+                  <div style={{ fontSize: 11, color: '#94a3b8' }}>{acc.email}</div>
+                </div>
+                <span style={{
+                  fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 0.5,
+                  padding: '3px 8px', borderRadius: 4, background: `${acc.color}15`, color: acc.color,
+                }}>{acc.role}</span>
+              </button>
+            ))}
           </div>
         </div>
 
-        <p className="text-center text-xs text-slate-400 mt-6">
-          &copy; 2025 CACGM. All rights reserved.
+        <p style={{ textAlign: 'center', fontSize: 11, color: '#94a3b8', marginTop: 24 }}>
+          &copy; {new Date().getFullYear()} CACGM. All rights reserved.
         </p>
       </motion.div>
     </div>

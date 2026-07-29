@@ -126,22 +126,36 @@ export default function MembersPage() {
         onBranchChange={setBranchFilter}
       />
 
-      <AnimatedCard delay={0.1} className="p-6 mb-6">
-        <div className="flex flex-col sm:flex-row gap-4">
-          <div className="flex-1 relative">
-            <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-            <input type="text" placeholder="Search members..." value={search} onChange={(e) => setSearch(e.target.value)} className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" />
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+        className="mb-6"
+      >
+        <AnimatedCard delay={0.1} className="p-6">
+          <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex-1 relative">
+              <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+              <input type="text" placeholder="Search members..." value={search} onChange={(e) => setSearch(e.target.value)} className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" />
+            </div>
+            <button onClick={() => { setForm(emptyForm); setShowModal('add'); }} className="flex items-center gap-2 px-4 py-2.5 bg-primary text-white rounded-xl text-sm font-medium hover:bg-primary/90 transition-colors">
+              <Plus size={16} /> Add Member
+            </button>
+            <button onClick={exportCSV} className="flex items-center gap-2 px-4 py-2.5 bg-slate-100 text-slate-700 rounded-xl text-sm font-medium hover:bg-slate-200 transition-colors">
+              <Download size={16} /> Export CSV
+            </button>
           </div>
-          <button onClick={() => { setForm(emptyForm); setShowModal('add'); }} className="flex items-center gap-2 px-4 py-2.5 bg-primary text-white rounded-xl text-sm font-medium hover:bg-primary/90 transition-colors">
-            <Plus size={16} /> Add Member
-          </button>
-          <button onClick={exportCSV} className="flex items-center gap-2 px-4 py-2.5 bg-slate-100 text-slate-700 rounded-xl text-sm font-medium hover:bg-slate-200 transition-colors">
-            <Download size={16} /> Export CSV
-          </button>
-        </div>
-      </AnimatedCard>
+        </AnimatedCard>
+      </motion.div>
 
-      <AnimatedCard delay={0.2} className="overflow-hidden">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+      >
+        <AnimatedCard delay={0.2} className="overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
@@ -192,6 +206,7 @@ export default function MembersPage() {
           <div className="py-12 text-center text-slate-500 text-sm">No members found.</div>
         )}
       </AnimatedCard>
+      </motion.div>
 
       {/* Add/Edit Modal */}
       <AnimatePresence>

@@ -5,12 +5,12 @@ import { Users, Heart, Globe, Church, Music, HandHeart } from 'lucide-react';
 import Link from 'next/link';
 
 const departments = [
-  { name: "Men's Ministry", desc: 'Building men of integrity, faith, and leadership through fellowship.', icon: <Users size={22} />, color: '#3364A0' },
-  { name: "Women's Ministry", desc: 'Empowering women to grow in faith, build community, and serve.', icon: <Heart size={22} />, color: '#E46C63' },
-  { name: 'Youth Ministry', desc: 'Dynamic programs for young people to discover their purpose.', icon: <Globe size={22} />, color: '#39A1B1' },
-  { name: "Children's Ministry", desc: 'Nurturing the next generation with age-appropriate activities.', icon: <Church size={22} />, color: '#9EC73F' },
-  { name: 'Worship Ministry', desc: 'Leading the congregation in heartfelt worship and music.', icon: <Music size={22} />, color: '#1A374F' },
-  { name: 'Outreach Ministry', desc: 'Serving the community through evangelism and charity.', icon: <HandHeart size={22} />, color: '#E46C63' },
+  { slug: 'mens-ministry', name: "Men's Ministry", desc: 'Building men of integrity, faith, and leadership through fellowship.', icon: <Users size={22} />, color: '#3364A0' },
+  { slug: 'womens-ministry', name: "Women's Ministry", desc: 'Empowering women to grow in faith, build community, and serve.', icon: <Heart size={22} />, color: '#E46C63' },
+  { slug: 'youth-ministry', name: 'Youth Ministry', desc: 'Dynamic programs for young people to discover their purpose.', icon: <Globe size={22} />, color: '#39A1B1' },
+  { slug: 'childrens-ministry', name: "Children's Ministry", desc: 'Nurturing the next generation with age-appropriate activities.', icon: <Church size={22} />, color: '#9EC73F' },
+  { slug: 'worship-ministry', name: 'Worship Ministry', desc: 'Leading the congregation in heartfelt worship and music.', icon: <Music size={22} />, color: '#1A374F' },
+  { slug: 'outreach-ministry', name: 'Outreach Ministry', desc: 'Serving the community through evangelism and charity.', icon: <HandHeart size={22} />, color: '#E46C63' },
 ];
 
 export default function MinistriesPage() {
@@ -36,7 +36,7 @@ export default function MinistriesPage() {
                 <div style={{ width: 50, height: 50, borderRadius: 3, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 20, background: `${dept.color}15`, color: dept.color }}>{dept.icon}</div>
                 <h3 style={{ fontSize: 20, fontFamily: "'Gotham', sans-serif", fontWeight: 500, color: '#222', marginBottom: 12 }}>{dept.name}</h3>
                 <p style={{ fontSize: 15, color: '#69757B', lineHeight: 1.6, marginBottom: 20 }}>{dept.desc}</p>
-                <Link href="/dashboard/departments" style={{ fontSize: 13, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', color: '#E46C63', textDecoration: 'none' }}>
+                <Link href={`/ministries/${dept.slug}`} style={{ fontSize: 13, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', color: '#E46C63', textDecoration: 'none' }}>
                   Learn More
                 </Link>
               </motion.div>

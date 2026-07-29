@@ -129,6 +129,8 @@ async function main() {
     { name: 'Pastor Adebayo Johnson', email: 'overseer@cacgm.org', role: 'GENERAL_OVERSEER' as const, branchId: 'branch-1' },
     { name: 'Pastor John Adeyemi', email: 'pastor.hq@cacgm.org', role: 'BRANCH_PASTOR' as const, branchId: 'branch-1' },
     { name: 'Pastor David Okafor', email: 'pastor.surulere@cacgm.org', role: 'BRANCH_PASTOR' as const, branchId: 'branch-2' },
+    { name: 'Sister Funke Akindele', email: 'accountant@cacgm.org', role: 'ACCOUNTANT' as const, branchId: 'branch-1' },
+    { name: 'Bro. Tunde Bakare', email: 'usher@cacgm.org', role: 'HEAD_USHER' as const, branchId: 'branch-1' },
     { name: 'Chief Emmanuel Okonkwo', email: 'mens@cacgm.org', role: 'MEN_PRESIDENT' as const, branchId: 'branch-1' },
     { name: 'Mrs. Grace Adeleke', email: 'womens@cacgm.org', role: 'WOMEN_PRESIDENT' as const, branchId: 'branch-1' },
     { name: 'Bro. David Nwachukwu', email: 'youth@cacgm.org', role: 'YOUTH_PRESIDENT' as const, branchId: 'branch-1' },

@@ -85,7 +85,13 @@ export default function OverviewPage() {
         onBranchChange={setBranchFilter}
       />
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8"
+      >
         <MetricCard
           title="Total Members"
           value="2,847"
@@ -118,9 +124,15 @@ export default function OverviewPage() {
           icon={<Building2 size={22} />}
           delay={0.3}
         />
-      </div>
+      </motion.div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+        className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8"
+      >
         <AnimatedCard delay={0.2} className="p-6 lg:col-span-2">
           <div className="flex items-center justify-between mb-6">
             <div>
@@ -205,9 +217,15 @@ export default function OverviewPage() {
             ))}
           </div>
         </AnimatedCard>
-      </div>
+      </motion.div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8"
+      >
         <AnimatedCard delay={0.4} className="p-6">
           <h3 className="text-lg font-semibold text-slate-800 mb-2">Branch Performance</h3>
           <p className="text-sm text-slate-500 mb-6">Member count by branch</p>
@@ -254,7 +272,7 @@ export default function OverviewPage() {
             ))}
           </div>
         </AnimatedCard>
-      </div>
+      </motion.div>
     </PageTransition>
   );
 }

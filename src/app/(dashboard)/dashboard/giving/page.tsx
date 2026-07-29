@@ -61,7 +61,13 @@ export default function GivingPage() {
         onBranchChange={setBranchFilter}
       />
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+        className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8"
+      >
         <div className="lg:col-span-2">
           <AnimatedCard delay={0.1} className="p-6">
             <h3 className="text-lg font-semibold text-slate-800 mb-6">Make a Donation</h3>
@@ -209,9 +215,15 @@ export default function GivingPage() {
             </div>
           </div>
         </AnimatedCard>
-      </div>
+      </motion.div>
 
-      <AnimatedCard delay={0.3} className="overflow-hidden">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+      >
+        <AnimatedCard delay={0.3} className="overflow-hidden">
         <div className="p-6 border-b border-slate-100">
           <h3 className="text-lg font-semibold text-slate-800">Giving History</h3>
           <p className="text-sm text-slate-500">Your recent transactions</p>
@@ -254,7 +266,8 @@ export default function GivingPage() {
             </tbody>
           </table>
         </div>
-      </AnimatedCard>
+        </AnimatedCard>
+      </motion.div>
     </PageTransition>
   );
 }

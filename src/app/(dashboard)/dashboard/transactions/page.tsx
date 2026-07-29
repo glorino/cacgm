@@ -59,7 +59,13 @@ export default function TransactionsPage() {
         onBranchChange={setBranchFilter}
       />
 
-      <div className="flex flex-wrap gap-3 mb-6">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+        className="flex flex-wrap gap-3 mb-6"
+      >
         <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} className="px-3 py-2 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/20">
           <option value="">All Status</option>
           <option value="SUCCESSFUL">Successful</option>
@@ -78,9 +84,15 @@ export default function TransactionsPage() {
           <Download size={16} />
           Export CSV
         </button>
-      </div>
+      </motion.div>
 
-      <AnimatedCard delay={0.1} className="overflow-hidden">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+      >
+        <AnimatedCard delay={0.1} className="overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
@@ -129,7 +141,8 @@ export default function TransactionsPage() {
             </tbody>
           </table>
         </div>
-      </AnimatedCard>
+        </AnimatedCard>
+      </motion.div>
     </PageTransition>
   );
 }

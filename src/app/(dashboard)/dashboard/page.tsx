@@ -76,7 +76,13 @@ export default function DashboardPage() {
         onBranchChange={setBranchFilter}
       />
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8"
+      >
         <MetricCard
           title="Total Members"
           value="2,847"
@@ -109,9 +115,15 @@ export default function DashboardPage() {
           icon={<Church size={22} />}
           delay={0.3}
         />
-      </div>
+      </motion.div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+        className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8"
+      >
         <AnimatedCard delay={0.2} className="p-6">
           <div className="flex items-center justify-between mb-6">
             <div>
@@ -201,9 +213,15 @@ export default function DashboardPage() {
             </BarChart>
           </ResponsiveContainer>
         </AnimatedCard>
-      </div>
+      </motion.div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className="grid grid-cols-1 lg:grid-cols-2 gap-6"
+      >
         <AnimatedCard delay={0.4} className="overflow-hidden">
           <div className="p-6 border-b border-slate-100">
             <div className="flex items-center justify-between">
@@ -292,7 +310,7 @@ export default function DashboardPage() {
             ))}
           </div>
         </AnimatedCard>
-      </div>
+      </motion.div>
     </PageTransition>
   );
 }

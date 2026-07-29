@@ -51,14 +51,26 @@ export default function AttendancePage() {
         onBranchChange={setBranchFilter}
       />
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8"
+      >
         <MetricCard title="This Sunday" value="1,380" change="+5.2% from last week" changeType="positive" icon={<Users size={22} />} delay={0} />
         <MetricCard title="Male" value="620" change="44.9%" changeType="neutral" icon={<Users size={22} />} delay={0.1} />
         <MetricCard title="Female" value="680" change="49.3%" changeType="neutral" icon={<Users size={22} />} delay={0.2} />
         <MetricCard title="Children" value="80" change="5.8%" changeType="neutral" icon={<Users size={22} />} delay={0.3} />
-      </div>
+      </motion.div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+        className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8"
+      >
         <AnimatedCard delay={0.2} className="p-6">
           <h3 className="text-lg font-semibold text-slate-800 mb-2">Attendance Trend</h3>
           <p className="text-sm text-slate-500 mb-6">By service type over 6 weeks</p>
@@ -93,9 +105,15 @@ export default function AttendancePage() {
             </BarChart>
           </ResponsiveContainer>
         </AnimatedCard>
-      </div>
+      </motion.div>
 
-      <AnimatedCard delay={0.4} className="p-6">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+      >
+        <AnimatedCard delay={0.4} className="p-6">
         <div className="flex items-center justify-between mb-6">
           <div>
             <h3 className="text-lg font-semibold text-slate-800">Record Attendance</h3>
@@ -149,7 +167,8 @@ export default function AttendancePage() {
             Save Attendance
           </button>
         </div>
-      </AnimatedCard>
+        </AnimatedCard>
+      </motion.div>
     </PageTransition>
   );
 }

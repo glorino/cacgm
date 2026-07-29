@@ -5,12 +5,12 @@ import { Calendar, MapPin, Clock } from 'lucide-react';
 import Link from 'next/link';
 
 const events = [
-  { title: 'Sunday Worship Service', date: 'Every Sunday', time: '8:00 AM & 10:30 AM', location: 'All Locations', desc: 'Join us for powerful worship and the Word of God.', featured: true },
-  { title: 'Midweek Service', date: 'Every Wednesday', time: '6:00 PM', location: 'Headquarters', desc: 'Deeper teaching, prayer, and spiritual growth.', featured: false },
-  { title: 'Youth Night', date: 'Every Friday', time: '6:30 PM', location: 'All Locations', desc: 'Dynamic worship and teaching for ages 13-18.', featured: false },
-  { title: 'Youth Camp 2026', date: 'August 15-20', time: 'All Day', location: 'Irvine Camp', desc: 'Games, worship, and life-changing messages.', featured: true },
-  { title: "Women's Conference", date: 'September 5-6', time: '9:00 AM', location: 'Headquarters', desc: 'A weekend of worship and fellowship for women.', featured: false },
-  { title: "Men's Prayer Breakfast", date: 'First Saturday Monthly', time: '7:30 AM', location: 'Headquarters', desc: 'Prayer, fellowship, and a hearty breakfast.', featured: false },
+  { slug: 'sunday-worship-service', title: 'Sunday Worship Service', date: 'Every Sunday', time: '8:00 AM & 10:30 AM', location: 'All Locations', desc: 'Join us for powerful worship and the Word of God.', featured: true },
+  { slug: 'midweek-service', title: 'Midweek Service', date: 'Every Wednesday', time: '6:00 PM', location: 'Headquarters', desc: 'Deeper teaching, prayer, and spiritual growth.', featured: false },
+  { slug: 'youth-night', title: 'Youth Night', date: 'Every Friday', time: '6:30 PM', location: 'All Locations', desc: 'Dynamic worship and teaching for ages 13-18.', featured: false },
+  { slug: 'youth-camp-2026', title: 'Youth Camp 2026', date: 'August 15-20', time: 'All Day', location: 'Irvine Camp', desc: 'Games, worship, and life-changing messages.', featured: true },
+  { slug: 'womens-conference', title: "Women's Conference", date: 'September 5-6', time: '9:00 AM', location: 'Headquarters', desc: 'A weekend of worship and fellowship for women.', featured: false },
+  { slug: 'mens-prayer-breakfast', title: "Men's Prayer Breakfast", date: 'First Saturday Monthly', time: '7:30 AM', location: 'Headquarters', desc: 'Prayer, fellowship, and a hearty breakfast.', featured: false },
 ];
 
 export default function EventsPage() {
@@ -43,7 +43,7 @@ export default function EventsPage() {
                     <h3 style={{ fontSize: 20, fontFamily: "'Gotham', sans-serif", fontWeight: 500, color: event.featured ? '#fff' : '#222', margin: 0 }}>{event.title}</h3>
                     <p style={{ fontSize: 15, marginTop: 8, color: event.featured ? 'rgba(255,255,255,0.5)' : '#69757B' }}>{event.desc}</p>
                   </div>
-                  <Link href="/dashboard" style={{
+                  <Link href={`/events/${event.slug}`} style={{
                     display: 'inline-block', padding: '14px 30px', fontSize: 13, fontWeight: 700,
                     textTransform: 'uppercase', letterSpacing: '1px', borderRadius: 3,
                     background: event.featured ? '#fff' : '#E46C63',
