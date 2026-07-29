@@ -90,7 +90,7 @@ export default function PublicGivePage() {
           <h1 style={{ color: '#fff', fontFamily: "'Arno Pro', serif", fontSize: 'clamp(32px, 5vw, 52px)', marginBottom: 12 }}>
             Give to CACGM
           </h1>
-          <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: 18, maxWidth: 600, margin: '0 auto', lineHeight: 1.6 }}>
+          <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: isMobile ? 16 : 18, maxWidth: 600, margin: '0 auto', lineHeight: 1.6 }}>
             Your generous giving supports our ministries, missions, and community outreach. Give securely online via Flutterwave.
           </p>
         </motion.div>
@@ -110,7 +110,7 @@ export default function PublicGivePage() {
             <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: 13, margin: '4px 0 0' }}>All transactions are secure and encrypted via Flutterwave</p>
           </div>
 
-          <div style={{ padding: 32 }}>
+          <div style={{ padding: isMobile ? 20 : 32 }}>
             {/* Success State */}
             {success ? (
               <motion.div

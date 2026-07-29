@@ -1,11 +1,22 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Mail, Lock, Eye, EyeOff, Loader2, Church, ArrowLeft } from 'lucide-react';
+
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+  return isMobile;
+}
 
 const demoAccounts = [
   { label: 'General Overseer', email: 'overseer@cacgm.org', role: 'Super Admin', color: '#1A374F' },
@@ -19,6 +30,7 @@ const demoAccounts = [
 
 export default function LoginPage() {
   const router = useRouter();
+  const isMobile = useIsMobile();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -55,12 +67,11 @@ export default function LoginPage() {
   };
 
   return (
-    <div style={{ width: '100%', maxWidth: 440, padding: '0 24px' }}>
+    <div style={{ width: '100%', maxWidth: 440, padding: isMobile ? '0 16px' : '0 24px' }}>
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-        {/* Back to Homepage */}
         <Link href="/" style={{
           display: 'inline-flex', alignItems: 'center', gap: 6,
-          marginBottom: 24, fontSize: 13, fontWeight: 600,
+          marginBottom: 20, fontSize: 13, fontWeight: 600,
           color: '#69757B', textDecoration: 'none',
           transition: 'color .2s',
         }}
@@ -71,21 +82,21 @@ export default function LoginPage() {
           Back to Homepage
         </Link>
 
-        <div style={{ textAlign: 'center', marginBottom: 32 }}>
+        <div style={{ textAlign: 'center', marginBottom: isMobile ? 24 : 32 }}>
           <div style={{
-            width: 64, height: 64, borderRadius: 16,
+            width: 56, height: 56, borderRadius: 14,
             background: 'linear-gradient(135deg, #1A374F, #3364A0)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            margin: '0 auto 16px', boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+            margin: '0 auto 14px', boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
           }}>
-            <Church color="#fff" size={28} />
+            <Church color="#fff" size={24} />
           </div>
-          <h1 style={{ fontSize: 24, fontWeight: 700, color: '#222', margin: 0 }}>Welcome Back</h1>
-          <p style={{ color: '#69757B', fontSize: 14, marginTop: 4 }}>Sign in to CACGM Church Management</p>
+          <h1 style={{ fontSize: isMobile ? 22 : 24, fontWeight: 700, color: '#222', margin: 0 }}>Welcome Back</h1>
+          <p style={{ color: '#69757B', fontSize: isMobile ? 13 : 14, marginTop: 4 }}>Sign in to CACGM Church Management</p>
         </div>
 
         <div style={{
-          background: '#fff', borderRadius: 16, padding: 32,
+          background: '#fff', borderRadius: 16, padding: isMobile ? 24 : 32,
           boxShadow: '0 4px 24px rgba(0,0,0,0.08)', border: '1px solid #eee',
         }}>
           {error && (
@@ -94,7 +105,7 @@ export default function LoginPage() {
             </div>
           )}
 
-          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
             <div>
               <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#444', marginBottom: 6 }}>Email</label>
               <div style={{ position: 'relative' }}>
@@ -144,7 +155,7 @@ export default function LoginPage() {
               type="submit"
               disabled={loading}
               style={{
-                width: '100%', padding: '14px', borderRadius: 8,
+                width: '100%', padding: isMobile ? '13px' : '14px', borderRadius: 8,
                 background: 'linear-gradient(135deg, #1A374F, #3364A0)',
                 color: '#fff', fontWeight: 600, fontSize: 14,
                 border: 'none', cursor: 'pointer', opacity: loading ? 0.7 : 1,
@@ -155,17 +166,17 @@ export default function LoginPage() {
             </button>
           </form>
 
-          <div style={{ marginTop: 24, textAlign: 'center', fontSize: 13, color: '#69757B' }}>
+          <div style={{ marginTop: 20, textAlign: 'center', fontSize: 13, color: '#69757B' }}>
             Don&apos;t have an account?{' '}
             <Link href="/register" style={{ color: '#3364A0', fontWeight: 600, textDecoration: 'none' }}>Register</Link>
           </div>
         </div>
 
         {/* Demo Quick Login */}
-        <div style={{ marginTop: 24, background: '#f8fafc', borderRadius: 12, padding: 20, border: '1px solid #e2e8f0' }}>
-          <p style={{ fontSize: 12, fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 12 }}>Quick Demo Login</p>
-          <p style={{ fontSize: 11, color: '#94a3b8', marginBottom: 12 }}>Password for all: <strong>password123</strong></p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+        <div style={{ marginTop: 20, background: '#f8fafc', borderRadius: 12, padding: isMobile ? 16 : 20, border: '1px solid #e2e8f0' }}>
+          <p style={{ fontSize: 12, fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 10 }}>Quick Demo Login</p>
+          <p style={{ fontSize: 11, color: '#94a3b8', marginBottom: 10 }}>Password for all: <strong>password123</strong></p>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr 1fr' : '1fr', gap: 6 }}>
             {demoAccounts.map((acc) => (
               <button
                 key={acc.email}
@@ -173,7 +184,7 @@ export default function LoginPage() {
                 disabled={loading}
                 style={{
                   display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                  padding: '10px 14px', borderRadius: 8, border: '1px solid #e2e8f0',
+                  padding: isMobile ? '9px 10px' : '10px 14px', borderRadius: 8, border: '1px solid #e2e8f0',
                   background: '#fff', cursor: loading ? 'wait' : 'pointer',
                   transition: 'all .15s', textAlign: 'left',
                 }}
@@ -181,19 +192,20 @@ export default function LoginPage() {
                 onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#e2e8f0'; e.currentTarget.style.background = '#fff'; }}
               >
                 <div>
-                  <div style={{ fontSize: 13, fontWeight: 600, color: '#222' }}>{acc.label}</div>
-                  <div style={{ fontSize: 11, color: '#94a3b8' }}>{acc.email}</div>
+                  <div style={{ fontSize: isMobile ? 12 : 13, fontWeight: 600, color: '#222' }}>{acc.label}</div>
+                  <div style={{ fontSize: isMobile ? 10 : 11, color: '#94a3b8' }}>{acc.email}</div>
                 </div>
                 <span style={{
-                  fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 0.5,
-                  padding: '3px 8px', borderRadius: 4, background: `${acc.color}15`, color: acc.color,
+                  fontSize: isMobile ? 9 : 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 0.5,
+                  padding: '3px 6px', borderRadius: 4, background: `${acc.color}15`, color: acc.color,
+                  whiteSpace: 'nowrap',
                 }}>{acc.role}</span>
               </button>
             ))}
           </div>
         </div>
 
-        <p style={{ textAlign: 'center', fontSize: 11, color: '#94a3b8', marginTop: 24 }}>
+        <p style={{ textAlign: 'center', fontSize: 11, color: '#94a3b8', marginTop: 20 }}>
           &copy; {new Date().getFullYear()} CACGM. All rights reserved.
         </p>
       </motion.div>

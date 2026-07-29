@@ -101,21 +101,6 @@ export default function HomePage() {
         <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '100%', background: 'linear-gradient(180deg, rgba(0,0,0,0) 18%, rgba(0,0,0,0.6) 63%)', zIndex: 5 }} />
         <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 350, opacity: 0.8, background: 'linear-gradient(180deg, rgba(0,0,0,0.0001) 0%, #000 100%)', zIndex: 5 }} />
 
-        {/* Slider Controls - dots */}
-        <div style={{ position: 'absolute', bottom: isMobile ? 220 : 340, left: 0, right: 0, zIndex: 20, display: 'flex', justifyContent: 'center', gap: 12 }}>
-          {heroImages.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setCurrentSlide(i)}
-              style={{
-                width: i === currentSlide ? 40 : 10, height: 10, borderRadius: 5,
-                background: i === currentSlide ? '#E46C63' : 'rgba(255,255,255,0.4)',
-                border: 'none', cursor: 'pointer', transition: 'all .3s',
-              }}
-            />
-          ))}
-        </div>
-
         {/* Arrow controls - hidden on mobile */}
         {!isMobile && (
           <>
@@ -158,6 +143,20 @@ export default function HomePage() {
               {heroTexts[currentSlide]}
             </motion.h1>
           </AnimatePresence>
+          {/* Slider dots - inline with hero text */}
+          <div style={{ display: 'flex', justifyContent: 'center', gap: 12, marginTop: isMobile ? 20 : 30 }}>
+            {heroImages.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrentSlide(i)}
+                style={{
+                  width: i === currentSlide ? 40 : 10, height: 10, borderRadius: 5,
+                  background: i === currentSlide ? '#E46C63' : 'rgba(255,255,255,0.4)',
+                  border: 'none', cursor: 'pointer', transition: 'all .3s',
+                }}
+              />
+            ))}
+          </div>
         </div>
 
         {/* Experience Cards */}
