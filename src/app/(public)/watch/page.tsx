@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Play, Youtube, ExternalLink } from 'lucide-react';
+import { Play, MonitorPlay, ExternalLink } from 'lucide-react';
 import Link from 'next/link';
 
 const liveStreams = [
@@ -63,7 +63,7 @@ export default function WatchPage() {
               </div>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 14, fontWeight: 600 }}>
-              <Youtube size={20} /> Watch Live <ExternalLink size={16} />
+              <MonitorPlay size={20} /> Watch Live <ExternalLink size={16} />
             </div>
           </motion.a>
         </div>
@@ -108,7 +108,7 @@ export default function WatchPage() {
                     textDecoration: 'none', transition: 'opacity .2s',
                   }}
                 >
-                  <Youtube size={16} /> {stream.live ? 'Watch Now' : 'Set Reminder'}
+                  <MonitorPlay size={16} /> {stream.live ? 'Watch Now' : 'Set Reminder'}
                 </a>
               </motion.div>
             ))}
