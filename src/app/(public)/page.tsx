@@ -35,22 +35,22 @@ const loopSteps = [
 
 const stories = [
   {
-    name: 'Sunday Service',
-    quote: 'Watch our latest Sunday service message and be blessed by the Word of God.',
-    tag: 'Church Message',
-    videoId: '9bVjt4qRv_A',
+    name: 'Power of Resurrection',
+    quote: 'Join Apostle Dr. Matthew Ogbonmwan for a powerful Triumphant Half-Hour on the Power of Resurrection.',
+    tag: 'Triumphant Half-Hour',
+    videoId: '4RbO59Ad5do',
   },
   {
-    name: 'Midweek Service',
-    quote: 'Join our midweek service for deeper teachings and spiritual growth.',
-    tag: 'Church Message',
-    videoId: '1Skr4izdzUQ',
+    name: 'God Is Our Refuge',
+    quote: 'Be encouraged as we explore God as our refuge and fortress in times of trouble.',
+    tag: 'Triumphant Half-Hour',
+    videoId: 'fOkbgRVN4lc',
   },
   {
-    name: 'Worship Night',
-    quote: 'Experience the presence of God through our worship night sessions.',
-    tag: 'Worship',
-    videoId: 'H-MjtMaJ2hI',
+    name: 'Christ Our Refuge',
+    quote: 'Discover the comforting truth that Christ is our refuge and strength in every season.',
+    tag: 'Triumphant Half-Hour',
+    videoId: '1-u4hWayX2s',
   },
 ];
 

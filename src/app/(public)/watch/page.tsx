@@ -16,16 +16,16 @@ function useIsMobile() {
 }
 
 const liveStreams = [
-  { title: 'Sunday Worship Service', time: 'Sundays 8:00 AM & 10:30 AM', channel: 'CACGM Headquarters', url: 'https://www.youtube.com/@CACGM', live: true },
-  { title: 'Midweek Service', time: 'Wednesdays 6:00 PM', channel: 'CACGM Headquarters', url: 'https://www.youtube.com/@CACGM', live: false },
-  { title: 'Youth Service', time: 'Fridays 6:30 PM', channel: 'CACGM Youth', url: 'https://www.youtube.com/@CACGM', live: false },
+  { title: 'Sunday Worship Service', time: 'Sundays 8:00 AM & 10:30 AM', channel: 'CACGM Global', url: 'https://www.youtube.com/@CacgmGlobal', live: true },
+  { title: 'Midweek Service', time: 'Wednesdays 6:00 PM', channel: 'CACGM Global', url: 'https://www.youtube.com/@CacgmGlobal', live: false },
+  { title: 'Youth Service', time: 'Fridays 6:30 PM', channel: 'CACGM Global', url: 'https://www.youtube.com/@CacgmGlobal', live: false },
 ];
 
 const pastSermons = [
-  { title: 'Walking in Faith', speaker: 'Pastor J.A. Adelaja', date: 'July 27, 2026', thumbnail: 'https://images.unsplash.com/photo-1504052434569-70ad5836ab65?w=600&q=80' },
-  { title: 'The Power of Prayer', speaker: 'Pastor F.O. Adeyemi', date: 'July 20, 2026', thumbnail: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80' },
-  { title: 'Building Strong Families', speaker: 'Pastor T.O. Balogun', date: 'July 13, 2026', thumbnail: 'https://images.unsplash.com/photo-1438232992991-995b7058bbb3?w=600&q=80' },
-  { title: 'Youth Empowerment', speaker: 'Pastor E.A. Okafor', date: 'July 6, 2026', thumbnail: 'https://images.unsplash.com/photo-1529070538774-1f59b6a5d8f2?w=600&q=80' },
+  { title: 'Triumphant Half-Hour: Power of Resurrection', speaker: 'Apostle Dr. Matthew Ogbonmwan', date: 'April 2026', thumbnail: 'https://i.ytimg.com/vi/4RbO59Ad5do/maxresdefault.jpg', videoId: '4RbO59Ad5do' },
+  { title: 'God Is Our Refuge', speaker: 'Apostle Dr. Matthew Ogbonmwan', date: 'February 2026', thumbnail: 'https://i.ytimg.com/vi/fOkbgRVN4lc/maxresdefault.jpg', videoId: 'fOkbgRVN4lc' },
+  { title: 'Triumphant Half-Hour: Redemption', speaker: 'Apostle Dr. Matthew Ogbonmwan', date: 'January 2026', thumbnail: 'https://i.ytimg.com/vi/BOYyxkstHUc/maxresdefault.jpg', videoId: 'BOYyxkstHUc' },
+  { title: 'Christ Our Refuge', speaker: 'Apostle Dr. Matthew Ogbonmwan', date: 'January 2026', thumbnail: 'https://i.ytimg.com/vi/1-u4hWayX2s/maxresdefault.jpg', videoId: '1-u4hWayX2s' },
 ];
 
 export default function WatchPage() {
@@ -49,7 +49,7 @@ export default function WatchPage() {
       <section style={{ padding: isMobile ? '24px 16px 0' : '40px 0 0' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto', padding: isMobile ? '0' : '0 50px' }}>
           <motion.a
-            href="https://www.youtube.com/@CACGM"
+            href="https://www.youtube.com/@CacgmGlobal/videos"
             target="_blank"
             rel="noopener noreferrer"
             initial={{ opacity: 0, y: 20 }}
@@ -135,13 +135,16 @@ export default function WatchPage() {
           <h2 style={{ fontSize: isMobile ? 22 : 28, fontFamily: "'Arno Pro', serif", color: '#222', marginBottom: isMobile ? 20 : 30 }}>Past Sermons</h2>
           <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)', gap: isMobile ? 12 : 20 }}>
             {pastSermons.map((sermon, i) => (
-              <motion.div
+              <motion.a
                 key={sermon.title}
+                href={`https://www.youtube.com/watch?v=${sermon.videoId}`}
+                target="_blank"
+                rel="noopener noreferrer"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                style={{ borderRadius: 12, overflow: 'hidden', background: '#fff', border: '1px solid #eee' }}
+                style={{ borderRadius: 12, overflow: 'hidden', background: '#fff', border: '1px solid #eee', textDecoration: 'none', display: 'block' }}
               >
                 <div style={{ position: 'relative', paddingBottom: '56%', background: '#1A374F' }}>
                   <img src={sermon.thumbnail} alt={sermon.title} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
@@ -161,7 +164,7 @@ export default function WatchPage() {
                   <h3 style={{ fontSize: isMobile ? 13 : 15, fontWeight: 600, color: '#222', marginBottom: 4 }}>{sermon.title}</h3>
                   <p style={{ fontSize: isMobile ? 11 : 12, color: '#69757B', margin: 0 }}>{sermon.speaker} &middot; {sermon.date}</p>
                 </div>
-              </motion.div>
+              </motion.a>
             ))}
           </div>
         </div>
