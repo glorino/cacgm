@@ -2,7 +2,7 @@
 
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Sidebar from '@/components/Sidebar';
 
 export default function DashboardLayout({
@@ -12,6 +12,7 @@ export default function DashboardLayout({
 }) {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   useEffect(() => {
     if (status === 'unauthenticated') {
@@ -21,11 +22,19 @@ export default function DashboardLayout({
 
   if (status === 'loading') {
     return (
-      <div className="flex min-h-screen bg-[#f8fafc] items-center justify-center">
-        <div className="flex flex-col items-center gap-3">
-          <div className="w-10 h-10 border-3 border-primary border-t-transparent rounded-full animate-spin" />
-          <p className="text-sm text-slate-500">Loading...</p>
+      <div style={{
+        display: 'flex', minHeight: '100vh', background: '#f8fafc',
+        alignItems: 'center', justifyContent: 'center',
+      }}>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{
+            width: 40, height: 40, border: '3px solid #1A374F',
+            borderTopColor: 'transparent', borderRadius: '50%',
+            animation: 'spin 0.8s linear infinite', margin: '0 auto 12px',
+          }} />
+          <p style={{ fontSize: 14, color: '#69757B' }}>Loading...</p>
         </div>
+        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
       </div>
     );
   }
@@ -33,13 +42,13 @@ export default function DashboardLayout({
   const user = session?.user as any;
   const userRole = user?.role || 'MEMBER';
   const userName = user?.name || 'User';
-  const branchName = user?.branchId || '';
+  const branchId = user?.branchId || '';
 
   return (
-    <div className="flex min-h-screen bg-[#f8fafc]">
-      <Sidebar userRole={userRole} userName={userName} branchName={branchName} />
-      <main className="flex-1 min-h-screen lg:ml-0">
-        <div className="p-5 sm:p-6 lg:p-8 pt-16 lg:pt-8 max-w-[1600px] mx-auto">
+    <div style={{ display: 'flex', minHeight: '100vh', background: '#f8fafc' }}>
+      <Sidebar userRole={userRole} userName={userName} branchName={branchId} />
+      <main style={{ flex: 1, minHeight: '100vh', marginLeft: 0 }}>
+        <div style={{ padding: '32px', paddingTop: 72, maxWidth: 1600, margin: '0 auto' }}>
           {children}
         </div>
       </main>

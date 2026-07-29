@@ -84,6 +84,8 @@ export function getRoleLabel(role: string): string {
     SUPER_ADMIN: 'Super Admin',
     GENERAL_OVERSEER: 'General Overseer',
     BRANCH_PASTOR: 'Branch Pastor',
+    ACCOUNTANT: 'Accountant',
+    HEAD_USHER: 'Head Usher',
     MEN_PRESIDENT: "Men's President",
     WOMEN_PRESIDENT: "Women's President",
     YOUTH_PRESIDENT: 'Youth President',
