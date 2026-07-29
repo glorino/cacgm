@@ -90,7 +90,7 @@ export default function HomePage() {
         <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 350, opacity: 0.8, background: 'linear-gradient(180deg, rgba(0,0,0,0.0001) 0%, #000 100%)', zIndex: 5 }} />
 
         {/* Slider Controls */}
-        <div style={{ position: 'absolute', bottom: 260, left: 0, right: 0, zIndex: 20, display: 'flex', justifyContent: 'center', gap: 12 }}>
+        <div style={{ position: 'absolute', bottom: 340, left: 0, right: 0, zIndex: 20, display: 'flex', justifyContent: 'center', gap: 12 }}>
           {heroImages.map((_, i) => (
             <button
               key={i}
