@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X, ChevronDown } from 'lucide-react';
@@ -23,6 +23,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -32,6 +33,15 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
   }, []);
 
   useEffect(() => { setMobileOpen(false); setDropdownOpen(false); }, [pathname]);
+
+  const handleDropdownEnter = () => {
+    if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
+    setDropdownOpen(true);
+  };
+
+  const handleDropdownLeave = () => {
+    dropdownTimeoutRef.current = setTimeout(() => setDropdownOpen(false), 150);
+  };
 
   return (
     <div style={{ minHeight: '100vh', background: '#fff', fontFamily: "'Gotham', sans-serif" }}>
@@ -70,8 +80,8 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
                 <li
                   key={link.label}
                   style={{ position: 'relative', marginLeft: 30 }}
-                  onMouseEnter={() => link.hasDropdown && setDropdownOpen(true)}
-                  onMouseLeave={() => link.hasDropdown && setDropdownOpen(false)}
+                  onMouseEnter={() => link.hasDropdown && handleDropdownEnter()}
+                  onMouseLeave={() => link.hasDropdown && handleDropdownLeave()}
                 >
                   <Link
                     href={link.href}
@@ -82,28 +92,37 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
                     }}
                   >
                     {link.label}
-                    {link.hasDropdown && <ChevronDown size={12} />}
+                    {link.hasDropdown && <ChevronDown size={12} style={{ transform: dropdownOpen ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform .2s' }} />}
                   </Link>
 
                   {link.hasDropdown && dropdownOpen && (
-                    <div style={{
-                      position: 'absolute', top: 'calc(100% + 10px)', left: -20,
-                      background: '#fff', borderRadius: 8,
-                      boxShadow: '0 8px 30px rgba(0,0,0,0.15)',
-                      padding: '12px 0', minWidth: 220, zIndex: 50,
-                    }}>
-                      <div style={{ padding: '0 20px 8px', fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 1, color: '#999' }}>Our Locations</div>
-                      {branchLocations.map((loc) => (
-                        <Link key={loc} href="/locations" style={{
-                          display: 'block', padding: '10px 20px', fontSize: 14,
-                          color: '#444', textDecoration: 'none', transition: 'background .15s',
-                        }}
-                          onMouseEnter={(e) => (e.currentTarget.style.background = '#f9f9f9')}
-                          onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
-                        >
-                          {loc}
-                        </Link>
-                      ))}
+                    <div
+                      style={{
+                        position: 'absolute', top: '100%', left: -20,
+                        paddingTop: 12,
+                        zIndex: 50,
+                      }}
+                      onMouseEnter={handleDropdownEnter}
+                      onMouseLeave={handleDropdownLeave}
+                    >
+                      <div style={{
+                        background: '#fff', borderRadius: 8,
+                        boxShadow: '0 8px 30px rgba(0,0,0,0.15)',
+                        padding: '12px 0', minWidth: 220,
+                      }}>
+                        <div style={{ padding: '0 20px 8px', fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 1, color: '#999' }}>Our Locations</div>
+                        {branchLocations.map((loc) => (
+                          <Link key={loc} href="/locations" style={{
+                            display: 'block', padding: '10px 20px', fontSize: 14,
+                            color: '#444', textDecoration: 'none', transition: 'background .15s',
+                          }}
+                            onMouseEnter={(e) => (e.currentTarget.style.background = '#f5f5f5')}
+                            onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
+                          >
+                            {loc}
+                          </Link>
+                        ))}
+                      </div>
                     </div>
                   )}
                 </li>
@@ -119,12 +138,12 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
               }}>
                 Sign In
               </Link>
-              <Link href="/dashboard" style={{
+              <Link href="/login" style={{
                 background: '#E46C63', color: '#fff', textDecoration: 'none',
                 fontSize: 13, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px',
                 padding: '13px 24px', borderRadius: 3, transition: 'opacity .2s',
               }}>
-                Dashboard
+                Give
               </Link>
             </div>
           </nav>
@@ -160,11 +179,11 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
                   display: 'block', padding: '12px 16px', color: '#555', textDecoration: 'none',
                   fontWeight: 700, textTransform: 'uppercase', fontSize: 14,
                 }}>Sign In</Link>
-                <Link href="/dashboard" style={{
+                <Link href="/login" style={{
                   display: 'block', padding: '12px 16px', textAlign: 'center',
                   fontWeight: 700, textTransform: 'uppercase', fontSize: 14, letterSpacing: '1px',
                   marginTop: 12, background: '#E46C63', color: '#fff', borderRadius: 3, textDecoration: 'none',
-                }}>Dashboard</Link>
+                }}>Give</Link>
               </div>
             </motion.div>
           )}

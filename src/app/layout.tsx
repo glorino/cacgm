@@ -13,9 +13,9 @@ export const metadata: Metadata = {
   title: "CACGM - Christ Apostolic Church of God Mission",
   description: "Church Management System for Christ Apostolic Church of God Mission. Manage members, attendance, giving, departments, and branch locations.",
   icons: {
-    icon: "/favicon.svg",
-    shortcut: "/favicon.svg",
-    apple: "/favicon.svg",
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
   },
 };
 

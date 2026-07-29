@@ -5,12 +5,12 @@ import { Users, Heart, Globe, Church, Music, HandHeart } from 'lucide-react';
 import Link from 'next/link';
 
 const departments = [
-  { slug: 'mens-ministry', name: "Men's Ministry", desc: 'Building men of integrity, faith, and leadership through fellowship.', icon: <Users size={22} />, color: '#3364A0' },
-  { slug: 'womens-ministry', name: "Women's Ministry", desc: 'Empowering women to grow in faith, build community, and serve.', icon: <Heart size={22} />, color: '#E46C63' },
-  { slug: 'youth-ministry', name: 'Youth Ministry', desc: 'Dynamic programs for young people to discover their purpose.', icon: <Globe size={22} />, color: '#39A1B1' },
-  { slug: 'childrens-ministry', name: "Children's Ministry", desc: 'Nurturing the next generation with age-appropriate activities.', icon: <Church size={22} />, color: '#9EC73F' },
-  { slug: 'worship-ministry', name: 'Worship Ministry', desc: 'Leading the congregation in heartfelt worship and music.', icon: <Music size={22} />, color: '#1A374F' },
-  { slug: 'outreach-ministry', name: 'Outreach Ministry', desc: 'Serving the community through evangelism and charity.', icon: <HandHeart size={22} />, color: '#E46C63' },
+  { slug: 'mens-ministry', name: "Men's Ministry", desc: 'Building men of integrity, faith, and leadership through fellowship.', icon: <Users size={24} />, color: '#3364A0', bgGradient: 'linear-gradient(135deg, #3364A0, #1A374F)' },
+  { slug: 'womens-ministry', name: "Women's Ministry", desc: 'Empowering women to grow in faith, build community, and serve.', icon: <Heart size={24} />, color: '#E46C63', bgGradient: 'linear-gradient(135deg, #E46C63, #c44f47)' },
+  { slug: 'youth-ministry', name: 'Youth Ministry', desc: 'Dynamic programs for young people to discover their purpose.', icon: <Globe size={24} />, color: '#39A1B1', bgGradient: 'linear-gradient(135deg, #39A1B1, #2d8a96)' },
+  { slug: 'childrens-ministry', name: "Children's Ministry", desc: 'Nurturing the next generation with age-appropriate activities.', icon: <Church size={24} />, color: '#9EC73F', bgGradient: 'linear-gradient(135deg, #9EC73F, #7da832)' },
+  { slug: 'worship-ministry', name: 'Worship Ministry', desc: 'Leading the congregation in heartfelt worship and music.', icon: <Music size={24} />, color: '#1A374F', bgGradient: 'linear-gradient(135deg, #1A374F, #254f6e)' },
+  { slug: 'outreach-ministry', name: 'Outreach Ministry', desc: 'Serving the community through evangelism and charity.', icon: <HandHeart size={24} />, color: '#7c3aed', bgGradient: 'linear-gradient(135deg, #7c3aed, #6d28d9)' },
 ];
 
 export default function MinistriesPage() {
@@ -32,12 +32,19 @@ export default function MinistriesPage() {
         <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 50px' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 30 }}>
             {departments.map((dept, i) => (
-              <motion.div key={dept.name} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }} style={{ padding: 35, background: '#fff', borderRadius: 15, border: '1px solid #f0f0f0', transition: 'box-shadow .3s' }}>
-                <div style={{ width: 50, height: 50, borderRadius: 3, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 20, background: `${dept.color}15`, color: dept.color }}>{dept.icon}</div>
+              <motion.div key={dept.name} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}
+                style={{ padding: 35, background: '#fff', borderRadius: 15, border: '1px solid #f0f0f0', transition: 'box-shadow .3s, transform .3s', position: 'relative', overflow: 'hidden' }}
+                onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 8px 30px rgba(0,0,0,0.08)'; e.currentTarget.style.transform = 'translateY(-4px)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.transform = 'translateY(0)'; }}
+              >
+                {/* Color accent bar */}
+                <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 4, background: dept.bgGradient }} />
+                <div style={{ width: 56, height: 56, borderRadius: 14, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 20, background: `${dept.color}12`, color: dept.color }}>{dept.icon}</div>
                 <h3 style={{ fontSize: 20, fontFamily: "'Gotham', sans-serif", fontWeight: 500, color: '#222', marginBottom: 12 }}>{dept.name}</h3>
                 <p style={{ fontSize: 15, color: '#69757B', lineHeight: 1.6, marginBottom: 20 }}>{dept.desc}</p>
-                <Link href={`/ministries/${dept.slug}`} style={{ fontSize: 13, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', color: '#E46C63', textDecoration: 'none' }}>
+                <Link href={`/ministries/${dept.slug}`} style={{ fontSize: 13, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', color: dept.color, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 6 }}>
                   Learn More
+                  <span style={{ transition: 'transform .2s', display: 'inline-block' }}>&rarr;</span>
                 </Link>
               </motion.div>
             ))}

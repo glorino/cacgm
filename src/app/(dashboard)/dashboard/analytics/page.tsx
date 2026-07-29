@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Sparkles, TrendingUp, AlertTriangle, Lightbulb } from 'lucide-react';
 import Header from '@/components/Header';
 import { useUser } from '@/hooks/useUser';
 import { AnimatedCard, MetricCard, PageTransition } from '@/components/AnimatedUI';
@@ -21,6 +22,12 @@ import {
   LineChart,
   Line,
 } from 'recharts';
+
+const years = [2024, 2025, 2026];
+const months = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December',
+];
 
 const monthlyData = [
   { month: 'Jan', members: 2600, attendance: 1800, giving: 4200000 },
@@ -57,9 +64,46 @@ const attendanceByService = [
   { service: 'Vigil', avg: 150, peak: 220 },
 ];
 
+const aiInsights = [
+  {
+    title: 'Growth Opportunity',
+    description: 'Monthly giving has increased 18% over the last quarter. Consider launching a stewardship campaign to sustain momentum.',
+    icon: <Sparkles size={20} />,
+    bgColor: 'bg-blue-50',
+    iconColor: 'text-blue-600',
+    borderColor: 'border-blue-200',
+  },
+  {
+    title: 'Trending Upward',
+    description: 'Youth service attendance has grown 12% month-over-month, indicating strong engagement among young members.',
+    icon: <TrendingUp size={20} />,
+    bgColor: 'bg-emerald-50',
+    iconColor: 'text-emerald-600',
+    borderColor: 'border-emerald-200',
+  },
+  {
+    title: 'Attention Needed',
+    description: 'Ikorodu branch giving is 28% below target. Consider scheduling a pastoral visit to assess needs and provide support.',
+    icon: <AlertTriangle size={20} />,
+    bgColor: 'bg-amber-50',
+    iconColor: 'text-amber-600',
+    borderColor: 'border-amber-200',
+  },
+  {
+    title: 'Smart Recommendation',
+    description: 'Visitor conversion rate (34%) is above benchmark. Implement a follow-up automation to push this to 40%+.',
+    icon: <Lightbulb size={20} />,
+    bgColor: 'bg-purple-50',
+    iconColor: 'text-purple-600',
+    borderColor: 'border-purple-200',
+  },
+];
+
 export default function AnalyticsPage() {
   const { userRole, userName } = useUser();
   const [branchFilter, setBranchFilter] = useState('');
+  const [selectedYear, setSelectedYear] = useState(2026);
+  const [selectedMonth, setSelectedMonth] = useState('all');
 
   return (
     <PageTransition>
@@ -73,6 +117,63 @@ export default function AnalyticsPage() {
         onBranchChange={setBranchFilter}
       />
 
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '12px',
+          marginBottom: '24px',
+          flexWrap: 'wrap',
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <label style={{ fontSize: '14px', fontWeight: 500, color: '#475569' }}>Year:</label>
+          <select
+            value={selectedYear}
+            onChange={(e) => setSelectedYear(Number(e.target.value))}
+            style={{
+              padding: '8px 12px',
+              borderRadius: '10px',
+              border: '1px solid #e2e8f0',
+              backgroundColor: '#fff',
+              fontSize: '14px',
+              color: '#1e293b',
+              outline: 'none',
+              cursor: 'pointer',
+              boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
+            }}
+          >
+            {years.map((y) => (
+              <option key={y} value={y}>{y}</option>
+            ))}
+          </select>
+        </div>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <label style={{ fontSize: '14px', fontWeight: 500, color: '#475569' }}>Month:</label>
+          <select
+            value={selectedMonth}
+            onChange={(e) => setSelectedMonth(e.target.value)}
+            style={{
+              padding: '8px 12px',
+              borderRadius: '10px',
+              border: '1px solid #e2e8f0',
+              backgroundColor: '#fff',
+              fontSize: '14px',
+              color: '#1e293b',
+              outline: 'none',
+              cursor: 'pointer',
+              boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
+            }}
+          >
+            <option value="all">All Months</option>
+            {months.map((m, i) => (
+              <option key={i} value={m}>{m}</option>
+            ))}
+          </select>
+        </div>
+      </div>
+
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -80,10 +181,24 @@ export default function AnalyticsPage() {
         transition={{ duration: 0.5 }}
         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8"
       >
-        <MetricCard title="Growth Rate" value="+9.5%" change="Year over year" changeType="positive" icon={<span className="text-lg">📈</span>} delay={0} />
-        <MetricCard title="Retention Rate" value="87%" change="Member retention" changeType="positive" icon={<span className="text-lg">🔄</span>} delay={0.1} />
-        <MetricCard title="Avg. Giving/Member" value={formatCurrency(2212)} change="Per month" changeType="neutral" icon={<span className="text-lg">💰</span>} delay={0.2} />
-        <MetricCard title="Visitor Conversion" value="34%" change="From first visit" changeType="positive" icon={<span className="text-lg">🎯</span>} delay={0.3} />
+        {aiInsights.map((insight, i) => (
+          <motion.div
+            key={insight.title}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: i * 0.1 }}
+            className={`${insight.bgColor} ${insight.borderColor} border rounded-2xl p-5`}
+          >
+            <div className="flex items-center gap-3 mb-3">
+              <div className={`w-9 h-9 rounded-lg flex items-center justify-center ${insight.bgColor} ${insight.iconColor}`}>
+                {insight.icon}
+              </div>
+              <h4 className="text-sm font-semibold text-slate-800">{insight.title}</h4>
+            </div>
+            <p className="text-xs text-slate-600 leading-relaxed">{insight.description}</p>
+          </motion.div>
+        ))}
       </motion.div>
 
       <motion.div
@@ -91,6 +206,19 @@ export default function AnalyticsPage() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5, delay: 0.1 }}
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8"
+      >
+        <MetricCard title="Growth Rate" value="+9.5%" change="Year over year" changeType="positive" icon={<TrendingUp size={22} />} delay={0} />
+        <MetricCard title="Retention Rate" value="87%" change="Member retention" changeType="positive" icon={<TrendingUp size={22} />} delay={0.1} />
+        <MetricCard title="Avg. Giving/Member" value={formatCurrency(2212)} change="Per month" changeType="neutral" icon={<TrendingUp size={22} />} delay={0.2} />
+        <MetricCard title="Visitor Conversion" value="34%" change="From first visit" changeType="positive" icon={<TrendingUp size={22} />} delay={0.3} />
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.2 }}
         className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8"
       >
         <AnimatedCard delay={0.2} className="p-6">
@@ -121,7 +249,8 @@ export default function AnalyticsPage() {
                   <Cell key={`cell-${index}`} fill={entry.color} />
                 ))}
               </Pie>
-              <Tooltip contentStyle={{ borderRadius: '12px', border: '1px solid #e2e8f0' }} // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              <Tooltip contentStyle={{ borderRadius: '12px', border: '1px solid #e2e8f0' }}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               formatter={(value: any) => [formatCurrency(Number(value))]} />
             </PieChart>
           </ResponsiveContainer>
@@ -140,7 +269,7 @@ export default function AnalyticsPage() {
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: 0.2 }}
+        transition={{ duration: 0.5, delay: 0.3 }}
         className="grid grid-cols-1 lg:grid-cols-2 gap-6"
       >
         <AnimatedCard delay={0.4} className="p-6">
@@ -151,7 +280,8 @@ export default function AnalyticsPage() {
               <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
               <XAxis dataKey="name" tick={{ fontSize: 11, fill: '#94a3b8' }} />
               <YAxis tick={{ fontSize: 12, fill: '#94a3b8' }} tickFormatter={(v) => `${(v / 1000000).toFixed(1)}M`} />
-              <Tooltip contentStyle={{ borderRadius: '12px', border: '1px solid #e2e8f0' }} // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              <Tooltip contentStyle={{ borderRadius: '12px', border: '1px solid #e2e8f0' }}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               formatter={(value: any) => [formatCurrency(Number(value))]} />
               <Legend />
               <Bar dataKey="giving" fill="#1e3a5f" radius={[6, 6, 0, 0]} name="Monthly Giving" />

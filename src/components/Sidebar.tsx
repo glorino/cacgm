@@ -22,6 +22,7 @@ import {
   TrendingUp,
   UserCheck,
   Landmark,
+  Home,
 } from 'lucide-react';
 import { cn, getInitials, getRoleLabel } from '@/lib/utils';
 
@@ -33,6 +34,7 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
+  { label: 'Homepage', href: '/', icon: <Home size={20} /> },
   { label: 'Dashboard', href: '/dashboard', icon: <LayoutDashboard size={20} /> },
   { label: 'Overview', href: '/dashboard/overview', icon: <BarChart3 size={20} />, roles: ['GENERAL_OVERSEER', 'SUPER_ADMIN'] },
   { label: 'Members', href: '/dashboard/members', icon: <Users size={20} /> },
@@ -40,8 +42,8 @@ const navItems: NavItem[] = [
   { label: 'Giving', href: '/dashboard/giving', icon: <Heart size={20} /> },
   { label: 'Transactions', href: '/dashboard/transactions', icon: <Landmark size={20} />, roles: ['GENERAL_OVERSEER', 'SUPER_ADMIN', 'BRANCH_PASTOR', 'ACCOUNTANT'] },
   { label: 'Departments', href: '/dashboard/departments', icon: <Church size={20} /> },
-  { label: 'Men\'s Fellowship', href: '/dashboard/departments/mens', icon: <Shield size={20} />, roles: ['GENERAL_OVERSEER', 'SUPER_ADMIN', 'MEN_PRESIDENT', 'BRANCH_PASTOR'] },
-  { label: 'Women\'s Ministry', href: '/dashboard/departments/womens', icon: <Shield size={20} />, roles: ['GENERAL_OVERSEER', 'SUPER_ADMIN', 'WOMEN_PRESIDENT', 'BRANCH_PASTOR'] },
+  { label: "Men's Fellowship", href: '/dashboard/departments/mens', icon: <Shield size={20} />, roles: ['GENERAL_OVERSEER', 'SUPER_ADMIN', 'MEN_PRESIDENT', 'BRANCH_PASTOR'] },
+  { label: "Women's Ministry", href: '/dashboard/departments/womens', icon: <Shield size={20} />, roles: ['GENERAL_OVERSEER', 'SUPER_ADMIN', 'WOMEN_PRESIDENT', 'BRANCH_PASTOR'] },
   { label: 'Youth Department', href: '/dashboard/departments/youth', icon: <Shield size={20} />, roles: ['GENERAL_OVERSEER', 'SUPER_ADMIN', 'YOUTH_PRESIDENT', 'BRANCH_PASTOR'] },
   { label: 'Find Branch', href: '/branches', icon: <MapPin size={20} /> },
   { label: 'Analytics', href: '/dashboard/analytics', icon: <TrendingUp size={20} />, roles: ['GENERAL_OVERSEER', 'SUPER_ADMIN', 'BRANCH_PASTOR', 'ACCOUNTANT'] },
@@ -94,12 +96,13 @@ interface SidebarProps {
               href={item.href}
               onClick={() => setMobileOpen(false)}
               className={cn(
-                'flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 group relative',
+                'flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium transition-all duration-200 group relative',
                 isActive
                   ? 'bg-primary/10 text-primary'
                   : 'text-slate-600 hover:bg-slate-100 hover:text-slate-800',
                 collapsed && 'justify-center px-2'
               )}
+              style={{ fontSize: collapsed ? 14 : 15 }}
             >
               {isActive && (
                 <motion.div
@@ -143,17 +146,18 @@ interface SidebarProps {
           </div>
           {!collapsed && (
             <div className="overflow-hidden min-w-0">
-              <p className="text-sm font-medium text-slate-800 truncate">{userName}</p>
-              <p className="text-[10px] text-slate-500 truncate">{getRoleLabel(userRole)}</p>
+              <p className="font-medium text-slate-800 truncate" style={{ fontSize: 14 }}>{userName}</p>
+              <p className="text-slate-500 truncate" style={{ fontSize: 11 }}>{getRoleLabel(userRole)}</p>
             </div>
           )}
         </div>
         <button
           onClick={() => signOut({ callbackUrl: '/login' })}
           className={cn(
-            'flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 text-red-500 hover:bg-red-50',
+            'flex items-center gap-3 w-full px-3 py-2.5 rounded-xl font-medium transition-all duration-200 text-red-500 hover:bg-red-50',
             collapsed && 'justify-center px-2'
           )}
+          style={{ fontSize: 14 }}
         >
           <LogOut size={20} className="flex-shrink-0" />
           {!collapsed && <span>Sign Out</span>}

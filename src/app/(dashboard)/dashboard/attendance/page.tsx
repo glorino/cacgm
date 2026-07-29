@@ -38,6 +38,8 @@ export default function AttendancePage() {
   const { userRole, userName } = useUser();
   const [branchFilter, setBranchFilter] = useState('');
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
+  const [yearFilter, setYearFilter] = useState('');
+  const [monthFilter, setMonthFilter] = useState('');
 
   return (
     <PageTransition>
@@ -50,6 +52,25 @@ export default function AttendancePage() {
         selectedBranch={branchFilter}
         onBranchChange={setBranchFilter}
       />
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+        className="flex flex-wrap gap-3 mb-6"
+      >
+        <select value={yearFilter} onChange={(e) => setYearFilter(e.target.value)} className="px-3 py-2 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/20">
+          <option value="">All Years</option>
+          <option value="2026">2026</option>
+          <option value="2025">2025</option>
+          <option value="2024">2024</option>
+        </select>
+        <select value={monthFilter} onChange={(e) => setMonthFilter(e.target.value)} className="px-3 py-2 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/20">
+          <option value="">All Months</option>
+          {['January','February','March','April','May','June','July','August','September','October','November','December'].map(m => <option key={m} value={m}>{m}</option>)}
+        </select>
+      </motion.div>
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}

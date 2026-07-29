@@ -1,15 +1,94 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Calendar, MapPin, Clock } from 'lucide-react';
 import Link from 'next/link';
+
+interface Countdown {
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+}
+
+function getCountdown(dateStr: string): Countdown | null {
+  const now = new Date();
+  let target: Date;
+
+  // Handle recurring events
+  if (dateStr.startsWith('Every')) return null;
+
+  // Handle date ranges like "August 15-20"
+  const year = now.getFullYear();
+  const dateText = dateStr.replace(/\d{4}/, '').trim();
+
+  // Try parsing as full date
+  target = new Date(`${dateStr}, ${year}`);
+  if (isNaN(target.getTime())) {
+    // Try "Month Day-Day" format
+    const match = dateText.match(/(\w+)\s+(\d+)/);
+    if (match) {
+      target = new Date(`${match[1]} ${match[2]}, ${year}`);
+    }
+  }
+
+  if (isNaN(target.getTime())) return null;
+
+  const diff = target.getTime() - now.getTime();
+  if (diff <= 0) return null;
+
+  return {
+    days: Math.floor(diff / (1000 * 60 * 60 * 24)),
+    hours: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+    minutes: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
+    seconds: Math.floor((diff % (1000 * 60)) / 1000),
+  };
+}
+
+function CountdownTimer({ dateStr }: { dateStr: string }) {
+  const [countdown, setCountdown] = useState<Countdown | null>(null);
+
+  useEffect(() => {
+    setCountdown(getCountdown(dateStr));
+    const timer = setInterval(() => {
+      setCountdown(getCountdown(dateStr));
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [dateStr]);
+
+  if (!countdown) return null;
+
+  return (
+    <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
+      {[
+        { val: countdown.days, label: 'Days' },
+        { val: countdown.hours, label: 'Hrs' },
+        { val: countdown.minutes, label: 'Min' },
+        { val: countdown.seconds, label: 'Sec' },
+      ].map((item) => (
+        <div key={item.label} style={{ textAlign: 'center', minWidth: 50 }}>
+          <div style={{
+            padding: '6px 10px', borderRadius: 8,
+            background: 'rgba(228,108,99,0.1)',
+            color: '#E46C63', fontWeight: 700, fontSize: 18,
+            fontVariantNumeric: 'tabular-nums',
+          }}>
+            {String(item.val).padStart(2, '0')}
+          </div>
+          <p style={{ fontSize: 10, color: '#999', marginTop: 4, textTransform: 'uppercase', letterSpacing: 1 }}>{item.label}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
 
 const events = [
   { slug: 'sunday-worship-service', title: 'Sunday Worship Service', date: 'Every Sunday', time: '8:00 AM & 10:30 AM', location: 'All Locations', desc: 'Join us for powerful worship and the Word of God.', featured: true },
   { slug: 'midweek-service', title: 'Midweek Service', date: 'Every Wednesday', time: '6:00 PM', location: 'Headquarters', desc: 'Deeper teaching, prayer, and spiritual growth.', featured: false },
   { slug: 'youth-night', title: 'Youth Night', date: 'Every Friday', time: '6:30 PM', location: 'All Locations', desc: 'Dynamic worship and teaching for ages 13-18.', featured: false },
-  { slug: 'youth-camp-2026', title: 'Youth Camp 2026', date: 'August 15-20', time: 'All Day', location: 'Irvine Camp', desc: 'Games, worship, and life-changing messages.', featured: true },
-  { slug: 'womens-conference', title: "Women's Conference", date: 'September 5-6', time: '9:00 AM', location: 'Headquarters', desc: 'A weekend of worship and fellowship for women.', featured: false },
+  { slug: 'youth-camp-2026', title: 'Youth Camp 2026', date: 'August 15', time: 'All Day', location: 'Irvine Camp', desc: 'Games, worship, and life-changing messages.', featured: true },
+  { slug: 'womens-conference', title: "Women's Conference", date: 'September 5', time: '9:00 AM', location: 'Headquarters', desc: 'A weekend of worship and fellowship for women.', featured: false },
   { slug: 'mens-prayer-breakfast', title: "Men's Prayer Breakfast", date: 'First Saturday Monthly', time: '7:30 AM', location: 'Headquarters', desc: 'Prayer, fellowship, and a hearty breakfast.', featured: false },
 ];
 
@@ -33,7 +112,7 @@ export default function EventsPage() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
             {events.map((event, i) => (
               <motion.div key={event.title} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }} style={{ padding: 35, borderRadius: 15, background: event.featured ? '#1A374F' : '#fff', border: event.featured ? 'none' : '1px solid #eee' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 20, flexWrap: 'wrap' }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: 20, flexWrap: 'wrap' }}>
                   <div style={{ flex: 1, minWidth: 200 }}>
                     <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 16, fontSize: 13, marginBottom: 12 }}>
                       <span style={{ display: 'flex', alignItems: 'center', gap: 6, color: event.featured ? 'rgba(255,255,255,0.5)' : '#69757B' }}><Calendar size={14} /> {event.date}</span>
@@ -42,13 +121,14 @@ export default function EventsPage() {
                     </div>
                     <h3 style={{ fontSize: 20, fontFamily: "'Gotham', sans-serif", fontWeight: 500, color: event.featured ? '#fff' : '#222', margin: 0 }}>{event.title}</h3>
                     <p style={{ fontSize: 15, marginTop: 8, color: event.featured ? 'rgba(255,255,255,0.5)' : '#69757B' }}>{event.desc}</p>
+                    <CountdownTimer dateStr={event.date} />
                   </div>
                   <Link href={`/events/${event.slug}`} style={{
                     display: 'inline-block', padding: '14px 30px', fontSize: 13, fontWeight: 700,
                     textTransform: 'uppercase', letterSpacing: '1px', borderRadius: 3,
                     background: event.featured ? '#fff' : '#E46C63',
                     color: event.featured ? '#1A374F' : '#fff',
-                    textDecoration: 'none', whiteSpace: 'nowrap',
+                    textDecoration: 'none', whiteSpace: 'nowrap', alignSelf: 'center',
                   }}>
                     Learn More
                   </Link>

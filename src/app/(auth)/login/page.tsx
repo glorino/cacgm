@@ -5,7 +5,7 @@ import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Mail, Lock, Eye, EyeOff, Loader2, Church } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, Loader2, Church, ArrowLeft } from 'lucide-react';
 
 const demoAccounts = [
   { label: 'General Overseer', email: 'overseer@cacgm.org', role: 'Super Admin', color: '#1A374F' },
@@ -57,6 +57,20 @@ export default function LoginPage() {
   return (
     <div style={{ width: '100%', maxWidth: 440, padding: '0 24px' }}>
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+        {/* Back to Homepage */}
+        <Link href="/" style={{
+          display: 'inline-flex', alignItems: 'center', gap: 6,
+          marginBottom: 24, fontSize: 13, fontWeight: 600,
+          color: '#69757B', textDecoration: 'none',
+          transition: 'color .2s',
+        }}
+          onMouseEnter={(e) => e.currentTarget.style.color = '#3364A0'}
+          onMouseLeave={(e) => e.currentTarget.style.color = '#69757B'}
+        >
+          <ArrowLeft size={16} />
+          Back to Homepage
+        </Link>
+
         <div style={{ textAlign: 'center', marginBottom: 32 }}>
           <div style={{
             width: 64, height: 64, borderRadius: 16,
