@@ -9,11 +9,7 @@ import {
   Church,
   ArrowUpRight,
   Heart,
-  Calendar,
   Sparkles,
-  Activity,
-  DollarSign,
-  BarChart3,
 } from 'lucide-react';
 import Header from '@/components/Header';
 import { useUser } from '@/hooks/useUser';
@@ -29,11 +25,22 @@ import {
   ResponsiveContainer,
   BarChart,
   Bar,
-  Legend,
 } from 'recharts';
+
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+  return isMobile;
+}
 
 export default function DashboardPage() {
   const { userRole, userName } = useUser();
+  const isMobile = useIsMobile();
   const [branchFilter, setBranchFilter] = useState('');
   const [stats, setStats] = useState({
     totalMembers: 0,
@@ -152,7 +159,7 @@ export default function DashboardPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginBottom: 28 }}
+        style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)', gap: isMobile ? 12 : 16, marginBottom: 28 }}
       >
         <MetricCard
           title="Total Members"
@@ -193,7 +200,7 @@ export default function DashboardPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.1 }}
-        style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginBottom: 28 }}
+        style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 20, marginBottom: 28 }}
       >
         {/* Financial Trends */}
         <AnimatedCard delay={0.2} className="p-6">
@@ -294,7 +301,7 @@ export default function DashboardPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
-        style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}
+        style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 20 }}
       >
         {/* Recent Transactions */}
         <AnimatedCard delay={0.4} className="overflow-hidden">

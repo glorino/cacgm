@@ -14,7 +14,19 @@ const iconMap: Record<string, React.ReactNode> = {
   building: <Building size={20} />,
 };
 
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+  return isMobile;
+}
+
 export default function PublicGivePage() {
+  const isMobile = useIsMobile();
   const [selectedType, setSelectedType] = useState('TITHE');
   const [customAmount, setCustomAmount] = useState('');
   const [selectedPreset, setSelectedPreset] = useState<number | null>(null);
@@ -73,7 +85,7 @@ export default function PublicGivePage() {
   return (
     <div style={{ minHeight: '100vh', background: '#f8fafc' }}>
       {/* Hero */}
-      <section style={{ background: 'linear-gradient(135deg, #1A374F, #3364A0)', padding: '140px 40px 60px', textAlign: 'center' }}>
+      <section style={{ background: 'linear-gradient(135deg, #1A374F, #3364A0)', padding: isMobile ? '100px 20px 40px' : '140px 40px 60px', textAlign: 'center' }}>
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
           <h1 style={{ color: '#fff', fontFamily: "'Arno Pro', serif", fontSize: 'clamp(32px, 5vw, 52px)', marginBottom: 12 }}>
             Give to CACGM
@@ -85,7 +97,7 @@ export default function PublicGivePage() {
       </section>
 
       {/* Giving Form */}
-      <section style={{ maxWidth: 700, margin: '-30px auto 60px', padding: '0 20px', position: 'relative', zIndex: 10 }}>
+      <section style={{ maxWidth: 700, margin: isMobile ? '-20px auto 40px' : '-30px auto 60px', padding: isMobile ? '0 12px' : '0 20px', position: 'relative', zIndex: 10 }}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -126,8 +138,8 @@ export default function PublicGivePage() {
               <>
                 {/* Giving Type */}
                 <div style={{ marginBottom: 28 }}>
-                  <label style={{ fontSize: 13, fontWeight: 600, color: '#334155', display: 'block', marginBottom: 12 }}>Select Giving Type</label>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 10 }}>
+              <label style={{ fontSize: 13, fontWeight: 600, color: '#334155', display: 'block', marginBottom: 12 }}>Select Giving Type</label>
+              <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(3, 1fr)' : 'repeat(5, 1fr)', gap: 10 }}>
                     {GIVING_TYPES.map((type) => (
                       <motion.button
                         key={type.id}
@@ -151,8 +163,8 @@ export default function PublicGivePage() {
 
                 {/* Amount Selection */}
                 <div style={{ marginBottom: 28 }}>
-                  <label style={{ fontSize: 13, fontWeight: 600, color: '#334155', display: 'block', marginBottom: 12 }}>Select Amount (₦)</label>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 10, marginBottom: 12 }}>
+              <label style={{ fontSize: 13, fontWeight: 600, color: '#334155', display: 'block', marginBottom: 12 }}>Select Amount (₦)</label>
+              <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(3, 1fr)' : 'repeat(4, 1fr)', gap: 10, marginBottom: 12 }}>
                     {PRESET_AMOUNTS.map((amount) => (
                       <motion.button
                         key={amount}
@@ -191,8 +203,8 @@ export default function PublicGivePage() {
 
                 {/* Donor Info */}
                 <div style={{ marginBottom: 28 }}>
-                  <label style={{ fontSize: 13, fontWeight: 600, color: '#334155', display: 'block', marginBottom: 12 }}>Your Information</label>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 12 }}>
+              <label style={{ fontSize: 13, fontWeight: 600, color: '#334155', display: 'block', marginBottom: 12 }}>Your Information</label>
+              <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 12, marginBottom: 12 }}>
                     <input
                       type="text"
                       placeholder="Full Name *"

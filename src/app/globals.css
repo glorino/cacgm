@@ -25,6 +25,7 @@ body {
   color: #1f2937;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 ::-webkit-scrollbar {
@@ -42,6 +43,207 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #64748b;
+}
+
+/* ==================== RESPONSIVE UTILITIES ==================== */
+
+/* Flex layouts */
+.flex-row-mobile { display: flex; flex-direction: row; }
+.flex-col-mobile { display: flex; flex-direction: column; }
+.flex-wrap-mobile { flex-wrap: wrap; }
+.flex-center-mobile { display: flex; align-items: center; justify-content: center; }
+
+/* Grid layouts */
+.grid-4-mobile { display: grid; grid-template-columns: repeat(4, 1fr); }
+.grid-3-mobile { display: grid; grid-template-columns: repeat(3, 1fr); }
+.grid-2-mobile { display: grid; grid-template-columns: repeat(2, 1fr); }
+.grid-1-mobile { display: grid; grid-template-columns: 1fr; }
+
+/* Spacing */
+.gap-mobile-sm { gap: 8px; }
+.gap-mobile-md { gap: 16px; }
+.gap-mobile-lg { gap: 24px; }
+
+/* Text */
+.text-center-mobile { text-align: center; }
+.text-left-mobile { text-align: left; }
+
+/* Display */
+.hidden-mobile { display: none; }
+.block-mobile { display: block; }
+.overflow-x-auto-mobile { overflow-x: auto; }
+
+/* Width */
+.w-full-mobile { width: 100%; }
+.max-w-full-mobile { max-width: 100%; }
+
+/* Padding/Margin */
+.p-mobile-sm { padding: 8px; }
+.p-mobile-md { padding: 16px; }
+.p-mobile-lg { padding: 24px; }
+.px-mobile-sm { padding-left: 8px; padding-right: 8px; }
+.px-mobile-md { padding-left: 16px; padding-right: 16px; }
+.py-mobile-sm { padding-top: 8px; padding-bottom: 8px; }
+.py-mobile-md { padding-top: 16px; padding-bottom: 16px; }
+.mb-mobile-sm { margin-bottom: 8px; }
+.mb-mobile-md { margin-bottom: 16px; }
+.mb-mobile-lg { margin-bottom: 24px; }
+
+/* Overflow */
+.overflow-hidden-mobile { overflow: hidden; }
+.truncate-mobile { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* Sidebar responsive */
+.sidebar-mobile-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 40;
+}
+
+/* ==================== MEDIA QUERIES ==================== */
+
+/* Tablet: 768px and below */
+@media (max-width: 768px) {
+  .flex-row-mobile { flex-direction: column; }
+  .grid-4-mobile { grid-template-columns: repeat(2, 1fr); }
+  .grid-3-mobile { grid-template-columns: 1fr; }
+  .grid-2-mobile { grid-template-columns: 1fr; }
+  .hidden-mobile { display: none !important; }
+  .block-mobile { display: block !important; }
+
+  /* Landing page experience cards */
+  .experience-cards-grid {
+    flex-direction: column !important;
+    gap: 12px !important;
+  }
+
+  /* Stories grid */
+  .stories-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  /* Footer columns */
+  .footer-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 24px !important;
+  }
+
+  /* Hero text */
+  .hero-title {
+    font-size: clamp(28px, 6vw, 42px) !important;
+  }
+
+  /* Dashboard metric cards */
+  .metric-cards-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
+
+  /* Dashboard charts */
+  .charts-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Dashboard recent activity */
+  .activity-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Giving type buttons */
+  .giving-type-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  /* Amount buttons */
+  .amount-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  /* Branch list */
+  .branch-layout {
+    flex-direction: column !important;
+  }
+
+  /* Loop section */
+  .loop-section {
+    flex-direction: column !important;
+    gap: 40px !important;
+  }
+
+  /* CTA buttons */
+  .cta-buttons {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  .cta-buttons a {
+    text-align: center !important;
+  }
+
+  /* Tables */
+  .hide-tablet { display: none !important; }
+
+  /* Modal */
+  .modal-content {
+    margin: 16px !important;
+    max-height: 90vh !important;
+    overflow-y: auto !important;
+  }
+
+  /* Public page padding */
+  .public-page-padding {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+}
+
+/* Mobile: 480px and below */
+@media (max-width: 480px) {
+  .grid-4-mobile { grid-template-columns: 1fr; }
+  .grid-3-mobile { grid-template-columns: 1fr; }
+  .grid-2-mobile { grid-template-columns: 1fr; }
+
+  /* Footer columns */
+  .footer-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+
+  /* Metric cards */
+  .metric-cards-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Giving type buttons */
+  .giving-type-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* Amount buttons */
+  .amount-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* Hero */
+  .hero-title {
+    font-size: 26px !important;
+  }
+
+  /* Footer info bar */
+  .footer-info-bar {
+    flex-direction: column !important;
+    gap: 12px !important;
+    text-align: center !important;
+  }
+
+  /* Header nav */
+  .desktop-nav { display: none !important; }
+  .mobile-toggle { display: block !important; }
+
+  /* Slider controls */
+  .slider-arrows { display: none !important; }
 }
 
 @layer utilities {

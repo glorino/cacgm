@@ -22,14 +22,18 @@ const branchLocations = [
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const pathname = usePathname();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
+    const onResize = () => setIsMobile(window.innerWidth <= 768);
+    onResize();
     window.addEventListener('scroll', onScroll);
-    return () => window.removeEventListener('scroll', onScroll);
+    window.addEventListener('resize', onResize);
+    return () => { window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', onResize); };
   }, []);
 
   useEffect(() => { setMobileOpen(false); setDropdownOpen(false); }, [pathname]);
@@ -74,7 +78,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
           </Link>
 
           {/* Desktop Nav */}
-          <nav style={{ display: 'flex', alignItems: 'center', gap: 0 }}>
+          <nav style={{ display: 'flex', alignItems: 'center', gap: 0 }} className={isMobile ? 'hidden-mobile' : ''}>
             <ul style={{ display: 'flex', listStyle: 'none', margin: 0, padding: 0, alignItems: 'center', fontWeight: 700, fontSize: 13, textTransform: 'uppercase', letterSpacing: '0.5px' }}>
               {navLinks.map((link) => (
                 <li
@@ -150,9 +154,9 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
 
           {/* Mobile Toggle */}
           <button onClick={() => setMobileOpen(!mobileOpen)} style={{
-            display: 'none', padding: 8,
-            color: scrolled ? '#222' : '#fff', background: 'none', border: 'none', cursor: 'pointer',
-          }} className="mobile-toggle">
+            display: isMobile ? 'flex' : 'none', padding: 8,
+            color: scrolled ? '#222' : '#fff', background: 'none', border: 'none', cursor: 'pointer', alignItems: 'center', justifyContent: 'center',
+          }}>
             {mobileOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
@@ -192,7 +196,6 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
 
       <style>{`
         @media (max-width: 1023px) {
-          .mobile-toggle { display: block !important; }
           nav > ul, nav > div:last-child { display: none !important; }
         }
       `}</style>
@@ -202,12 +205,12 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
       {/* FOOTER */}
       <footer>
         {/* Newsletter */}
-        <div style={{ padding: '60px 50px', textAlign: 'center', background: '#39A1B1' }}>
+        <div style={{ padding: isMobile ? '40px 20px' : '60px 50px', textAlign: 'center', background: '#39A1B1' }}>
           <div style={{ maxWidth: 500, margin: '0 auto' }}>
-            <h3 style={{ color: '#fff', fontFamily: "'Arno Pro', serif", fontSize: 32, marginBottom: 12 }}>The Weekly</h3>
-            <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: 15, marginBottom: 32 }}>Sign up to stay in the loop with everything happening at CACGM.</p>
+            <h3 style={{ color: '#fff', fontFamily: "'Arno Pro', serif", fontSize: isMobile ? 26 : 32, marginBottom: 12 }}>The Weekly</h3>
+            <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: isMobile ? 14 : 15, marginBottom: 24 }}>Sign up to stay in the loop with everything happening at CACGM.</p>
             <Link href="/contact" style={{
-              display: 'inline-block', padding: '16px 40px', fontSize: 13, fontWeight: 700,
+              display: 'inline-block', padding: isMobile ? '14px 28px' : '16px 40px', fontSize: 13, fontWeight: 700,
               textTransform: 'uppercase', letterSpacing: '1px', borderRadius: 3,
               background: '#fff', color: '#39A1B1', textDecoration: 'none',
             }}>
@@ -217,9 +220,9 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
         </div>
 
         {/* Footer Content */}
-        <div style={{ padding: '60px 50px', background: '#222' }}>
+        <div style={{ padding: isMobile ? '40px 20px' : '60px 50px', background: '#222' }}>
           <div style={{ maxWidth: 1400, margin: '0 auto' }}>
-            <div style={{ marginBottom: 40 }}>
+            <div style={{ marginBottom: 32 }}>
               <div style={{
                 display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
                 height: 45, padding: '0 24px', fontWeight: 700, fontSize: 16,
@@ -227,7 +230,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
               }}>CACGM</div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 40, marginBottom: 48 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(5, 1fr)', gap: isMobile ? 24 : 40, marginBottom: 40 }}>
               {[
                 { name: 'Headquarters', addr: '12 Allen Avenue, Ikeja, Lagos', time: 'Sundays 8:00 & 10:30 AM' },
                 { name: 'Surulere', addr: '45 Bode Thomas Street', time: 'Sundays 9:00 AM' },
@@ -236,14 +239,14 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
                 { name: 'Lekki', addr: '15 Admiralty Way', time: 'Sundays 9:00 AM' },
               ].map((loc) => (
                 <div key={loc.name}>
-                  <h3 style={{ color: '#fff', fontSize: 17, fontWeight: 500, marginBottom: 12 }}>{loc.name}</h3>
-                  <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: 14, margin: '0 0 8px', lineHeight: 1.6 }}>{loc.addr}</p>
-                  <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: 14, margin: 0 }}>{loc.time}</p>
+                  <h3 style={{ color: '#fff', fontSize: isMobile ? 15 : 17, fontWeight: 500, marginBottom: 8 }}>{loc.name}</h3>
+                  <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: isMobile ? 13 : 14, margin: '0 0 6px', lineHeight: 1.6 }}>{loc.addr}</p>
+                  <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: isMobile ? 13 : 14, margin: 0 }}>{loc.time}</p>
                 </div>
               ))}
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: 32, paddingTop: 32, borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? 20 : 32, paddingTop: 24, borderTop: '1px solid rgba(255,255,255,0.1)', flexWrap: 'wrap' }}>
               {['Instagram', 'Facebook', 'YouTube'].map((social) => (
                 <a key={social} href="#" style={{ color: '#39A1B1', textDecoration: 'none', fontSize: 13, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px' }}>{social}</a>
               ))}
@@ -253,12 +256,13 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
 
         {/* Info Bar */}
         <div style={{
-          padding: '20px 50px', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          fontSize: 12, fontWeight: 500, textTransform: 'uppercase', letterSpacing: '1px',
+          padding: isMobile ? '16px 20px' : '20px 50px', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          fontSize: isMobile ? 10 : 12, fontWeight: 500, textTransform: 'uppercase', letterSpacing: '1px',
           background: '#191919', color: 'rgba(255,255,255,0.5)',
+          flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? 12 : 0, textAlign: isMobile ? 'center' : 'left',
         }}>
           <span>&copy; {new Date().getFullYear()} CACGM. All Rights Reserved.</span>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 32 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? 16 : 32, flexWrap: 'wrap', justifyContent: 'center' }}>
             <a href="#" style={{ color: 'inherit', textDecoration: 'none' }}>Contact Us</a>
             <a href="#" style={{ color: 'inherit', textDecoration: 'none' }}>About Us</a>
             <a href="#" style={{ color: 'inherit', textDecoration: 'none' }}>Privacy Policy</a>

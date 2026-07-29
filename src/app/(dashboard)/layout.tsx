@@ -13,6 +13,14 @@ export default function DashboardLayout({
   const { data: session, status } = useSession();
   const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   useEffect(() => {
     if (status === 'unauthenticated') {
@@ -47,8 +55,8 @@ export default function DashboardLayout({
   return (
     <div style={{ display: 'flex', minHeight: '100vh', background: '#f8fafc' }}>
       <Sidebar userRole={userRole} userName={userName} branchName={branchId} />
-      <main style={{ flex: 1, minHeight: '100vh', marginLeft: 0 }}>
-        <div style={{ padding: '32px', paddingTop: 72, maxWidth: 1600, margin: '0 auto' }}>
+      <main style={{ flex: 1, minHeight: '100vh', marginLeft: isMobile ? 0 : 0 }}>
+        <div style={{ padding: isMobile ? '16px' : '32px', paddingTop: isMobile ? 60 : 72, maxWidth: 1600, margin: '0 auto' }}>
           {children}
         </div>
       </main>
