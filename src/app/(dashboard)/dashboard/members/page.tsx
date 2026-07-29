@@ -224,39 +224,58 @@ export default function MembersPage() {
       <AnimatePresence>
         {(showModal === 'add' || showModal === 'edit') && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
-            <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.95, opacity: 0 }} className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6">
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg font-semibold text-slate-800">{showModal === 'edit' ? 'Edit Member' : 'Add Member'}</h3>
-                <button onClick={() => setShowModal(null)} className="p-1 rounded-lg hover:bg-slate-100"><X size={18} /></button>
-              </div>
-              {error && <div className="mb-4 p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm">{error}</div>}
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Full Name</label>
-                  <input type="text" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20" placeholder="John Doe" />
+            <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.95, opacity: 0 }} className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden">
+              {/* Modal Header */}
+              <div style={{ background: 'linear-gradient(135deg, #1A374F, #3364A0)', padding: '20px 24px' }} className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div style={{ width: 40, height: 40, borderRadius: 12, background: 'rgba(255,255,255,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <User size={20} className="text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-white">{showModal === 'edit' ? 'Edit Member' : 'Add New Member'}</h3>
+                    <p className="text-xs text-slate-300">{showModal === 'edit' ? 'Update member information' : 'Register a new church member'}</p>
+                  </div>
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Email</label>
-                  <input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20" placeholder="john@cacgm.org" />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Phone</label>
-                  <input type="tel" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20" placeholder="+234 800 000 0000" />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Branch</label>
-                  <select value={form.branchId} onChange={(e) => setForm({ ...form, branchId: e.target.value })} className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20">
-                    <option value="">Select Branch</option>
-                    {BRANCHES_DATA.map(b => <option key={b.id} value={b.id}>{b.name}</option>)}
-                  </select>
-                </div>
-              </div>
-              <div className="flex gap-3 mt-6">
-                <button onClick={() => setShowModal(null)} className="flex-1 py-2.5 rounded-xl border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50">Cancel</button>
-                <button onClick={handleSave} disabled={saving || !form.name || !form.email} className="flex-1 py-2.5 rounded-xl bg-primary text-white text-sm font-medium hover:bg-primary/90 disabled:opacity-50 flex items-center justify-center gap-2">
-                  {saving ? <Loader2 size={16} className="animate-spin" /> : null}
-                  {showModal === 'edit' ? 'Update' : 'Create'}
+                <button onClick={() => setShowModal(null)} className="p-2 rounded-lg hover:bg-white/10 transition-colors">
+                  <X size={18} className="text-white" />
                 </button>
+              </div>
+
+              {/* Modal Body */}
+              <div className="p-6">
+                {error && <div className="mb-4 p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm">{error}</div>}
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-1.5">Full Name</label>
+                    <input type="text" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="John Doe" style={{ width: '100%', padding: '10px 14px', borderRadius: 10, border: '1px solid #e2e8f0', fontSize: 14, background: '#f8fafc', outline: 'none' }} onFocus={(e) => e.target.style.borderColor = '#1A374F'} onBlur={(e) => e.target.style.borderColor = '#e2e8f0'} />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-1.5">Email</label>
+                    <input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} placeholder="john@cacgm.org" style={{ width: '100%', padding: '10px 14px', borderRadius: 10, border: '1px solid #e2e8f0', fontSize: 14, background: '#f8fafc', outline: 'none' }} onFocus={(e) => e.target.style.borderColor = '#1A374F'} onBlur={(e) => e.target.style.borderColor = '#e2e8f0'} />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-1.5">Phone</label>
+                    <input type="tel" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} placeholder="+234 800 000 0000" style={{ width: '100%', padding: '10px 14px', borderRadius: 10, border: '1px solid #e2e8f0', fontSize: 14, background: '#f8fafc', outline: 'none' }} onFocus={(e) => e.target.style.borderColor = '#1A374F'} onBlur={(e) => e.target.style.borderColor = '#e2e8f0'} />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-1.5">Branch</label>
+                    <select value={form.branchId} onChange={(e) => setForm({ ...form, branchId: e.target.value })} style={{ width: '100%', padding: '10px 14px', borderRadius: 10, border: '1px solid #e2e8f0', fontSize: 14, background: '#f8fafc', outline: 'none', color: form.branchId ? '#1e293b' : '#94a3b8' }} onFocus={(e) => e.target.style.borderColor = '#1A374F'} onBlur={(e) => e.target.style.borderColor = '#e2e8f0'}>
+                      <option value="">Select Branch</option>
+                      {BRANCHES_DATA.map(b => <option key={b.id} value={b.id}>{b.name}</option>)}
+                    </select>
+                  </div>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="flex gap-3 mt-6">
+                  <button onClick={() => setShowModal(null)} className="flex-1 py-3 rounded-xl border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors">
+                    Cancel
+                  </button>
+                  <button onClick={handleSave} disabled={saving || !form.name || !form.email} style={{ flex: 1, padding: '12px', borderRadius: 11, background: 'linear-gradient(135deg, #1A374F, #3364A0)', color: '#fff', fontSize: 14, fontWeight: 600, border: 'none', cursor: saving ? 'wait' : 'pointer', opacity: saving || !form.name || !form.email ? 0.5 : 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+                    {saving ? <Loader2 size={16} className="animate-spin" /> : null}
+                    {showModal === 'edit' ? 'Update Member' : 'Create Member'}
+                  </button>
+                </div>
               </div>
             </motion.div>
           </motion.div>

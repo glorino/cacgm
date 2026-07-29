@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MapPin, Navigation, Phone, Clock, Locate, X } from 'lucide-react';
+import { MapPin, Navigation, Phone, Clock, Locate, X, ExternalLink } from 'lucide-react';
 import { BRANCHES_DATA, SERVICE_TYPES } from '@/lib/constants';
 import { haversineDistance, cn } from '@/lib/utils';
 
@@ -11,19 +11,13 @@ interface UserLocation {
   lng: number;
 }
 
-declare global {
-  interface Window {
-    google: typeof google;
-    initMap?: () => void;
-  }
-}
-
 export default function BranchLocatorPage() {
   const [userLocation, setUserLocation] = useState<UserLocation | null>(null);
   const [selectedBranch, setSelectedBranch] = useState<string | null>(null);
   const [locationError, setLocationError] = useState('');
   const [loading, setLoading] = useState(false);
   const [mapLoaded, setMapLoaded] = useState(false);
+  const [mapError, setMapError] = useState(false);
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<google.maps.Map | null>(null);
   const markersRef = useRef<google.maps.Marker[]>([]);
@@ -42,101 +36,116 @@ export default function BranchLocatorPage() {
     return haversineDistance(userLocation.lat, userLocation.lng, lat, lng);
   };
 
-  const initMap = useCallback(() => {
+  const initMap = useCallback((loc?: UserLocation) => {
     if (!mapRef.current || mapInstanceRef.current) return;
 
-    const center = userLocation || { lat: 6.5244, lng: 3.3792 };
+    const center = loc || userLocation || { lat: 6.5244, lng: 3.3792 };
 
-    const map = new google.maps.Map(mapRef.current, {
-      center,
-      zoom: 12,
-      disableDefaultUI: true,
-      zoomControl: true,
-      mapTypeControl: false,
-      streetViewControl: false,
-      fullscreenControl: true,
-      styles: [
-        { featureType: 'poi', stylers: [{ visibility: 'off' }] },
-        { featureType: 'transit', stylers: [{ visibility: 'off' }] },
-        { elementType: 'labels', stylers: [{ visibility: 'simplified' }] },
-        { featureType: 'road', elementType: 'labels.icon', stylers: [{ visibility: 'off' }] },
-      ],
-    });
+    try {
+      const map = new google.maps.Map(mapRef.current, {
+        center,
+        zoom: 12,
+        disableDefaultUI: true,
+        zoomControl: true,
+        mapTypeControl: false,
+        streetViewControl: false,
+        fullscreenControl: true,
+        styles: [
+          { featureType: 'poi', stylers: [{ visibility: 'off' }] },
+          { featureType: 'transit', stylers: [{ visibility: 'off' }] },
+          { elementType: 'labels', stylers: [{ visibility: 'simplified' }] },
+          { featureType: 'road', elementType: 'labels.icon', stylers: [{ visibility: 'off' }] },
+        ],
+      });
 
-    mapInstanceRef.current = map;
+      mapInstanceRef.current = map;
 
-    BRANCHES_DATA.forEach((branch) => {
-      const marker = new google.maps.Marker({
+      BRANCHES_DATA.forEach((branch) => {
+        const marker = new google.maps.Marker({
+          map,
+          position: { lat: branch.latitude, lng: branch.longitude },
+          title: branch.name,
+          icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 10,
+            fillColor: '#1e3a5f',
+            fillOpacity: 1,
+            strokeColor: '#E46C63',
+            strokeWeight: 3,
+          },
+          label: {
+            text: 'CA',
+            color: '#ffffff',
+            fontSize: '9px',
+            fontWeight: 'bold',
+          },
+        });
+
+        marker.addListener('click', () => {
+          setSelectedBranch(branch.id);
+          map.panTo({ lat: branch.latitude, lng: branch.longitude });
+          map.setZoom(15);
+        });
+
+        markersRef.current.push(marker);
+      });
+
+      if (loc) {
+        userMarkerRef.current = new google.maps.Marker({
+          map,
+          position: loc,
+          title: 'Your Location',
+          icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 12,
+            fillColor: '#3b82f6',
+            fillOpacity: 1,
+            strokeColor: '#ffffff',
+            strokeWeight: 4,
+          },
+        });
+      }
+
+      directionsRendererRef.current = new google.maps.DirectionsRenderer({
         map,
-        position: { lat: branch.latitude, lng: branch.longitude },
-        title: branch.name,
-        icon: {
-          path: google.maps.SymbolPath.CIRCLE,
-          scale: 10,
-          fillColor: '#1e3a5f',
-          fillOpacity: 1,
-          strokeColor: '#d4a017',
-          strokeWeight: 3,
-        },
-        label: {
-          text: 'CA',
-          color: '#ffffff',
-          fontSize: '9px',
-          fontWeight: 'bold',
+        suppressMarkers: true,
+        polylineOptions: {
+          strokeColor: '#1e3a5f',
+          strokeWeight: 5,
+          strokeOpacity: 0.8,
         },
       });
 
-      marker.addListener('click', () => {
-        setSelectedBranch(branch.id);
-        map.panTo({ lat: branch.latitude, lng: branch.longitude });
-        map.setZoom(15);
-      });
-
-      markersRef.current.push(marker);
-    });
-
-    if (userLocation) {
-      userMarkerRef.current = new google.maps.Marker({
-        map,
-        position: userLocation,
-        title: 'Your Location',
-        icon: {
-          path: google.maps.SymbolPath.CIRCLE,
-          scale: 12,
-          fillColor: '#3b82f6',
-          fillOpacity: 1,
-          strokeColor: '#ffffff',
-          strokeWeight: 4,
-        },
-      });
+      setMapLoaded(true);
+    } catch {
+      setMapError(true);
+      setMapLoaded(true);
     }
-
-    directionsRendererRef.current = new google.maps.DirectionsRenderer({
-      map,
-      suppressMarkers: true,
-      polylineOptions: {
-        strokeColor: '#1e3a5f',
-        strokeWeight: 5,
-        strokeOpacity: 0.8,
-      },
-    });
-
-    setMapLoaded(true);
   }, [userLocation]);
 
-  const loadGoogleMaps = useCallback(() => {
+  const loadGoogleMaps = useCallback((loc?: UserLocation) => {
     if (typeof window !== 'undefined' && window.google && window.google.maps) {
-      initMap();
+      initMap(loc);
       return;
     }
 
     const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '';
+    if (!apiKey) {
+      setMapError(true);
+      setMapLoaded(true);
+      return;
+    }
+
     const script = document.createElement('script');
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=initMap`;
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=__initBranchMap`;
     script.async = true;
     script.defer = true;
+    script.onerror = () => {
+      setMapError(true);
+      setMapLoaded(true);
+    };
 
-    window.initMap = initMap;
+    window.__initBranchMap = () => initMap(loc);
     document.head.appendChild(script);
   }, [initMap]);
 
@@ -146,21 +155,47 @@ export default function BranchLocatorPage() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          setUserLocation({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          });
+          const loc = { lat: position.coords.latitude, lng: position.coords.longitude };
+          setUserLocation(loc);
           setLoading(false);
+          if (!mapInstanceRef.current) {
+            loadGoogleMaps(loc);
+          } else {
+            mapInstanceRef.current.panTo(loc);
+            if (!userMarkerRef.current) {
+              userMarkerRef.current = new google.maps.Marker({
+                map: mapInstanceRef.current,
+                position: loc,
+                title: 'Your Location',
+                icon: {
+                  path: google.maps.SymbolPath.CIRCLE,
+                  scale: 12,
+                  fillColor: '#3b82f6',
+                  fillOpacity: 1,
+                  strokeColor: '#ffffff',
+                  strokeWeight: 4,
+                },
+              });
+            } else {
+              userMarkerRef.current.setPosition(loc);
+            }
+          }
         },
         () => {
-          setLocationError('Location access denied. Showing default location.');
+          setLocationError('Location access denied. Using default location.');
           setLoading(false);
+          if (!mapInstanceRef.current) {
+            loadGoogleMaps();
+          }
         },
-        { enableHighAccuracy: true, timeout: 10000 }
+        { enableHighAccuracy: false, timeout: 5000, maximumAge: 60000 }
       );
     } else {
-      setLocationError('Geolocation not supported by your browser.');
+      setLocationError('Geolocation not supported. Using default location.');
       setLoading(false);
+      if (!mapInstanceRef.current) {
+        loadGoogleMaps();
+      }
     }
   };
 
@@ -188,48 +223,26 @@ export default function BranchLocatorPage() {
     }
   };
 
+  // Load map on mount with default location - don't wait for geolocation
   useEffect(() => {
-    requestLocation();
+    const timer = setTimeout(() => {
+      loadGoogleMaps();
+    }, 500);
+    return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    if (userLocation) {
-      if (mapInstanceRef.current) {
-        mapInstanceRef.current.panTo(userLocation);
-        if (userMarkerRef.current) {
-          userMarkerRef.current.setPosition(userLocation);
-        } else {
-          userMarkerRef.current = new google.maps.Marker({
-            map: mapInstanceRef.current,
-            position: userLocation,
-            title: 'Your Location',
-            icon: {
-              path: google.maps.SymbolPath.CIRCLE,
-              scale: 12,
-              fillColor: '#3b82f6',
-              fillOpacity: 1,
-              strokeColor: '#ffffff',
-              strokeWeight: 4,
-            },
-          });
-        }
-      } else {
-        loadGoogleMaps();
-      }
-    }
-  }, [userLocation, loadGoogleMaps]);
 
   const selectedBranchData = BRANCHES_DATA.find((b) => b.id === selectedBranch);
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <div className="bg-gradient-primary text-white p-6">
+      <div style={{ background: 'linear-gradient(135deg, #1A374F, #3364A0)', padding: '24px 32px' }}>
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold">Find a Branch</h1>
+            <h1 className="text-2xl font-bold text-white">Find a Branch</h1>
             <p className="text-slate-300 text-sm mt-1">Locate the nearest CACGM branch and get directions</p>
           </div>
-          <a href="/dashboard" className="px-4 py-2 bg-white/10 border border-white/20 rounded-xl text-sm font-medium hover:bg-white/20 transition-colors">
+          <a href="/dashboard" className="px-4 py-2 bg-white/10 border border-white/20 rounded-xl text-sm font-medium text-white hover:bg-white/20 transition-colors">
             Dashboard
           </a>
         </div>
@@ -237,18 +250,24 @@ export default function BranchLocatorPage() {
 
       <div className="max-w-7xl mx-auto p-4 sm:p-6">
         <div className="flex flex-col lg:flex-row gap-6" style={{ height: 'calc(100vh - 180px)' }}>
-          <div className="lg:w-[380px] flex-shrink-0 overflow-y-auto space-y-3">
-            <div className="bg-white rounded-2xl p-4 border border-slate-200 sticky top-0 z-10">
+          <div className="lg:w-[380px] flex-shrink-0 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 200px)' }}>
+            <div className="bg-white rounded-2xl p-4 border border-slate-200 sticky top-0 z-10 mb-3">
               <button
                 onClick={requestLocation}
                 disabled={loading}
-                className="w-full flex items-center justify-center gap-2 py-3 bg-primary text-white rounded-xl text-sm font-medium hover:bg-primary/90 transition-colors disabled:opacity-50"
+                style={{
+                  width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+                  padding: '12px', borderRadius: 12, fontSize: 14, fontWeight: 600,
+                  background: 'linear-gradient(135deg, #1A374F, #3364A0)',
+                  color: '#fff', border: 'none', cursor: loading ? 'wait' : 'pointer',
+                  opacity: loading ? 0.7 : 1,
+                }}
               >
                 <Locate size={18} />
                 {loading ? 'Locating...' : userLocation ? 'Update Location' : 'Use My Location'}
               </button>
               {locationError && (
-                <p className="text-xs text-amber-600 mt-2 text-center">{locationError}</p>
+                <p style={{ fontSize: 12, color: '#b45309', marginTop: 8, textAlign: 'center' }}>{locationError}</p>
               )}
             </div>
 
@@ -269,14 +288,15 @@ export default function BranchLocatorPage() {
                         mapInstanceRef.current.setZoom(15);
                       }
                     }}
-                    className={cn(
-                      'bg-white rounded-2xl p-4 border cursor-pointer transition-all hover:shadow-md',
-                      isSelected ? 'border-primary shadow-md ring-1 ring-primary/20' : 'border-slate-200'
-                    )}
+                    className="bg-white rounded-2xl p-4 border cursor-pointer transition-all hover:shadow-md"
+                    style={{
+                      borderColor: isSelected ? '#1A374F' : '#e2e8f0',
+                      boxShadow: isSelected ? '0 4px 16px rgba(26,55,79,0.15)' : undefined,
+                    }}
                   >
                     <div className="flex items-start gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-primary/5 flex items-center justify-center flex-shrink-0">
-                        <MapPin size={18} className="text-primary" />
+                      <div style={{ width: 40, height: 40, borderRadius: 12, background: isSelected ? 'linear-gradient(135deg, #1A374F, #3364A0)' : '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                        <MapPin size={18} style={{ color: isSelected ? '#fff' : '#1A374F' }} />
                       </div>
                       <div className="flex-1 min-w-0">
                         <h3 className="text-sm font-semibold text-slate-800">{branch.name}</h3>
@@ -305,20 +325,29 @@ export default function BranchLocatorPage() {
                           ))}
                         </div>
 
-                        {isSelected && userLocation && (
-                          <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: 'auto' }}
-                            className="mt-3 pt-3 border-t border-slate-100"
-                          >
-                            <button
-                              onClick={(e) => { e.stopPropagation(); getDirections(branch); }}
-                              className="w-full py-2 bg-primary text-white rounded-lg text-xs font-medium hover:bg-primary/90 transition-colors flex items-center justify-center gap-2"
+                        {isSelected && (
+                          <div className="mt-3 pt-3 border-t border-slate-100 space-y-2">
+                            <a
+                              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(branch.address)}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={(e) => e.stopPropagation()}
+                              className="w-full py-2 rounded-lg text-xs font-medium flex items-center justify-center gap-2 transition-colors"
+                              style={{ background: '#1A374F', color: '#fff' }}
                             >
-                              <Navigation size={14} />
-                              Get Directions
-                            </button>
-                          </motion.div>
+                              <ExternalLink size={14} />
+                              Open in Google Maps
+                            </a>
+                            {userLocation && (
+                              <button
+                                onClick={(e) => { e.stopPropagation(); getDirections(branch); }}
+                                className="w-full py-2 bg-primary text-white rounded-lg text-xs font-medium hover:bg-primary/90 transition-colors flex items-center justify-center gap-2"
+                              >
+                                <Navigation size={14} />
+                                Get Directions
+                              </button>
+                            )}
+                          </div>
                         )}
                       </div>
                     </div>
@@ -336,6 +365,29 @@ export default function BranchLocatorPage() {
                 <div className="text-center">
                   <div className="w-12 h-12 border-4 border-primary/20 border-t-primary rounded-full animate-spin mx-auto" />
                   <p className="text-sm text-slate-500 mt-4">Loading map...</p>
+                </div>
+              </div>
+            )}
+
+            {mapError && (
+              <div className="absolute inset-0 flex items-center justify-center bg-slate-100">
+                <div className="text-center p-8">
+                  <MapPin size={48} className="mx-auto mb-4 text-slate-300" />
+                  <p className="text-lg font-semibold text-slate-700 mb-2">Map Unavailable</p>
+                  <p className="text-sm text-slate-500 mb-4">Google Maps could not be loaded. Please check your connection.</p>
+                  <div className="space-y-2">
+                    {BRANCHES_DATA.slice(0, 3).map((b) => (
+                      <a
+                        key={b.id}
+                        href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(b.address)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block px-4 py-2 bg-white rounded-lg border border-slate-200 text-sm text-slate-700 hover:bg-slate-50"
+                      >
+                        {b.name} &rarr;
+                      </a>
+                    ))}
+                  </div>
                 </div>
               </div>
             )}
@@ -360,12 +412,13 @@ export default function BranchLocatorPage() {
 
                   {userLocation && (
                     <>
-                      <p className="text-xs text-primary font-medium mb-3">
+                      <p className="text-xs font-medium mb-3" style={{ color: '#1A374F' }}>
                         {getDistance(selectedBranchData.latitude, selectedBranchData.longitude)?.toFixed(1)} km from your location
                       </p>
                       <button
                         onClick={() => getDirections(selectedBranchData)}
-                        className="w-full py-2 bg-primary text-white rounded-xl text-xs font-medium hover:bg-primary/90 transition-colors flex items-center justify-center gap-2"
+                        className="w-full py-2 text-white rounded-xl text-xs font-medium hover:opacity-90 transition-colors flex items-center justify-center gap-2"
+                        style={{ background: 'linear-gradient(135deg, #1A374F, #3364A0)' }}
                       >
                         <Navigation size={14} />
                         Get Directions

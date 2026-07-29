@@ -35,9 +35,23 @@ interface MetricCardProps {
   changeType?: 'positive' | 'negative' | 'neutral';
   icon: ReactNode;
   delay?: number;
+  gradient?: string;
 }
 
-export function MetricCard({ title, value, change, changeType = 'neutral', icon, delay = 0 }: MetricCardProps) {
+const gradients = [
+  'linear-gradient(135deg, #1e3a5f, #3b6ea0)',
+  'linear-gradient(135deg, #E46C63, #f09090)',
+  'linear-gradient(135deg, #39A1B1, #5bc0c9)',
+  'linear-gradient(135deg, #3364A0, #5a8bc7)',
+];
+
+const iconBgs = ['#1e3a5f20', '#E46C6320', '#39A1B120', '#3364A020'];
+const iconColors = ['#1e3a5f', '#E46C63', '#39A1B1', '#3364A0'];
+
+export function MetricCard({ title, value, change, changeType = 'neutral', icon, delay = 0, gradient }: MetricCardProps) {
+  const grad = gradient || gradients[Math.floor(delay * 10) % gradients.length];
+  const idx = Math.floor(delay * 10) % gradients.length;
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -49,23 +63,47 @@ export function MetricCard({ title, value, change, changeType = 'neutral', icon,
         delay,
       }}
       whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
-      className="bg-white rounded-2xl border border-slate-200/60 p-6 shadow-sm hover:shadow-lg transition-all"
+      style={{
+        background: grad,
+        borderRadius: 16,
+        padding: 24,
+        color: '#fff',
+        position: 'relative',
+        overflow: 'hidden',
+        boxShadow: '0 4px 16px rgba(0,0,0,0.12)',
+      }}
     >
-      <div className="flex items-start justify-between">
-        <div className="flex-1">
-          <p className="text-sm font-medium text-slate-500">{title}</p>
-          <p className="text-3xl font-bold text-slate-800 mt-2">{value}</p>
+      {/* Decorative circle */}
+      <div style={{
+        position: 'absolute', top: -20, right: -20,
+        width: 100, height: 100, borderRadius: '50%',
+        background: 'rgba(255,255,255,0.08)',
+      }} />
+      <div style={{
+        position: 'absolute', bottom: -30, left: -10,
+        width: 60, height: 60, borderRadius: '50%',
+        background: 'rgba(255,255,255,0.05)',
+      }} />
+
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', position: 'relative', zIndex: 1 }}>
+        <div style={{ flex: 1 }}>
+          <p style={{ fontSize: 13, fontWeight: 500, opacity: 0.85, margin: 0 }}>{title}</p>
+          <p style={{ fontSize: 32, fontWeight: 700, margin: '8px 0 0', lineHeight: 1 }}>{value}</p>
           {change && (
-            <p className={`text-xs mt-2 font-medium ${
-              changeType === 'positive' ? 'text-emerald-600' :
-              changeType === 'negative' ? 'text-red-500' :
-              'text-slate-500'
-            }`}>
+            <p style={{
+              fontSize: 12, marginTop: 8, fontWeight: 500,
+              color: changeType === 'positive' ? '#a7f3d0' : changeType === 'negative' ? '#fca5a5' : 'rgba(255,255,255,0.7)',
+            }}>
               {change}
             </p>
           )}
         </div>
-        <div className="w-12 h-12 rounded-xl bg-primary/5 flex items-center justify-center text-primary flex-shrink-0">
+        <div style={{
+          width: 48, height: 48, borderRadius: 12,
+          background: 'rgba(255,255,255,0.15)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          color: '#fff', flexShrink: 0,
+        }}>
           {icon}
         </div>
       </div>

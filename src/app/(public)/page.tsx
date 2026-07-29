@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Play } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Play, MapPin, Globe, Users, MonitorPlay } from 'lucide-react';
 
 const heroImages = [
   'https://images.unsplash.com/photo-1438032005730-c779502df39b?w=2000&q=80',
@@ -19,10 +19,10 @@ const heroTexts = [
 ];
 
 const experienceCards = [
-  { title: 'Find a Congregation', desc: 'We gather together for services each weekend', link: 'Locations', href: '/locations' },
-  { title: 'Youth Ministry', desc: 'For young people ages 13-18', link: 'Learn More', href: '/ministries' },
-  { title: 'Hosted Here', desc: 'Partner churches under CACGM', link: 'Learn More', href: '/about' },
-  { title: 'Online', desc: 'Experience CACGM from anywhere', link: 'Learn More', href: '/watch' },
+  { title: 'Find a Congregation', desc: 'We gather together for services each weekend', link: 'Locations', href: '/locations', icon: <MapPin size={28} />, color: '#1A374F', bg: 'linear-gradient(135deg, #1A374F, #254f6e)' },
+  { title: 'Youth Ministry', desc: 'For young people ages 13-18', link: 'Learn More', href: '/ministries', icon: <Users size={28} />, color: '#E46C63', bg: 'linear-gradient(135deg, #E46C63, #c44f47)' },
+  { title: 'Hosted Here', desc: 'Partner churches under CACGM', link: 'Learn More', href: '/about', icon: <Globe size={28} />, color: '#39A1B1', bg: 'linear-gradient(135deg, #39A1B1, #2d8a96)' },
+  { title: 'Online', desc: 'Experience CACGM from anywhere', link: 'Learn More', href: '/watch', icon: <MonitorPlay size={28} />, color: '#3364A0', bg: 'linear-gradient(135deg, #3364A0, #254f8a)' },
 ];
 
 const loopSteps = [
@@ -154,19 +154,37 @@ export default function HomePage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 + i * 0.1 }}
+                whileHover={{ y: -6, transition: { duration: 0.2 } }}
                 style={{
                   flex: 1, borderRadius: 15, padding: 30, display: 'flex', flexDirection: 'column', textAlign: 'left',
                   background: 'hsla(0,0%,100%,0.92)', backdropFilter: 'blur(20px)',
+                  overflow: 'hidden', position: 'relative', cursor: 'pointer',
+                  boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
                 }}
               >
-                <h3 style={{ fontSize: 20, fontFamily: "'Gotham', sans-serif", fontWeight: 500, color: '#222', marginBottom: 8 }}>{card.title}</h3>
-                <p style={{ fontSize: 15, color: '#69757B', marginBottom: 30, lineHeight: 1.6 }}>{card.desc}</p>
+                {/* Color accent bar at top */}
+                <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 4, background: card.bg }} />
+                <div style={{
+                  width: 52, height: 52, borderRadius: 14,
+                  background: card.bg,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  marginBottom: 16, color: '#fff',
+                  boxShadow: `0 4px 12px ${card.color}30`,
+                }}>
+                  {card.icon}
+                </div>
+                <h3 style={{ fontSize: 19, fontFamily: "'Gotham', sans-serif", fontWeight: 600, color: '#222', marginBottom: 8 }}>{card.title}</h3>
+                <p style={{ fontSize: 15, color: '#69757B', marginBottom: 24, lineHeight: 1.6 }}>{card.desc}</p>
                 <div style={{ marginTop: 'auto' }}>
                   <Link href={card.href} style={{
-                    display: 'inline-block', minWidth: 170, textAlign: 'center', padding: '14px 22px',
-                    fontSize: 13, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px',
-                    borderRadius: 3, border: '1px solid rgba(0,0,0,0.15)', color: '#222', textDecoration: 'none',
-                  }}>
+                    display: 'inline-block', padding: '12px 22px',
+                    fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px',
+                    borderRadius: 3, background: card.color, color: '#fff', textDecoration: 'none',
+                    transition: 'opacity .2s',
+                  }}
+                    onMouseEnter={(e) => e.currentTarget.style.opacity = '0.85'}
+                    onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
+                  >
                     {card.link}
                   </Link>
                 </div>
