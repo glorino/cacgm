@@ -61,16 +61,16 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
         }}>
           {/* Logo */}
           <Link href="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
-            <div style={{
-              width: scrolled ? 42 : 50, height: scrolled ? 42 : 50,
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontWeight: 700, borderRadius: 4, fontSize: scrolled ? 13 : 15,
-              background: scrolled ? '#1a3a5c' : '#fff',
-              color: scrolled ? '#fff' : '#1a3a5c',
-              transition: 'all .35s ease',
-            }}>
-              CA
-            </div>
+            <img
+              src="/logo.png"
+              alt="CACGM"
+              style={{
+                height: scrolled ? 38 : 46,
+                width: 'auto',
+                objectFit: 'contain',
+                transition: 'all .35s ease',
+              }}
+            />
           </Link>
 
           {/* Desktop Nav */}
@@ -138,7 +138,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
               }}>
                 Sign In
               </Link>
-              <Link href="/login" style={{
+              <Link href="/give" style={{
                 background: '#E46C63', color: '#fff', textDecoration: 'none',
                 fontSize: 13, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px',
                 padding: '13px 24px', borderRadius: 3, transition: 'opacity .2s',
@@ -179,7 +179,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
                   display: 'block', padding: '12px 16px', color: '#555', textDecoration: 'none',
                   fontWeight: 700, textTransform: 'uppercase', fontSize: 14,
                 }}>Sign In</Link>
-                <Link href="/login" style={{
+                <Link href="/give" style={{
                   display: 'block', padding: '12px 16px', textAlign: 'center',
                   fontWeight: 700, textTransform: 'uppercase', fontSize: 14, letterSpacing: '1px',
                   marginTop: 12, background: '#E46C63', color: '#fff', borderRadius: 3, textDecoration: 'none',

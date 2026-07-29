@@ -34,22 +34,22 @@ const loopSteps = [
 
 const stories = [
   {
-    name: 'Sarah',
-    quote: 'CACGM changed my life. I found purpose and community here.',
-    tag: 'Testimony',
-    videoId: 'dQw4w9WgXcQ',
+    name: 'Sunday Service',
+    quote: 'Watch our latest Sunday service message and be blessed by the Word of God.',
+    tag: 'Church Message',
+    videoId: 'uq6UnTMPyUI',
   },
   {
-    name: 'David',
-    quote: 'God transformed my family through the ministry at this church.',
-    tag: 'Testimony',
-    videoId: 'LXb3EKWsInQ',
+    name: 'Midweek Service',
+    quote: 'Join our midweek service for deeper teachings and spiritual growth.',
+    tag: 'Church Message',
+    videoId: 'ZBzolX8wOqY',
   },
   {
-    name: 'Grace',
-    quote: 'I went from being lost to leading a department. Only God!',
-    tag: 'Testimony',
-    videoId: '9bZkp7q19f0',
+    name: 'Worship Night',
+    quote: 'Experience the presence of God through our worship night sessions.',
+    tag: 'Worship',
+    videoId: 'rVnEYkrm7ac',
   },
 ];
 
@@ -90,7 +90,7 @@ export default function HomePage() {
         <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 350, opacity: 0.8, background: 'linear-gradient(180deg, rgba(0,0,0,0.0001) 0%, #000 100%)', zIndex: 5 }} />
 
         {/* Slider Controls */}
-        <div style={{ position: 'absolute', bottom: 300, left: 0, right: 0, zIndex: 20, display: 'flex', justifyContent: 'center', gap: 12 }}>
+        <div style={{ position: 'absolute', bottom: 260, left: 0, right: 0, zIndex: 20, display: 'flex', justifyContent: 'center', gap: 12 }}>
           {heroImages.map((_, i) => (
             <button
               key={i}
@@ -127,7 +127,7 @@ export default function HomePage() {
           <ChevronRight size={24} />
         </button>
 
-        <div style={{ position: 'relative', zIndex: 10, textAlign: 'center', maxWidth: 1280, margin: '0 auto', padding: '28vh 40px 60px' }}>
+        <div style={{ position: 'relative', zIndex: 10, textAlign: 'center', maxWidth: 1280, margin: '0 auto', padding: '22vh 40px 40px' }}>
           <AnimatePresence mode="wait">
             <motion.h1
               key={currentSlide}
@@ -135,7 +135,7 @@ export default function HomePage() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -30 }}
               transition={{ duration: 0.6 }}
-              style={{ color: '#fff', lineHeight: 1.25, fontFamily: "'Arno Pro', serif", fontWeight: 400, fontSize: 'clamp(38px, 7vw, 76px)', marginBottom: 50 }}
+              style={{ color: '#fff', lineHeight: 1.25, fontFamily: "'Arno Pro', serif", fontWeight: 400, fontSize: 'clamp(32px, 5vw, 60px)', marginBottom: 30 }}
             >
               {heroTexts[currentSlide]}
             </motion.h1>
@@ -143,8 +143,8 @@ export default function HomePage() {
         </div>
 
         {/* Experience Cards */}
-        <div style={{ position: 'relative', zIndex: 10, maxWidth: 1400, margin: '0 auto', padding: '0 50px 40px' }}>
-          <h2 style={{ color: '#fff', textAlign: 'center', fontFamily: "'Arno Pro', serif", fontWeight: 400, marginBottom: 45, fontSize: 'clamp(24px, 3vw, 38px)' }}>
+        <div style={{ position: 'relative', zIndex: 10, maxWidth: 1400, margin: '0 auto', padding: '0 50px 50px' }}>
+          <h2 style={{ color: '#fff', textAlign: 'center', fontFamily: "'Arno Pro', serif", fontWeight: 400, marginBottom: 30, fontSize: 'clamp(20px, 2.5vw, 30px)' }}>
             Ways to experience CACGM
           </h2>
           <div style={{ display: 'flex', gap: 15 }}>
@@ -156,7 +156,7 @@ export default function HomePage() {
                 transition={{ delay: 0.3 + i * 0.1 }}
                 whileHover={{ y: -6, transition: { duration: 0.2 } }}
                 style={{
-                  flex: 1, borderRadius: 15, padding: 30, display: 'flex', flexDirection: 'column', textAlign: 'left',
+                  flex: 1, borderRadius: 15, padding: '22px 20px', display: 'flex', flexDirection: 'column', textAlign: 'left',
                   background: 'hsla(0,0%,100%,0.92)', backdropFilter: 'blur(20px)',
                   overflow: 'hidden', position: 'relative', cursor: 'pointer',
                   boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
@@ -165,20 +165,20 @@ export default function HomePage() {
                 {/* Color accent bar at top */}
                 <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 4, background: card.bg }} />
                 <div style={{
-                  width: 52, height: 52, borderRadius: 14,
+                  width: 44, height: 44, borderRadius: 12,
                   background: card.bg,
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  marginBottom: 16, color: '#fff',
+                  marginBottom: 12, color: '#fff',
                   boxShadow: `0 4px 12px ${card.color}30`,
                 }}>
                   {card.icon}
                 </div>
-                <h3 style={{ fontSize: 19, fontFamily: "'Gotham', sans-serif", fontWeight: 600, color: '#222', marginBottom: 8 }}>{card.title}</h3>
-                <p style={{ fontSize: 15, color: '#69757B', marginBottom: 24, lineHeight: 1.6 }}>{card.desc}</p>
+                <h3 style={{ fontSize: 16, fontFamily: "'Gotham', sans-serif", fontWeight: 600, color: '#222', marginBottom: 6 }}>{card.title}</h3>
+                <p style={{ fontSize: 13, color: '#69757B', marginBottom: 16, lineHeight: 1.5 }}>{card.desc}</p>
                 <div style={{ marginTop: 'auto' }}>
                   <Link href={card.href} style={{
-                    display: 'inline-block', padding: '12px 22px',
-                    fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px',
+                    display: 'inline-block', padding: '10px 18px',
+                    fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px',
                     borderRadius: 3, background: card.color, color: '#fff', textDecoration: 'none',
                     transition: 'opacity .2s',
                   }}
