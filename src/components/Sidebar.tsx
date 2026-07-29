@@ -25,29 +25,29 @@ import {
   Home,
 } from 'lucide-react';
 import { cn, getInitials, getRoleLabel } from '@/lib/utils';
+import { hasPermission, type Permission } from '@/lib/rbac';
 
 interface NavItem {
   label: string;
   href: string;
   icon: React.ReactNode;
-  roles?: string[];
+  permission?: Permission;
 }
 
 const navItems: NavItem[] = [
   { label: 'Homepage', href: '/', icon: <Home size={20} /> },
   { label: 'Dashboard', href: '/dashboard', icon: <LayoutDashboard size={20} /> },
-  { label: 'Overview', href: '/dashboard/overview', icon: <BarChart3 size={20} />, roles: ['GENERAL_OVERSEER', 'SUPER_ADMIN'] },
-  { label: 'Members', href: '/dashboard/members', icon: <Users size={20} /> },
-  { label: 'Attendance', href: '/dashboard/attendance', icon: <UserCheck size={20} />, roles: ['GENERAL_OVERSEER', 'SUPER_ADMIN', 'BRANCH_PASTOR', 'HEAD_USHER'] },
-  { label: 'Giving', href: '/dashboard/giving', icon: <Heart size={20} /> },
-  { label: 'Transactions', href: '/dashboard/transactions', icon: <Landmark size={20} />, roles: ['GENERAL_OVERSEER', 'SUPER_ADMIN', 'BRANCH_PASTOR', 'ACCOUNTANT'] },
-  { label: 'Departments', href: '/dashboard/departments', icon: <Church size={20} /> },
-  { label: "Men's Fellowship", href: '/dashboard/departments/mens', icon: <Shield size={20} />, roles: ['GENERAL_OVERSEER', 'SUPER_ADMIN', 'MEN_PRESIDENT', 'BRANCH_PASTOR'] },
-  { label: "Women's Ministry", href: '/dashboard/departments/womens', icon: <Shield size={20} />, roles: ['GENERAL_OVERSEER', 'SUPER_ADMIN', 'WOMEN_PRESIDENT', 'BRANCH_PASTOR'] },
-  { label: 'Youth Department', href: '/dashboard/departments/youth', icon: <Shield size={20} />, roles: ['GENERAL_OVERSEER', 'SUPER_ADMIN', 'YOUTH_PRESIDENT', 'BRANCH_PASTOR'] },
+  { label: 'Members', href: '/dashboard/members', icon: <Users size={20} />, permission: 'members:view' },
+  { label: 'Attendance', href: '/dashboard/attendance', icon: <UserCheck size={20} />, permission: 'attendance:view' },
+  { label: 'Giving', href: '/dashboard/giving', icon: <Heart size={20} />, permission: 'giving:view' },
+  { label: 'Transactions', href: '/dashboard/transactions', icon: <Landmark size={20} />, permission: 'transactions:view' },
+  { label: 'Departments', href: '/dashboard/departments', icon: <Church size={20} />, permission: 'departments:view' },
+  { label: "Men's Fellowship", href: '/dashboard/departments/mens', icon: <Shield size={20} />, permission: 'departments:view' },
+  { label: "Women's Ministry", href: '/dashboard/departments/womens', icon: <Shield size={20} />, permission: 'departments:view' },
+  { label: 'Youth Department', href: '/dashboard/departments/youth', icon: <Shield size={20} />, permission: 'departments:view' },
   { label: 'Find Branch', href: '/branches', icon: <MapPin size={20} /> },
-  { label: 'Analytics', href: '/dashboard/analytics', icon: <TrendingUp size={20} />, roles: ['GENERAL_OVERSEER', 'SUPER_ADMIN', 'BRANCH_PASTOR', 'ACCOUNTANT'] },
-  { label: 'Settings', href: '/dashboard/settings', icon: <Settings size={20} /> },
+  { label: 'Analytics', href: '/dashboard/analytics', icon: <TrendingUp size={20} />, permission: 'analytics:view' },
+  { label: 'Settings', href: '/dashboard/settings', icon: <Settings size={20} />, permission: 'settings:view' },
 ];
 
 interface SidebarProps {
@@ -63,7 +63,7 @@ interface SidebarProps {
   const router = useRouter();
 
   const filteredNav = navItems.filter(
-    (item) => !item.roles || item.roles.includes(userRole)
+    (item) => !item.permission || hasPermission(userRole, item.permission)
   );
 
   const SidebarContent = () => (

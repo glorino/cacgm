@@ -15,6 +15,7 @@ import Header from '@/components/Header';
 import { useUser } from '@/hooks/useUser';
 import { MetricCard, AnimatedCard, PageTransition } from '@/components/AnimatedUI';
 import { formatCurrency } from '@/lib/utils';
+import { getRoleDashboardTitle, getRoleSubtitle, hasPermission } from '@/lib/rbac';
 import {
   AreaChart,
   Area,
@@ -116,9 +117,9 @@ export default function DashboardPage() {
   return (
     <PageTransition>
       <Header
-        title="Dashboard"
-        subtitle="Welcome back, here's your church overview"
-        showBranchFilter
+        title={getRoleDashboardTitle(userRole)}
+        subtitle={getRoleSubtitle(userRole)}
+        showBranchFilter={hasPermission(userRole, 'branches:view')}
         userRole={userRole}
         userName={userName}
         selectedBranch={branchFilter}
